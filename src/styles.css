@@ -1,0 +1,55 @@
+:root {
+    --color-negro: #000000;
+    --color-blanco: #ffffff;
+    --color-negro: #000000;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+*::-webkit-scrollbar {
+    width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+    background: var(--color-negro);
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: var(--color-blanco);
+    border-radius: 0px;
+    border: 1px solid var(--color-negro);
+}
+
+.contenedor-principal {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    /* vh es la altura del viewport */
+}
+
+.contenido-pages {
+    flex: 1;
+}
+
+.page-titulo {
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+
+.tabla-contenedor {
+    max-height: 500px;
+    /* o el valor que quieras */
+    overflow-y: auto;
+    border: 1px solid #0000000d;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}

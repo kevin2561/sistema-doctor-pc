@@ -1,0 +1,29 @@
+#contenedor-login{
+    min-width: 300px;
+    background-color: white; /* Opcional, solo para que se vea mejor */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  
+    /* Para centrar el contenedor-login */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.error{
+    display: none;
+    color: red;
+    margin: 5px 0px;
+    font-size: 14px;
+}
+#contenedor-password{
+    position: relative;
+    height: 100%;
+}
+#icono-eye{
+    position: absolute;
+    top: 7.5px;
+    right: 10px;
+    cursor: pointer;
+}

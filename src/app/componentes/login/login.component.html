@@ -1,0 +1,26 @@
+<section id="contenedor-login">
+    <form (ngSubmit)="login()">
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Usuario</label>
+            <input type="email" class="form-control" id="usuario" [(ngModel)]="usuarioInput" name="usuario"
+                placeholder="Ingrese su usuario">
+            <label class="form-label error" [ngClass]="{'d-block': errorUsuario}">Usuario incorrecto</label>
+        </div>
+
+
+        <div class="mb-3">
+            <label for="inputPassword5" class="form-label">Password</label>
+            <div id="contenedor-password">
+                <input [type]="mostrarPassword ? 'text' : 'password'" id="inputPassword5" class="form-control"
+                    aria-describedby="passwordHelpBlock" [(ngModel)]="passwordInput" name="password">
+                <span (click)="togglePassword()" id="icono-eye"><i [class.bi-eye-fill]="mostrarPassword"
+                        [class.bi-eye-slash-fill]="!mostrarPassword"></i></span>
+            </div>
+
+            <label class="form-label error" [ngClass]="{'d-block': errorPassword}">Contraseña incorrecta</label>
+
+        </div>
+        <button class="btn btn-primary">Ingresar</button>
+
+    </form>
+</section>
