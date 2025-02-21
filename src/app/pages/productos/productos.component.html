@@ -16,20 +16,24 @@
                 </tr>
             </thead>
             <tbody id="t-body">
-                <tr>
-                    <td>1</td>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>4</td>
-                    <td>5</td>
-                    <td>6</td>
-                    <td>7</td>
+                <tr *ngFor="let producto of productosActivados; let i= index">
+                    <td>{{i+1}}</td>
+                    <td>{{producto.nombre}}</td>
+                    <td>{{producto.precio}}</td>
+                    <td>{{producto.marca}}</td>
+                    <td>{{producto.modelo}}</td>
+                    <td>{{producto.stock}}</td>
+                    <td><img class="img-table"  [src]="producto.imagen || 'assets/no-imagen.jpg'"  alt=""></td>
+
+
                     <td><i class="bi bi-pencil-square"></i></td>
                     <td><button (click)="desactivarProducto()" class="btn btn-danger">Desactivar</button></td>
                 </tr>
-                <tr><td>1</td></tr>
             </tbody>
 
         </table>
+
     </div>
+
 </section>
+
