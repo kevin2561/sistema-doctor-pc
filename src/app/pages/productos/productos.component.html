@@ -3,8 +3,8 @@
         <h1>Productos</h1>
     </div>
     <div class="tabla-contenedor">
-        <table class="table">
-            <thead>
+        <table class="table table-bordered table-hover text-center">
+            <thead class="table-dark">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Nombre</th>
@@ -13,6 +13,8 @@
                     <th scope="col">Modelo</th>
                     <th scope="col">Stock</th>
                     <th scope="col">Imagen</th>
+                    <th scope="col">Editar</th>
+                    <th scope="col">Desactivar</th>
                 </tr>
             </thead>
             <tbody id="t-body">
@@ -23,11 +25,16 @@
                     <td>{{producto.marca}}</td>
                     <td>{{producto.modelo}}</td>
                     <td>{{producto.stock}}</td>
-                    <td><img class="img-table"  [src]="producto.imagen || 'assets/no-imagen.jpg'"  alt=""></td>
+                    <td><img class="img-table" [src]="producto.imagen || 'assets/no-imagen.jpg'" alt=""></td>
 
 
                     <td><i class="bi bi-pencil-square"></i></td>
                     <td><button (click)="desactivarProducto()" class="btn btn-danger">Desactivar</button></td>
+                </tr>
+                <tr class="table-info fw-bold">
+                    <td colspan="5" class="text-end">Total:</td>
+                    <td>s/800.00</td>
+                    <td colspan="2"></td>
                 </tr>
             </tbody>
 
@@ -36,4 +43,3 @@
     </div>
 
 </section>
-

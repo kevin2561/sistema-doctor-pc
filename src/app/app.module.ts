@@ -16,8 +16,9 @@ import { CrearCategoriaComponent } from './pages/crear-categoria/crear-categoria
 import { CategoriasDesactivadasComponent } from './pages/categorias-desactivadas/categorias-desactivadas.component';
 import { CrearVentaComponent } from './pages/crear-venta/crear-venta.component';
 import { VentasComponent } from './pages/ventas/ventas.component';
-import { HttpClientModule  } from '@angular/common/http';
-
+import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
+import { ProductosService } from './services/productos.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,8 +39,11 @@ import { HttpClientModule  } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule 
+    HttpClientModule,
+    RouterModule
     
+
+
   ],
   providers: [
     provideClientHydration(withEventReplay())
