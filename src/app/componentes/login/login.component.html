@@ -1,26 +1,27 @@
-<section id="contenedor-login">
-    <form (ngSubmit)="login()">
-        <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Usuario</label>
-            <input type="email" class="form-control" id="usuario" [(ngModel)]="usuarioInput" name="usuario"
-                placeholder="Ingrese su usuario">
-            <label class="form-label error" [ngClass]="{'d-block': errorUsuario}">Usuario incorrecto</label>
-        </div>
-
-
-        <div class="mb-3">
-            <label for="inputPassword5" class="form-label">Password</label>
-            <div id="contenedor-password">
-                <input [type]="mostrarPassword ? 'text' : 'password'" id="inputPassword5" class="form-control"
-                    aria-describedby="passwordHelpBlock" [(ngModel)]="passwordInput" name="password">
-                <span (click)="togglePassword()" id="icono-eye"><i [class.bi-eye-fill]="mostrarPassword"
-                        [class.bi-eye-slash-fill]="!mostrarPassword"></i></span>
+<section id="contenedor-login" class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card p-4 shadow-lg rounded-4" style="max-width: 400px; width: 100%;">
+        <h2 class="text-center mb-4">Iniciar Sesión</h2>
+        <form (ngSubmit)="login()">
+            <div class="mb-3">
+                <label for="usuario" class="form-label">Usuario</label>
+                <input type="email" class="form-control" id="usuario" [(ngModel)]="usuarioInput" name="usuario"
+                    placeholder="Ingrese su usuario">
+                <div class="text-danger small mt-1" *ngIf="errorUsuario">Usuario incorrecto</div>
             </div>
 
-            <label class="form-label error" [ngClass]="{'d-block': errorPassword}">Contraseña incorrecta</label>
+            <div class="mb-3">
+                <label for="inputPassword5" class="form-label">Contraseña</label>
+                <div class="input-group">
+                    <input [type]="mostrarPassword ? 'text' : 'password'" id="inputPassword5" class="form-control"
+                        [(ngModel)]="passwordInput" name="password">
+                    <span class="input-group-text bg-white border" (click)="togglePassword()" style="cursor: pointer;">
+                        <i [class.bi-eye-fill]="mostrarPassword" [class.bi-eye-slash-fill]="!mostrarPassword"></i>
+                    </span>
+                </div>
+                <div class="text-danger small mt-1" *ngIf="errorPassword">Contraseña incorrecta</div>
+            </div>
 
-        </div>
-        <button class="btn btn-primary">Ingresar</button>
-
-    </form>
+            <button class="btn btn-primary w-100 mt-3">Ingresar</button>
+        </form>
+    </div>
 </section>

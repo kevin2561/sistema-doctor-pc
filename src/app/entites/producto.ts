@@ -9,5 +9,5 @@ export interface Producto {
     imagen?: string
     marca: string
     modelo: string
-     categoria: Categoria
+    categoria: Categoria
 }
