@@ -1,10 +1,13 @@
 <section id="contenedor-productos-desactivados" class="container">
     <div class="page-titulo">
-        <h1>Productos Desactivados</h1>
+        <h1 class="page-titulo text-center mb-3">Productos Desactivados</h1>
+
+        <p class="text-center text-muted">Aquí se muestran todos los productos que actualmente están inactivos.</p>
+
     </div>
     <div class="tabla-contenedor">
-        <table class="table">
-            <thead>
+        <table class="table table-bordered table-hover text-center">
+            <thead class="table-dark">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Nombre</th>
@@ -13,6 +16,7 @@
                     <th scope="col">Modelo</th>
                     <th scope="col">Stock</th>
                     <th scope="col">Imagen</th>
+                    <th scope="col">Activar</th>
                 </tr>
             </thead>
             <tbody id="t-body">
@@ -26,7 +30,6 @@
                     <td>xxx</td>
                     <td><button (click)="activarProducto()" class="btn btn-danger">Activar</button></td>
                 </tr>
-                <tr><td>1</td></tr>
             </tbody>
 
         </table>

@@ -1,6 +1,8 @@
 <section id="contenedor-productos-desactivados" class="container">
     <div class="page-titulo">
-        <h1>Productos</h1>
+        <h1 class="page-titulo text-center mb-3">Productos</h1>
+
+        <p class="text-center text-muted">Todos estos productos estan Activos.</p>
     </div>
     <div class="tabla-contenedor">
         <table class="table table-bordered table-hover text-center">
@@ -28,14 +30,14 @@
                     <td><img class="img-table" [src]="producto.imagen || 'assets/no-imagen.jpg'" alt=""></td>
 
 
-                    <td><i class="bi bi-pencil-square"></i></td>
+                    <td><i class="bi bi-pencil-square accion-iconos" title="Editar"></i></td>
                     <td><button (click)="desactivarProducto()" class="btn btn-danger">Desactivar</button></td>
                 </tr>
-                <tr class="table-info fw-bold">
+                <!-- <tr class="table-info fw-bold">
                     <td colspan="5" class="text-end">Total:</td>
                     <td>s/800.00</td>
                     <td colspan="2"></td>
-                </tr>
+                </tr> -->
             </tbody>
 
         </table>

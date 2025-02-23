@@ -13,7 +13,7 @@ export class CrearProductoComponent {
     idProducto: 0,
     nombre: '',
     precio: 0,
-    stock: 0,
+    stock:  0,
     estado: true,
     imagen: '',
     marca: '',

@@ -1,15 +1,23 @@
 <section id="contenedor-login" class="d-flex justify-content-center align-items-center vh-100">
-    <div class="card p-4 shadow-lg rounded-4" style="max-width: 400px; width: 100%;">
-        <h2 class="text-center mb-4">Iniciar Sesión</h2>
+    <div class="card p-4 shadow-lg rounded-4 text-center" style="max-width: 400px; width: 100%;">
+        
+        <!-- Contenedor del Logo -->
+        <div class="d-flex justify-content-center">
+            <img src="assets/logo.jpg" alt="Logo de la empresa" class="mb-3 rounded" 
+                 style="width: 120px; height: 120px; object-fit: cover;">
+        </div>
+
+        <h2 class="mb-4">Iniciar Sesión</h2>
+
         <form (ngSubmit)="login()">
-            <div class="mb-3">
+            <div class="mb-3 text-start">
                 <label for="usuario" class="form-label">Usuario</label>
                 <input type="email" class="form-control" id="usuario" [(ngModel)]="usuarioInput" name="usuario"
                     placeholder="Ingrese su usuario">
                 <div class="text-danger small mt-1" *ngIf="errorUsuario">Usuario incorrecto</div>
             </div>
 
-            <div class="mb-3">
+            <div class="mb-3 text-start">
                 <label for="inputPassword5" class="form-label">Contraseña</label>
                 <div class="input-group">
                     <input [type]="mostrarPassword ? 'text' : 'password'" id="inputPassword5" class="form-control"

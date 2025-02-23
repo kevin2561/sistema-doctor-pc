@@ -1,16 +1,18 @@
 <section id="contenedor-categorias" class="container">
     <div class="page-titulo">
-        <h1>Categorias</h1>
+        <h1 class="page-titulo text-center mb-3">Categorias</h1>
+
+        <p class="text-center text-muted">Todos estas categorias estan Activas.</p>
     </div>
     <div class="tabla-contenedor">
-        <table class="table w-100">
-            <thead>
+        <table class="table table-bordered table-hover text-center">
+            <thead class="table-dark">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Estado</th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
+                    <th scope="col">Editar</th>
+                    <th scope="col">Desactivar</th>
 
                 </tr>
             </thead>
@@ -18,8 +20,8 @@
                 <tr>
                     <td>0</td>
                     <td>Mark</td>
-                    <td>Otto</td>
-                    <td><i class="bi bi-pencil-square"></i></td>
+                    <td>Activo</td>
+                    <td><i class="bi bi-pencil-square accion-iconos text-primary" title="Editar"></i></td>
                     <td><button (click)="desactivarCategoria()" class="btn btn-danger">Desactivar</button></td>
                 </tr>
             </tbody>

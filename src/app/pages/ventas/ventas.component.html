@@ -1,7 +1,12 @@
 <section id="contenedor-ventas" class="container mt-4">
-    
+    <h1 class="page-titulo text-center mb-3">Ventas</h1>
+
+    <p class="text-center text-muted">Ingrese un mes y año para poder ver los registros</p>
+
+
     <!-- Filtros de Ventas -->
     <div id="contenedor-filtros-ventas" class="row mb-4">
+
         <div class="col-md-5">
             <label class="form-label fw-bold">Seleccionar Mes</label>
             <select class="form-select">
@@ -16,6 +21,7 @@
                 <option selected disabled>Seleccione un año</option>
                 <option *ngFor="let anio of anios" [value]="anio">{{ anio }}</option>
             </select>
+
         </div>
 
         <!-- Botón Filtrar (Solo Diseño, sin eventos) -->
@@ -26,10 +32,10 @@
         </div>
     </div>
 
-    <!-- Título de la Página -->
+    <!-- Título de la Página
     <div class="page-titulo text-center mb-3">
         <h1 class="fw-bold">Ventas</h1>
-    </div>
+    </div> -->
 
     <!-- Contenedor de la Tabla -->
     <div class="tabla-contenedor">
@@ -55,33 +61,16 @@
                     <td>xxx</td>
                     <td>xxx</td>
                     <td>
-                        <i class="bi bi-pencil-square text-primary" style="cursor:pointer;"></i>
+                        <i class="bi bi-pencil-square text-primary accion-iconos" title="Editar" style="cursor:pointer;"></i>
                     </td>
                     <td>
-                        <button class="btn btn-danger btn-sm">
-                            Eliminar
-                        </button>
+                        <i class="bi bi-trash text-danger accion-iconos" title="Eliminar"></i>
                     </td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>John</td>
-                    <td>Doe</td>
-                    <td>xxx</td>
-                    <td>xxx</td>
-                    <td>xxx</td>
-                    <td>
-                        <i class="bi bi-pencil-square text-primary" style="cursor:pointer;"></i>
-                    </td>
-                    <td>
-                        <button class="btn btn-danger btn-sm">
-                            Eliminar
-                        </button>
-                    </td>
-                </tr>
-                <tr class="table-info fw-bold">
-                    <td colspan="5" class="text-end">Total:</td>
-                    <td>s/800.00</td>
+
+                <tr class="bg-info-subtle">
+                    <td colspan="5" class="fw-bold text-end">Total:</td>
+                    <td class="fw-bold text-dark">s/800.00</td>
                     <td colspan="2"></td>
                 </tr>
             </tbody>

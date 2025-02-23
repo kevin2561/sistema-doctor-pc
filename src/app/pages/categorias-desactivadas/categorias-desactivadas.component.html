@@ -1,25 +1,30 @@
 <section id="contenedor-categorias-desactivadas" class="container">
     <div class="page-titulo">
-        <h1>Categorias Desactivadas</h1>
+        <h1 class="page-titulo text-center mb-3">Categorias Desactivadas</h1>
+
+        <p class="text-center text-muted">Aquí se muestran todos las categorias que actualmente están inactivos.</p>
     </div>
     <div class="tabla-contenedor">
-        <table class="table w-100">
-            <thead>
+        <table class="table table-bordered table-hover text-center">
+            <thead class="table-dark">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Estado</th>
+                    <th scope="col">Activar</th>
                 </tr>
             </thead>
             <tbody id="t-body">
                 <tr>
                     <td>0</td>
                     <td>Mark</td>
-                    <td>Otto</td>
-             
+                    <td>Inactivo</td>
+
                     <td><button (click)="activarCategoria()" class="btn btn-danger">Activar</button></td>
                 </tr>
-                <tr><td>1</td></tr>
+                <tr>
+                    <td>1</td>
+                </tr>
             </tbody>
 
         </table>

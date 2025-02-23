@@ -39,7 +39,7 @@
                 <div class="col-md-6">
                     <label class="form-label fw-bold">Modelo</label>
                     <input type="text" [(ngModel)]="producto.modelo" name="modelo" class="form-control"
-                        placeholder="Ej: XM-L" required #modeloRef="ngModel">
+                        placeholder="Ej: A1657L" required #modeloRef="ngModel">
                     <div *ngIf="modeloRef.invalid && modeloRef.touched" class="text-danger mt-1">
                         El modelo es obligatorio.
                     </div>
