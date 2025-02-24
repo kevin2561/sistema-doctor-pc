@@ -19,6 +19,8 @@ import { VentasComponent } from './pages/ventas/ventas.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { ProductosService } from './services/productos.service';
+import { MesajeValidacionComponent } from './mensaje/mesaje-validacion/mesaje-validacion.component';
+import { LoadingComponent } from './componentes/loading/loading.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +35,9 @@ import { ProductosService } from './services/productos.service';
     CrearCategoriaComponent,
     CategoriasDesactivadasComponent,
     CrearVentaComponent,
-    VentasComponent
+    VentasComponent,
+    MesajeValidacionComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,

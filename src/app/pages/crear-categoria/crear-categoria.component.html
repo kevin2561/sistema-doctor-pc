@@ -1,10 +1,13 @@
-<section class="container mt-5 mb-5">
+<section  id="contenedor-crear-nueva-catebgoria" class="container mt-5 mb-5">
     <h1 class="page-titulo text-center mb-3">Crear Categoría</h1>
     <p class="text-center text-muted">Ingrese los datos para agregar una nueva categoría</p>
 
+ <app-mesaje-validacion [mensaje]="mensaje" [esExito]="esExito"></app-mesaje-validacion>
+
     <div id="contenedor-form-crear-categoria" class="d-flex justify-content-center">
-        <form #formularioCategoriaNuevo="ngForm" (ngSubmit)="crearNuevaCategoria()" class="p-4 border rounded shadow-lg bg-white" style="max-width: 500px; width: 100%;">
-            
+        <form #formularioCategoriaNuevo="ngForm" (ngSubmit)="crearNuevaCategoria(formularioCategoriaNuevo)"
+            class="p-4 border rounded shadow-lg bg-white" style="max-width: 500px; width: 100%;">
+
             <!-- Campo Nombre -->
             <div class="mb-3">
                 <label class="form-label fw-bold">Ingrese el Nombre de la Categoría</label>
@@ -27,3 +30,5 @@
         </form>
     </div>
 </section>
+
+<app-loading ></app-loading>

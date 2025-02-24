@@ -1,4 +1,4 @@
-<section id="contenedor-productos-desactivados" class="container">
+<section *ngIf="!cargando" id="contenedor-productos-desactivados" class="container">
     <div class="page-titulo">
         <h1 class="page-titulo text-center mb-3">Productos</h1>
 
@@ -45,3 +45,5 @@
     </div>
 
 </section>
+
+<app-loading *ngIf="cargando"></app-loading>

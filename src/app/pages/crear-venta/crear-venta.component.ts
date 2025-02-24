@@ -14,6 +14,7 @@ export class CrearVentaComponent {
     documento: "",
     descripcion: "",
     fecha: "",
+    metodoPago: "",
     total: 0
 
 

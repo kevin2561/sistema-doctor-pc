@@ -17,10 +17,12 @@
                 </tr>
             </thead>
             <tbody id="t-body">
-                <tr>
-                    <td>0</td>
-                    <td>Mark</td>
-                    <td>Activo</td>
+                <tr *ngFor="let categoria of categoriaActivadas; let i= index">
+                    <td>{{i + 1 }}</td>
+
+                    <td>{{categoria.nombre}}</td>
+                    <td>{{categoria.estado == true ? "Activo" : "False"}}</td>
+
                     <td><i class="bi bi-pencil-square accion-iconos text-primary" title="Editar"></i></td>
                     <td><button (click)="desactivarCategoria()" class="btn btn-danger">Desactivar</button></td>
                 </tr>

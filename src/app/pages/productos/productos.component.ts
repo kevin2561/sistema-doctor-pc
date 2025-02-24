@@ -10,6 +10,7 @@ import { ProductosService } from '../../services/productos.service';
 })
 export class ProductosComponent implements OnInit {
   productos: Producto[] = [];
+  cargando: boolean = false;
   constructor(private productosService: ProductosService) { }
 
   
@@ -19,13 +20,17 @@ export class ProductosComponent implements OnInit {
   }
 
   mostrarProductos(): void {
+    this.cargando = true;
     this.productosService.getAllProductos().subscribe({
       next: (data) => {
         this.productos = data;
         console.log(this.productos)
+        this.cargando= false
       },
       error: (error) => {
         console.error(error);
+        this.cargando= false
+
       }
     });
 

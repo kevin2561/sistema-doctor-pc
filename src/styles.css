@@ -12,7 +12,8 @@
 }
 
 *::-webkit-scrollbar {
-    width: 10px;
+    width: 8px;
+    height: 500px;
 }
 
 *::-webkit-scrollbar-track {
@@ -54,8 +55,35 @@
     border-collapse: collapse;
 }
 
+/* ------MENSAJE DE VALIDACION */
 .accion-iconos{
     font-size: 24px;
     cursor: pointer;
     color: var(--color-negro);
+}
+
+.no-contenido {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.no-contenido-icono {
+    font-size: 150px;
+    opacity: 0.8;
+    margin-bottom: 10px;
+}
+
+/* ------COTENEDIO DE CARGAR */
+#contenedor-loaders{
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    margin: auto;
+
 }
