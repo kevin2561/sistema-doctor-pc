@@ -1,6 +1,6 @@
+<app-mesaje-validacion [mensaje]="mensaje" [esExito]="esExito"></app-mesaje-validacion>
+
 <ng-container *ngIf="!e500; else errorTemplate">
-
-
 
     <section id="contenedor-categorias" class="container">
 
@@ -11,29 +11,30 @@
             <h1 class="page-titulo text-center mb-3">Categorias</h1>
 
             <p class="text-center text-muted">Todos estas categorias estan Activas.</p>
+            <div class="scroll-tabla">
+                <table class="table table-bordered table-hover text-center">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Editar</th>
+                            <th scope="col">Desactivar</th>
 
-            <table class="table table-bordered table-hover text-center">
-                <thead class="table-dark">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Estado</th>
-                        <th scope="col">Editar</th>
-                        <th scope="col">Desactivar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="t-body">
+                        <tr *ngFor="let categoria of categoriaActivadas; let i= index">
+                            <td>{{i + 1 }}</td>
 
-                    </tr>
-                </thead>
-                <tbody id="t-body">
-                    <tr *ngFor="let categoria of categoriaActivadas; let i= index">
-                        <td>{{i + 1 }}</td>
+                            <td>{{categoria.nombre}}</td>
+                            <td>{{categoria.estado == true ? "Activo" : "False"}}</td>
 
-                        <td>{{categoria.nombre}}</td>
-                        <td>{{categoria.estado == true ? "Activo" : "False"}}</td>
-
-                        <td><i class="bi bi-pencil-square accion-iconos text-primary" title="Editar"></i></td>
-                        <td><button (click)="desactivarCategoria()" class="btn btn-danger">Desactivar</button></td>
-                    </tr>
-                    <!-- <tr>
+                            <td><i class="bi bi-pencil-square accion-iconos text-primary" title="Editar"></i></td>
+                            <td><button (click)="desactivarCategoria(categoria.idCategoria, categoria.nombre)"
+                                    class="btn btn-danger">Desactivar</button></td>
+                        </tr>
+                        <!-- <tr>
                     <td>x</td>
                     <td>x</td>
                     <td>x</td>
@@ -41,10 +42,12 @@
                             data-bs-target="#exampleModal"></i></td>
                     <td><button (click)="desactivarCategoria()" class="btn btn-danger">Desactivar</button></td>
                 </tr> -->
-                </tbody>
+                    </tbody>
 
-            </table>
+                </table>
+            </div>
         </div>
+
 
         <!-- -------------------------MODAL------------ -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

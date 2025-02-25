@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Producto } from '../../entites/producto';
+import { ProductosService } from '../../services/productos.service';
+import { CategoriasService } from '../../services/categorias.service';
+import { Categoria } from '../../entites/categoria';
 
 @Component({
   selector: 'app-crear-producto',
@@ -7,23 +10,59 @@ import { Producto } from '../../entites/producto';
   templateUrl: './crear-producto.component.html',
   styleUrls: ['./crear-producto.component.css']
 })
-export class CrearProductoComponent {
+export class CrearProductoComponent implements OnInit {
   errorImagen: boolean = false;
+  imagenSeleccionada: File | null = null;
   producto: Producto = {
     idProducto: 0,
     nombre: '',
     precio: 0,
-    stock:  0,
+    stock: 0,
     estado: true,
     imagen: '',
     marca: '',
     modelo: '',
     categoria: { idCategoria: 0, nombre: '', estado: true }
+  };
+  categoria: Categoria[] = [];
+
+  constructor(private productoService: ProductosService, private categoriaService: CategoriasService) { }
+  ngOnInit() {
+    this.cargarCategorias();
+
+  }
+  cargarCategorias() {
+    this.categoriaService.getAllCategoria().subscribe({
+      next: (data) => {
+        this.categoria = data;
+        console.log(this.producto.categoria)
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    })
+
   }
 
+
+
   crearNuevoProducto() {
-    console.log("creado" + this.producto)
+    if (this.producto.nombre && this.producto.precio && this.producto.stock) {
+      this.productoService.postProducto(this.producto, this.imagenSeleccionada || undefined)
+        .subscribe(
+          (respuesta) => {
+            console.log("Producto creado:", respuesta);
+          },
+          (error) => {
+            console.error("Error al crear producto:", error);
+          }
+        );
+    } else {
+      alert("Todos los campos son obligatorios");
+    }
   }
+
+
 
   validarSizeImagen(event: any) {
     const maxSize = 10 * 1024 * 1024; // 10MB en bytes

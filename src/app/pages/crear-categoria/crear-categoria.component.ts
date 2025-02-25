@@ -52,14 +52,9 @@ export class CrearCategoriaComponent implements OnInit {
           this.mensajeService.mostrarMensaje(`Error de conexión. Inténtalo más tarde.`, false);
           formularioCategoriaNuevo.resetForm();
 
-        } else if (error.status === 400) {
-          // Error 400: categoría ya existente
-          this.mensajeService.mostrarMensaje(`Esta categoría ya existe.`, false);
-          formularioCategoriaNuevo.resetForm();
-
         } else {
           // Otros errores (500, 403, etc.)
-          this.mensajeService.mostrarMensaje(`Error inesperado (${error.status}): ${error.message}`, false);
+          this.mensajeService.mostrarMensaje(`Esta categoría ya existe.`, false);
           formularioCategoriaNuevo.resetForm();
 
         }

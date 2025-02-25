@@ -21,14 +21,19 @@ export class CategoriasService {
   postCategoria(categoria: Partial<Categoria>): Observable<Categoria> {
     return this.http.post<Categoria>(`${this.url}post`, categoria)
   }
+  //ACTIVAR
   activarC(id: number): Observable<Categoria> {
     return this.http.patch<Categoria>(`${this.url}activar/${id}`, {});
   }
+
+  //DESACTIVAR
   desactivarC(id: number): Observable<Categoria> {
     return this.http.patch<Categoria>(`${this.url}desactivar/${id}`, {});
   }
+
+  //UPDATE
   actualizarC(id: number): Observable<Categoria> {
-    return this.http.patch<Categoria>(`${this.url}put/${id}`, {});
+    return this.http.put<Categoria>(`${this.url}put/${id}`, {});
   }
 
 

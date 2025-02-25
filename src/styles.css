@@ -40,22 +40,41 @@
 .page-titulo {
     margin-top: 5%;
     margin-bottom: 5%;
+    text-decoration: underline;
 }
 
 
-.tabla-contenedor {
+/* .tabla-contenedor {
     max-height: 500px;
-    /* o el valor que quieras */
+   
     overflow-y: auto;
 }
 
 .table {
     width: 100%;
     border-collapse: collapse;
+} */
+
+/*-----------SCROLL - TABLA----------*/
+.scroll-tabla {
+    max-height: 500px;
+    /* O ajusta a 600px según necesites */
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    position: relative;
+}
+
+.scroll-tabla thead {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: #212529;
+    /* Asegura que tenga un fondo */
+    color: white;
 }
 
 /* ------MENSAJE DE VALIDACION */
-.accion-iconos{
+.accion-iconos {
     font-size: 24px;
     cursor: pointer;
     color: var(--color-negro);
@@ -73,16 +92,16 @@
 }
 
 /* ------COTENEDIO DE CARGAR */
-#contenedor-loaders{
+#contenedor-loaders {
     width: 100px;
     height: 100px;
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     display: flex;
-    justify-content: center; 
-    align-items: center; 
+    justify-content: center;
+    align-items: center;
     margin: auto;
 
 }

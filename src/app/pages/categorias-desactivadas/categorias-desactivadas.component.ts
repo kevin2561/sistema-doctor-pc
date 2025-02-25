@@ -19,14 +19,15 @@ export class CategoriasDesactivadasComponent implements OnInit {
 
   constructor(private categoriaService: CategoriasService, private mensajeService: MensajesService) { }
   ngOnInit(): void {
-    this.mostrarCategorias()
     this.mensajeService.mensaje$.subscribe(mensaje => this.mensaje = mensaje)
     this.mensajeService.esExito$.subscribe(esExito => this.esExito = esExito)
+    this.mostrarCategorias()
+
   }
 
   mostrarCategorias() {
     this.cargando = true
-    this.e500= false
+    this.e500 = false
     this.categoriaService.getAllCategoria().subscribe({
       next: (data) => {
         this.categorias = data;
@@ -37,7 +38,7 @@ export class CategoriasDesactivadasComponent implements OnInit {
       },
       error: (err) => {
         console.log(err)
-        this.e500= true
+        this.e500 = true
         this.cargando = false
 
       },
@@ -51,15 +52,15 @@ export class CategoriasDesactivadasComponent implements OnInit {
 
   }
 
-  activarCategoria(id: number) {
+  activarCategoria(id: number, nombre: string) {
     this.categoriaService.activarC(id).subscribe({
       next: () => {
         this.mostrarCategorias()
-        this.mensajeService.mostrarMensaje("Categoría Activada correctamente", true);
+        this.mensajeService.mostrarMensaje(`Categoría ${nombre.toUpperCase()} Activada correctamente`, true);
       },
 
       error: (err) => {
-        this.mensajeService.mostrarMensaje("Categoría Activada correctamente", false);
+        this.mensajeService.mostrarMensaje(`Error, No se puedo Activar ${nombre.toUpperCase()} `, false);
         console.error(err)
 
       },

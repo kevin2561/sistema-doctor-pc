@@ -5,7 +5,7 @@
     <div id="contenedor-form-crear-producto" class="d-flex justify-content-center">
         <form #formularioProductoNuevo="ngForm" (ngSubmit)="crearNuevoProducto()"
             class="p-4 border rounded shadow-lg bg-white w-100" style="max-width: 600px;">
-            
+
             <!-- Nombre y Precio -->
             <div class="row">
                 <div class="col-md-6">
@@ -49,8 +49,8 @@
             <!-- Stock -->
             <div class="mt-3">
                 <label class="form-label fw-bold">Stock</label>
-                <input type="text" [(ngModel)]="producto.stock" name="stock" class="form-control"
-                    placeholder="Ej: 10" required #stockRef="ngModel">
+                <input type="text" [(ngModel)]="producto.stock" name="stock" class="form-control" placeholder="Ej: 10"
+                    required #stockRef="ngModel">
                 <div *ngIf="stockRef.invalid && stockRef.touched" class="text-danger mt-1">
                     La cantidad es obligatoria.
                 </div>
@@ -68,10 +68,9 @@
             <div class="mt-3">
                 <label class="form-label fw-bold">Seleccione una Categoría</label>
                 <select [(ngModel)]="producto.categoria" name="categoria" class="form-select" required>
-                    <option value="0" disabled selected>Seleccione una categoría</option>
-                    <option value="1">Categoría 1</option>
-                    <option value="2">Categoría 2</option>
-                    <option value="3">Categoría 3</option>
+                    <option value="" disabled selected>Seleccione una categoría</option>
+                    <option *ngFor="let item of categoria" [value]="item.idCategoria">{{item.nombre}} </option>
+
                 </select>
             </div>
 
