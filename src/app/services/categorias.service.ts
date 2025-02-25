@@ -24,5 +24,12 @@ export class CategoriasService {
   activarC(id: number): Observable<Categoria> {
     return this.http.patch<Categoria>(`${this.url}activar/${id}`, {});
   }
+  desactivarC(id: number): Observable<Categoria> {
+    return this.http.patch<Categoria>(`${this.url}desactivar/${id}`, {});
+  }
+  actualizarC(id: number): Observable<Categoria> {
+    return this.http.patch<Categoria>(`${this.url}put/${id}`, {});
+  }
+
 
 }

@@ -13,7 +13,7 @@ export class ProductosComponent implements OnInit {
   cargando: boolean = false;
   constructor(private productosService: ProductosService) { }
 
-  
+
   ngOnInit(): void {
     this.mostrarProductos();
     this.desactivarProducto()
@@ -24,23 +24,30 @@ export class ProductosComponent implements OnInit {
     this.productosService.getAllProductos().subscribe({
       next: (data) => {
         this.productos = data;
-        console.log(this.productos)
-        this.cargando= false
+        // console.log(this.productos)
+        this.cargando = false
       },
       error: (error) => {
-        console.error(error);
-        this.cargando= false
+        this.cargando = false
+
+        // if (!error || !error.status) {
+        //   console.log("Error de Servidor Producto")
+        // } else if (error.status === 500) {
+        //   console.error(error);
+
+        // }
+        // console.error(error);
 
       }
     });
 
   }
 
-  get productosActivados():Producto[]{
-    return this.productos?.filter(p=> p.estado)
+  get productosActivados(): Producto[] {
+    return this.productos?.filter(p => p.estado)
   }
 
-  desactivarProducto():void {
+  desactivarProducto(): void {
     console.log("Desactivar")
   }
 

@@ -47,9 +47,22 @@ export class CrearCategoriaComponent implements OnInit {
 
       },
       error: (error) => {
-        console.error('🚨 Error al crear categoría:', error);
-        this.mensajeService.mostrarMensaje("Esta Categoria ya Existe", false);
+        if (!error || !error.status) {
+          // Error inesperado (por ejemplo, la API no responde)
+          this.mensajeService.mostrarMensaje(`Error de conexión. Inténtalo más tarde.`, false);
+          formularioCategoriaNuevo.resetForm();
 
+        } else if (error.status === 400) {
+          // Error 400: categoría ya existente
+          this.mensajeService.mostrarMensaje(`Esta categoría ya existe.`, false);
+          formularioCategoriaNuevo.resetForm();
+
+        } else {
+          // Otros errores (500, 403, etc.)
+          this.mensajeService.mostrarMensaje(`Error inesperado (${error.status}): ${error.message}`, false);
+          formularioCategoriaNuevo.resetForm();
+
+        }
       }
     });
 

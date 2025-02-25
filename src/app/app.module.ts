@@ -21,6 +21,7 @@ import { RouterModule } from '@angular/router';
 import { ProductosService } from './services/productos.service';
 import { MesajeValidacionComponent } from './mensaje/mesaje-validacion/mesaje-validacion.component';
 import { LoadingComponent } from './componentes/loading/loading.component';
+import { ErrorServidorComponent } from './mensaje/error-servidor/error-servidor.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,7 +38,8 @@ import { LoadingComponent } from './componentes/loading/loading.component';
     CrearVentaComponent,
     VentasComponent,
     MesajeValidacionComponent,
-    LoadingComponent
+    LoadingComponent,
+    ErrorServidorComponent
   ],
   imports: [
     BrowserModule,

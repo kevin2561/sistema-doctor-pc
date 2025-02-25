@@ -1,41 +1,50 @@
-<section  id="contenedor-categorias-desactivadas" *ngIf="cDesactivadas.length> 0 && !cargando" class="container">
-    <div class="page-titulo">
-        <h1 class="page-titulo text-center mb-3">Categorias Desactivadas</h1>
-        <p class="text-center text-muted">Aquí se muestran todos las categorias que actualmente están inactivos.</p>
-    </div>
-    <app-mesaje-validacion [mensaje]="mensaje" [esExito]="esExito"></app-mesaje-validacion>
-
-    <div class="tabla-contenedor">
-        <table class="table table-bordered table-hover text-center">
+<ng-container *ngIf="e500; else contenido">
+    <app-error-servidor>
+      <p>Verifique su conexión a internet.</p>
+      <p>Si el problema persiste, contacte con soporte técnico.</p>
+    </app-error-servidor>
+  </ng-container>
+  
+  <ng-template #contenido>
+    <ng-container *ngIf="cargando; else listaCategorias">
+      <app-loading></app-loading>
+    </ng-container>
+  
+    <ng-template #listaCategorias>
+      <ng-container *ngIf="cDesactivadas.length > 0; else sinCategorias">
+        <section id="contenedor-categorias-desactivadas" class="container">
+          <h1 class="page-titulo text-center mb-3">Categorías Desactivadas</h1>
+          <table class="table table-bordered table-hover text-center">
             <thead class="table-dark">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Estado</th>
-                    <th scope="col">Activar</th>
-                </tr>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Activar</th>
+              </tr>
             </thead>
-            <tbody id="t-body">
-                <tr *ngFor="let item of cDesactivadas; let i= index">
-                    <td>{{i+1}}</td>
-                    <td>{{item.nombre}}</td>
-                    <td>Inactivo</td>
-
-                    <td><button (click)="activarCategoria(item.idCategoria)" class="btn btn-danger">Activar</button>
-                    </td>
-                </tr>
-
+            <tbody>
+              <tr *ngFor="let item of cDesactivadas; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ item.nombre }}</td>
+                <td>Inactivo</td>
+                <td>
+                  <button (click)="activarCategoria(item.idCategoria)" class="btn btn-success">
+                    Activar
+                  </button>
+                </td>
+              </tr>
             </tbody>
-
-        </table>
-    </div>
-
-</section>
-
-<section *ngIf="cDesactivadas.length === 0 && !cargando" class="no-contenido ">
-    <i class="bi bi-folder-x no-contenido-icono"></i>
-    <h2 class="text-muted">No hay categorías desactivadas</h2>
-    <p class="text-muted">¡Todas las categorías están activas! 🎉</p>
-</section>
-
-<app-loading *ngIf="cargando"></app-loading>
+          </table>
+        </section>
+      </ng-container>
+  
+      <ng-template #sinCategorias>
+        <section class="no-contenido text-center">
+          <h2>No hay categorías desactivadas</h2>
+          <p>Todas las categorías están activas.</p>
+        </section>
+      </ng-template>
+    </ng-template>
+  </ng-template>
+  

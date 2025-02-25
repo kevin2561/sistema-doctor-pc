@@ -1,4 +1,4 @@
-<section *ngIf="!cargando" id="contenedor-productos-desactivados" class="container">
+<section  id="contenedor-productos-desactivados" class="container">
     <div class="page-titulo">
         <h1 class="page-titulo text-center mb-3">Productos</h1>
 
@@ -33,11 +33,7 @@
                     <td><i class="bi bi-pencil-square accion-iconos" title="Editar"></i></td>
                     <td><button (click)="desactivarProducto()" class="btn btn-danger">Desactivar</button></td>
                 </tr>
-                <!-- <tr class="table-info fw-bold">
-                    <td colspan="5" class="text-end">Total:</td>
-                    <td>s/800.00</td>
-                    <td colspan="2"></td>
-                </tr> -->
+
             </tbody>
 
         </table>
@@ -46,4 +42,4 @@
 
 </section>
 
-<app-loading *ngIf="cargando"></app-loading>
+<!-- <app-loading *ngIf="cargando"></app-loading> -->

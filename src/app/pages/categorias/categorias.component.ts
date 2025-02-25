@@ -10,22 +10,31 @@ import { CategoriasService } from '../../services/categorias.service';
 })
 export class CategoriasComponent implements OnInit {
   categoria: Categoria[] = [];
+  cargando: boolean = false;
+  e500: boolean = false
   constructor(private categoriaService: CategoriasService) { }
 
 
   ngOnInit(): void {
     this.mostrarCategorias()
-    this.desactivarCategoria()
   }
 
   mostrarCategorias(): void {
+    this.e500 = false;
+    this.cargando = true;
+    this.categoria = [];
+
     this.categoriaService.getAllCategoria().subscribe({
       next: (data) => {
+        this.cargando = false;
         this.categoria = data;
-        console.log(this.categoria)
+        // console.log(this.categoria)
+
       },
-      error: (error) => {
-        console.error(error);
+      error: () => {
+        this.e500 = true;
+        this.cargando = false;
+
       }
     })
   }
@@ -37,4 +46,8 @@ export class CategoriasComponent implements OnInit {
   desactivarCategoria() {
 
   }
+  actualizarCategoria() {
+
+  }
+
 }

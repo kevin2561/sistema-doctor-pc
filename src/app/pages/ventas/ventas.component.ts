@@ -10,8 +10,11 @@ export class VentasComponent {
   constructor() {
     this.generarAnios();
   }
-  meses: string[] = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-    'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
+  meses: [string, number][] = [
+    ['Enero', 0], ['Febrero', 1], ['Marzo', 2], ['Abril', 3],
+    ['Mayo', 4], ['Junio', 5], ['Julio', 6], ['Agosto', 7],
+    ['Septiembre', 8], ['Octubre', 9], ['Noviembre', 10], ['Diciembre', 11]
+  ];
   anios: number[] = [];
   anioMaximo: number = 2050
   anioInicio: number = 2025
@@ -22,7 +25,7 @@ export class VentasComponent {
     }
   }
   eliminarVenta() {
-    console.log(this.meses)
+    console.log("Eliminado")
   }
 
   // ventas = [
@@ -33,5 +36,13 @@ export class VentasComponent {
   // get totalVentas() {
   //   return this.ventas.reduce((total, venta) => total + venta.total, 0);
   // }
+
+  actualizarVenta() {
+    console.log("UPT")
+  }
+  filtrarVentas() {
+    console.log("filtrado")
+
+  }
 
 }

@@ -14,4 +14,17 @@ export class ProductosService {
   getAllProductos(): Observable<Producto[]> {
     return this.http.get<Producto[]>(`${this.url}`);
   }
+  postProducto(producto: Producto): Observable<Producto> {
+    return this.http.post<Producto>(`${this.url}`, {})
+
+  }
+  activarP(id: number): Observable<Producto> {
+    return this.http.patch<Producto>(`${this.url}/activar/${id}`, {});
+  }
+  desactivarP(id: number): Observable<Producto> {
+    return this.http.patch<Producto>(`${this.url}/desactivar/${id}`, {});
+  }
+  actualizarP(id: number): Observable<Producto> {
+    return this.http.patch<Producto>(`${this.url}/put/${id}`, {});
+  }
 }

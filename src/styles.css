@@ -13,7 +13,7 @@
 
 *::-webkit-scrollbar {
     width: 8px;
-    height: 500px;
+    height: 8px;
 }
 
 *::-webkit-scrollbar-track {
@@ -47,7 +47,6 @@
     max-height: 500px;
     /* o el valor que quieras */
     overflow-y: auto;
-    border: 1px solid #0000000d;
 }
 
 .table {
@@ -86,4 +85,57 @@
     align-items: center; 
     margin: auto;
 
+}
+
+/*------ERROR-SERVIDOR---------*/
+.error-container {
+    text-align: center;
+    padding: 40px;
+    max-width: 500px;
+    margin: 50px auto;
+    background: #f8d7da;
+    border: 2px solid #f5c6cb;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.error-code {
+    font-size: 80px;
+    font-weight: bold;
+    color: #dc3545;
+}
+
+.error-message {
+    font-size: 18px;
+    font-weight: 500;
+    color: #721c24;
+    margin-bottom: 15px;
+}
+
+.error-image {
+    width: 80%;
+    max-width: 300px;
+    margin-bottom: 20px;
+}
+
+.error-suggestions {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+}
+
+.error-suggestions li {
+    font-size: 16px;
+    color: #721c24;
+    background: #f1b0b7;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.error-suggestions li::before {
+    content: "⚠️";
+    margin-right: 10px;
 }

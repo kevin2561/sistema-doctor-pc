@@ -7,35 +7,37 @@
     <!-- Filtros de Ventas -->
     <div id="contenedor-filtros-ventas" class="row mb-4">
 
-        <div class="col-md-5">
-            <label class="form-label fw-bold">Seleccionar Mes</label>
-            <select class="form-select">
-                <option selected disabled>Seleccione un mes</option>
-                <option *ngFor="let mes of meses">{{ mes }}</option>
-            </select>
-        </div>
+        <form (ngSubmit)="filtrarVentas()" class="row g-3 align-items-end">
+            <!-- Filtro de Mes -->
+            <div class="col-md-5">
+                <label class="form-label fw-bold">Seleccionar Mes</label>
+                <select class="form-select" name="mes">
+                    <option selected disabled>Seleccione un mes</option>
+                    <option *ngFor="let mes of meses" [value]="mes[1]"> {{ mes[0] }}</option>
+                </select>
+            </div>
 
-        <div class="col-md-5">
-            <label class="form-label fw-bold">Seleccionar Año</label>
-            <select class="form-select" [(ngModel)]="anioActual">
-                <option selected disabled>Seleccione un año</option>
-                <option *ngFor="let anio of anios" [value]="anio">{{ anio }}</option>
-            </select>
+            <!-- Filtro de Año -->
+            <div class="col-md-5">
+                <label class="form-label fw-bold">Seleccionar Año</label>
+                <select class="form-select" name="anio">
+                    <option selected disabled>Seleccione un año</option>
+                    <option *ngFor="let anio of anios" [value]="anio">{{ anio }}</option>
+                </select>
+            </div>
 
-        </div>
+            <!-- Botón Filtrar -->
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="bi bi-search"></i> Filtrar
+                </button>
+            </div>
+        </form>
 
-        <!-- Botón Filtrar (Solo Diseño, sin eventos) -->
-        <div class="col-md-2 d-flex align-items-end">
-            <button class="btn btn-primary w-100">
-                <i class="bi bi-search"></i> Filtrar
-            </button>
-        </div>
+
     </div>
 
-    <!-- Título de la Página
-    <div class="page-titulo text-center mb-3">
-        <h1 class="fw-bold">Ventas</h1>
-    </div> -->
+
 
     <!-- Contenedor de la Tabla -->
     <div class="tabla-contenedor">
@@ -61,10 +63,11 @@
                     <td>xxx</td>
                     <td>xxx</td>
                     <td>
-                        <i class="bi bi-pencil-square text-primary accion-iconos" title="Editar" style="cursor:pointer;"></i>
+                        <i class="bi bi-pencil-square text-primary accion-iconos" title="Editar" style="cursor:pointer;"
+                            data-bs-toggle="modal" data-bs-target="#modalActualizarVenta"></i>
                     </td>
                     <td>
-                        <i class="bi bi-trash text-danger accion-iconos" title="Eliminar"></i>
+                        <i (click)="eliminarVenta()" class="bi bi-trash text-danger accion-iconos" title="Eliminar"></i>
                     </td>
                 </tr>
 
@@ -76,4 +79,85 @@
             </tbody>
         </table>
     </div>
+
+    <!-- --Modal -->
+    <div class="modal fade" id="modalActualizarVenta" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Actualizar Venta</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form (ngSubmit)="actualizarVenta()" #formularioNuevaVenta="ngForm"
+                        class="mb-4 p-4 border rounded shadow-lg bg-white mx-auto"
+                        style="max-width: 600px; width: 100%;">
+
+                        <!-- Campo Id y Metodo de Pago -->
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Código de la Venta</label>
+                                <input type="text" readonly name="Id" value="50" class="form-control">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Método de Pago</label>
+                                <select class="form-select">
+                                    <option selected>Seleccione</option>
+                                    <option value="efectivo">Efectivo</option>
+                                    <option value="plin">Plin</option>
+                                    <option value="tarjeta">Tarjeta</option>
+                                    <option value="yape">Yape</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Campo Nombre y Documento -->
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Nombre del Comprador</label>
+                                <input type="text" name="nombre" class="form-control" placeholder="Ej: Dante Alighieri">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Documento (Opcional)</label>
+                                <input type="text" name="documento" class="form-control" placeholder="Ej: DNI o RUC">
+                            </div>
+                        </div>
+
+                        <!-- Campo Total y Fecha -->
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Fecha</label>
+                                <input type="date" name="fecha" class="form-control">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Total</label>
+                                <input type="text" step="0.01" name="total" class="form-control"
+                                    placeholder="Ej: 150.00">
+                            </div>
+                        </div>
+
+                        <!-- Campo Descripción -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Descripción de la Venta</label>
+                            <textarea name="descripcion" class="form-control" rows="3"
+                                placeholder="Ej: Venta de productos electrónicos"></textarea>
+                        </div>
+
+                        <!-- Botones -->
+                        <div class="text-end">
+                            <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary">Actualizar</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </section>

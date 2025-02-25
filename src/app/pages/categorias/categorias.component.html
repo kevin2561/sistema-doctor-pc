@@ -1,33 +1,102 @@
-<section id="contenedor-categorias" class="container">
-    <div class="page-titulo">
-        <h1 class="page-titulo text-center mb-3">Categorias</h1>
+<ng-container *ngIf="!e500; else errorTemplate">
 
-        <p class="text-center text-muted">Todos estas categorias estan Activas.</p>
-    </div>
-    <div class="tabla-contenedor">
-        <table class="table table-bordered table-hover text-center">
-            <thead class="table-dark">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Estado</th>
-                    <th scope="col">Editar</th>
-                    <th scope="col">Desactivar</th>
 
-                </tr>
-            </thead>
-            <tbody id="t-body">
-                <tr *ngFor="let categoria of categoriaActivadas; let i= index">
-                    <td>{{i + 1 }}</td>
 
-                    <td>{{categoria.nombre}}</td>
-                    <td>{{categoria.estado == true ? "Activo" : "False"}}</td>
+    <section id="contenedor-categorias" class="container">
 
-                    <td><i class="bi bi-pencil-square accion-iconos text-primary" title="Editar"></i></td>
+        <app-loading *ngIf="cargando"></app-loading>
+
+
+        <div *ngIf="!cargando" class="tabla-contenedor">
+            <h1 class="page-titulo text-center mb-3">Categorias</h1>
+
+            <p class="text-center text-muted">Todos estas categorias estan Activas.</p>
+
+            <table class="table table-bordered table-hover text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Editar</th>
+                        <th scope="col">Desactivar</th>
+
+                    </tr>
+                </thead>
+                <tbody id="t-body">
+                    <tr *ngFor="let categoria of categoriaActivadas; let i= index">
+                        <td>{{i + 1 }}</td>
+
+                        <td>{{categoria.nombre}}</td>
+                        <td>{{categoria.estado == true ? "Activo" : "False"}}</td>
+
+                        <td><i class="bi bi-pencil-square accion-iconos text-primary" title="Editar"></i></td>
+                        <td><button (click)="desactivarCategoria()" class="btn btn-danger">Desactivar</button></td>
+                    </tr>
+                    <!-- <tr>
+                    <td>x</td>
+                    <td>x</td>
+                    <td>x</td>
+                    <td><i class="bi bi-pencil-square accion-iconos text-primary" title="Editar" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal"></i></td>
                     <td><button (click)="desactivarCategoria()" class="btn btn-danger">Desactivar</button></td>
-                </tr>
-            </tbody>
+                </tr> -->
+                </tbody>
 
-        </table>
-    </div>
-</section>
+            </table>
+        </div>
+
+        <!-- -------------------------MODAL------------ -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Actualizar Categoria</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- (ngSubmit)="crearNuevaCategoria(formularioCategoriaNuevo)" -->
+                        <form #formularioCategoriaNuevo="ngForm" (ngSubmit)="actualizarCategoria()"
+                            class="p-4 border rounded shadow-lg bg-white" style="max-width: 500px; width: 100%;">
+
+                            <!-- Campo Nombre -->
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Nombre</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-tag"></i></span>
+                                    <!-- <input type="text" [(ngModel)]="categoria.nombre" name="nombre" class="form-control"
+                            placeholder="Ej: Electrónica" required #nombreRef="ngModel"> -->
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Estado</label>
+                                <div class="input-group">
+
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected>Elija una acción</option>
+                                        <option value="1">Activo</option>
+                                        <option value="0">Inactivo</option>
+                                    </select>
+
+                                </div>
+                            </div>
+
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary">Actualizar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</ng-container>
+
+
+<!-- TEMPLATE DE ERROR -->
+<ng-template #errorTemplate>
+    <app-error-servidor></app-error-servidor>
+</ng-template>

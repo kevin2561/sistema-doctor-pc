@@ -14,6 +14,7 @@ export class CategoriasDesactivadasComponent implements OnInit {
   mensaje: string = ""
   esExito: boolean = false
   cargando: boolean = false
+  e500: boolean = false
 
 
   constructor(private categoriaService: CategoriasService, private mensajeService: MensajesService) { }
@@ -25,16 +26,18 @@ export class CategoriasDesactivadasComponent implements OnInit {
 
   mostrarCategorias() {
     this.cargando = true
+    this.e500= false
     this.categoriaService.getAllCategoria().subscribe({
       next: (data) => {
         this.categorias = data;
         // console.log(data)
         setTimeout(() => {
-          this.cargando= false
-        },100)
+          this.cargando = false
+        }, 100)
       },
       error: (err) => {
         console.log(err)
+        this.e500= true
         this.cargando = false
 
       },
