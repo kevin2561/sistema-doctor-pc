@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { VentasService } from '../../services/ventas.service';
+import { Ventas } from '../../entites/ventas';
 
 @Component({
   selector: 'app-ventas',
@@ -6,43 +8,65 @@ import { Component } from '@angular/core';
   templateUrl: './ventas.component.html',
   styleUrl: './ventas.component.css'
 })
-export class VentasComponent {
-  constructor() {
+export class VentasComponent implements OnInit {
+  constructor(private ventasService: VentasService) {
+    this.generarAnios();
+  }
+  ngOnInit(): void {
     this.generarAnios();
   }
   meses: [string, number][] = [
-    ['Enero', 0], ['Febrero', 1], ['Marzo', 2], ['Abril', 3],
-    ['Mayo', 4], ['Junio', 5], ['Julio', 6], ['Agosto', 7],
-    ['Septiembre', 8], ['Octubre', 9], ['Noviembre', 10], ['Diciembre', 11]
+    ['Enero', 1], ['Febrero', 2], ['Marzo', 3], ['Abril', 4],
+    ['Mayo', 5], ['Junio', 6], ['Julio', 7], ['Agosto', 8],
+    ['Septiembre', 9], ['Octubre', 10], ['Noviembre', 11], ['Diciembre', 12]
   ];
   anios: number[] = [];
+  venta: Ventas[] = [];
   anioMaximo: number = 2050
   anioInicio: number = 2025
   anioActual: number = new Date().getFullYear();
+  totalVentas: number = 0
   generarAnios() {
     for (let i = this.anioMaximo; i >= this.anioInicio; i--) {
       this.anios.push(i);
     }
   }
+
+  filtrarVentas(mes: string, anio: string) {
+
+    const mesNum = parseInt(mes, 10)
+    const anioNum = parseInt(anio, 10)
+    if (!mesNum) {
+      alert("Seleccione un Mes")
+      return
+    } else if (!anioNum) {
+      alert("Seleccione un Año")
+      return
+    }
+    console.log(`mes:${mes} anio: ${anio}`)
+    this.ventasService.mostrarXMesYear(mesNum, anioNum).subscribe({
+      next: (data) => {
+        this.venta = data
+        this.calcularVentas();
+
+      }, error: (err) => {
+        console.error(err)
+
+      },
+    })
+
+  }
+
   eliminarVenta() {
     console.log("Eliminado")
   }
 
-  // ventas = [
-  //   { nombre: "Mark", documento: "Otto", descripcion: "xxx", fecha: "2025-02-21", total: 150 },
-  //   { nombre: "John", documento: "Doe", descripcion: "xxx", fecha: "2025-02-21", total: 200 }
-  // ];
-
-  // get totalVentas() {
-  //   return this.ventas.reduce((total, venta) => total + venta.total, 0);
-  // }
 
   actualizarVenta() {
     console.log("UPT")
   }
-  filtrarVentas() {
-    console.log("filtrado")
 
+  calcularVentas() {
+    this.totalVentas = this.venta.reduce((sum, v) => sum + v.total, 0)
   }
-
 }
