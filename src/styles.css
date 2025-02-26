@@ -44,16 +44,11 @@
 }
 
 
-/* .tabla-contenedor {
-    max-height: 500px;
-   
-    overflow-y: auto;
+.table-hover tbody tr:hover {
+    --bs-table-hover-bg: #d6e4ff;
+    /* --bs-table-hover-color: white ; */
+    
 }
-
-.table {
-    width: 100%;
-    border-collapse: collapse;
-} */
 
 /*-----------SCROLL - TABLA----------*/
 .scroll-tabla {

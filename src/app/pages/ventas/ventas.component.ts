@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { VentasService } from '../../services/ventas.service';
 import { Ventas } from '../../entites/ventas';
+import { MensajesService } from '../../services/mensajes.service';
 
 @Component({
   selector: 'app-ventas',
@@ -9,12 +10,17 @@ import { Ventas } from '../../entites/ventas';
   styleUrl: './ventas.component.css'
 })
 export class VentasComponent implements OnInit {
-  constructor(private ventasService: VentasService) {
+  constructor(private ventasService: VentasService, private mensajeService: MensajesService) {
     this.generarAnios();
   }
   ngOnInit(): void {
+    this.mensajeService.mensaje$.subscribe(mensaje => this.mensaje = mensaje);
+    this.mensajeService.esExito$.subscribe(esExito => this.esExito = esExito);
     this.generarAnios();
+
   }
+  mensaje: string = "";
+  esExito: boolean = false;
   meses: [string, number][] = [
     ['Enero', 1], ['Febrero', 2], ['Marzo', 3], ['Abril', 4],
     ['Mayo', 5], ['Junio', 6], ['Julio', 7], ['Agosto', 8],
@@ -26,6 +32,8 @@ export class VentasComponent implements OnInit {
   anioInicio: number = 2025
   anioActual: number = new Date().getFullYear();
   totalVentas: number = 0
+  mesSeleccionado: string= ""
+  anioSeleccionado: string= ""
   generarAnios() {
     for (let i = this.anioMaximo; i >= this.anioInicio; i--) {
       this.anios.push(i);
@@ -43,12 +51,25 @@ export class VentasComponent implements OnInit {
       alert("Seleccione un Año")
       return
     }
-    console.log(`mes:${mes} anio: ${anio}`)
+
+  this.mesSeleccionado=  this.meses[mesNum - 1][0]
+  this.anioSeleccionado=  anio
     this.ventasService.mostrarXMesYear(mesNum, anioNum).subscribe({
       next: (data) => {
+        if (data.length === 0) {
+          this.mensajeService.mostrarMensaje(`No hay ventas registradas para el mes ${this.meses[mesNum - 1][0]} del  ${anio}`, false);
+          this.venta = [];
+          this.totalVentas = 0;
+          return;
+
+        }
         this.venta = data
         this.calcularVentas();
-
+        const registroText = data.length === 1 ? "registro" : "registros"
+        this.mensajeService.mostrarMensaje(
+          `Se encontraron ${data.length} ${registroText} de ventas de ${this.meses[mesNum - 1][0]} del ${anio}`,
+          true
+        );
       }, error: (err) => {
         console.error(err)
 

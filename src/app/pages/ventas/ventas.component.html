@@ -1,3 +1,5 @@
+<app-mesaje-validacion [mensaje]="mensaje" [esExito]="esExito"></app-mesaje-validacion>
+
 <section id="contenedor-ventas" class="container mt-4">
     <h1 class="page-titulo text-center mb-3">Ventas</h1>
 
@@ -11,7 +13,7 @@
             <!-- Filtro de Mes -->
             <div class="col-md-5">
                 <label class="form-label fw-bold">Seleccionar Mes</label>
-                <select #mes  class="form-select" name="mes">
+                <select #mes class="form-select" name="mes">
                     <option selected disabled>Seleccione un mes</option>
                     <option *ngFor="let mes of meses" [value]="mes[1]"> {{ mes[0] }}</option>
                 </select>
@@ -20,7 +22,7 @@
             <!-- Filtro de Año -->
             <div class="col-md-5">
                 <label class="form-label fw-bold">Seleccionar Año</label>
-                <select #anio  class="form-select" name="anio">
+                <select #anio class="form-select" name="anio">
                     <option selected disabled>Seleccione un año</option>
                     <option *ngFor="let anio of anios" [value]="anio">{{ anio }}</option>
                 </select>
@@ -61,7 +63,7 @@
                     <td>{{item.documento}}</td>
                     <td>{{item.descripcion}}</td>
                     <td>{{item.fecha}}</td>
-                    <td>{{item.total}}</td>
+                    <td>S/ {{item.total | number:'1.2-2'}}</td>
                     <td>
                         <i class="bi bi-pencil-square text-primary accion-iconos" title="Editar" style="cursor:pointer;"
                             data-bs-toggle="modal" data-bs-target="#modalActualizarVenta"></i>
@@ -72,9 +74,10 @@
                 </tr>
 
                 <tr class="bg-info-subtle">
-                    <td colspan="5" class="fw-bold text-end">Total:</td>
+                    <td colspan="5" class="fw-bold text-end">Total</td>
                     <td class="fw-bold text-dark"> S/ {{ totalVentas | number:'1.2-2' }}</td>
-                    <td colspan="2"></td>
+                    <td class="fw-bold text-dark" colspan="2">{{ venta.length === 0 ? '' : mesSeleccionado + ' del ' + anioSeleccionado }}
+                    </td>
                 </tr>
             </tbody>
         </table>

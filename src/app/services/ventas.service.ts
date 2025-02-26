@@ -7,13 +7,15 @@ import { Ventas } from '../entites/ventas';
   providedIn: 'root'
 })
 export class VentasService {
-  url: string = "http://localhost:9090/venta/"
+  url: string = "http://localhost:9090/ventas"
   // anio = new Date()
   constructor(private http: HttpClient) { }
 
   mostrarXMesYear(mes: number, anio: number): Observable<Ventas[]> {
-
-    return this.http.post<Ventas[]>(`${this.url}`, {mes,anio})
+    return this.http.get<Ventas[]>(`${this.url}/filtrar`, {
+      params: { mes: mes.toString(), anio: anio.toString() },
+      responseType: 'json' // Asegura que se interprete como JSON
+    });
 
   }
 
