@@ -1,3 +1,7 @@
+<app-loading *ngIf="cargando"></app-loading>
+<app-mesaje-validacion [mensaje]="mensaje" [esExito]="esExito"></app-mesaje-validacion>
+<app-error-servidor *ngIf="e500"></app-error-servidor>
+
 <section id="contenedor-productos-desactivados" class="container">
     <div class="page-titulo">
         <h1 class="page-titulo text-center mb-3">Productos Desactivados</h1>
@@ -5,7 +9,7 @@
         <p class="text-center text-muted">Aquí se muestran todos los productos que actualmente están inactivos.</p>
 
     </div>
-    <div class="tabla-contenedor">
+    <div class="tabla-contenedor" *ngIf="!cargando">
         <table class="table table-bordered table-hover text-center">
             <thead class="table-dark">
                 <tr>
@@ -26,16 +30,16 @@
                     <td>{{producto.marca}}</td>
                     <td>{{producto.modelo}}</td>
                     <td>{{producto.stock}}</td>
-                    <td>{{producto.precio}}</td>
-                    <td>{{producto.imagen}}</td>
-                    <td><button (click)="activarProducto()" class="btn btn-danger">Activar</button></td>
+                    <td>S/ {{producto.precio | number:'1.2-2'}}</td>
+                    <td><img class="img-table" [src]="producto.imagen || 'assets/no-imagen.jpg'"></td>
+                    <td><button  (click)="activarProducto(producto.idProducto, producto.nombre)"
+                            class="btn btn-success">Activar</button></td>
                 </tr>
             </tbody>
 
         </table>
     </div>
 </section>
-<!-- <app-loading></app-loading> -->
 
 <!-- <section *ngIf="cDesactivadas.length === 0 && !cargando" class="no-contenido ">
     <i class="bi bi-folder-x no-contenido-icono"></i>

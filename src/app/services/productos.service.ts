@@ -7,12 +7,12 @@ import { Producto } from '../entites/producto';
   providedIn: 'root'
 })
 export class ProductosService {
-  private url: String = "http://localhost:9090/producto/get"
+  private url: String = "http://localhost:9090/producto"
   constructor(private http: HttpClient) { }
 
 
   getAllProductos(): Observable<Producto[]> {
-    return this.http.get<Producto[]>(`${this.url}`);
+    return this.http.get<Producto[]>(`${this.url}/get`);
   }
   postProducto(producto: Producto, imagen?: File): Observable<Producto> {
     const formData = new FormData();
