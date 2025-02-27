@@ -32,8 +32,10 @@ export class VentasComponent implements OnInit {
   anioInicio: number = 2025
   anioActual: number = new Date().getFullYear();
   totalVentas: number = 0
-  mesSeleccionado: string= ""
-  anioSeleccionado: string= ""
+  mesSeleccionado: string = ""
+  anioSeleccionado: string = ""
+  e500: boolean = false;
+  cargando: boolean = false;
   generarAnios() {
     for (let i = this.anioMaximo; i >= this.anioInicio; i--) {
       this.anios.push(i);
@@ -51,15 +53,22 @@ export class VentasComponent implements OnInit {
       alert("Seleccione un Año")
       return
     }
+    this.e500 = false
+    this.cargando = true;
 
-  this.mesSeleccionado=  this.meses[mesNum - 1][0]
-  this.anioSeleccionado=  anio
+
+    this.mesSeleccionado = this.meses[mesNum - 1][0]
+    this.anioSeleccionado = anio
+
     this.ventasService.mostrarXMesYear(mesNum, anioNum).subscribe({
       next: (data) => {
+        this.cargando = false;
+
         if (data.length === 0) {
           this.mensajeService.mostrarMensaje(`No hay ventas registradas para el mes ${this.meses[mesNum - 1][0]} del  ${anio}`, false);
           this.venta = [];
           this.totalVentas = 0;
+
           return;
 
         }
@@ -71,7 +80,8 @@ export class VentasComponent implements OnInit {
           true
         );
       }, error: (err) => {
-        console.error(err)
+        this.cargando = false;
+        this.e500 = true
 
       },
     })

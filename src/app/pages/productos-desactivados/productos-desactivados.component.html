@@ -11,23 +11,23 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Nombre</th>
-                    <th scope="col">Precio</th>
                     <th scope="col">Marca</th>
                     <th scope="col">Modelo</th>
-                    <th scope="col">Stock</th>
+                    <th scope="col">stock</th>
+                    <th scope="col">Precio</th>
                     <th scope="col">Imagen</th>
                     <th scope="col">Activar</th>
                 </tr>
             </thead>
             <tbody id="t-body">
-                <tr>
-                    <td>0</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>xxx</td>
-                    <td>xxx</td>
-                    <td>xxx</td>
-                    <td>xxx</td>
+                <tr *ngFor="let producto of pDesactivados; let i= index">
+                    <td>{{i + 1}}</td>
+                    <td>{{producto.nombre}}</td>
+                    <td>{{producto.marca}}</td>
+                    <td>{{producto.modelo}}</td>
+                    <td>{{producto.stock}}</td>
+                    <td>{{producto.precio}}</td>
+                    <td>{{producto.imagen}}</td>
                     <td><button (click)="activarProducto()" class="btn btn-danger">Activar</button></td>
                 </tr>
             </tbody>

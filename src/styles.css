@@ -47,7 +47,7 @@
 .table-hover tbody tr:hover {
     --bs-table-hover-bg: #d6e4ff;
     /* --bs-table-hover-color: white ; */
-    
+
 }
 
 /*-----------SCROLL - TABLA----------*/
@@ -103,21 +103,18 @@
 
 /*------ERROR-SERVIDOR---------*/
 .error-container {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
+    max-width: 500px;
+
     text-align: center;
-    /* padding: 40px;
-    margin: 50px auto; */
+    padding: 40px;
+    margin: 50px auto;
     background: #f8d7da;
     border: 2px solid #f5c6cb;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.contenido-error {
+/* .contenido-error {
     padding: 40px;
     max-width: 500px;
     margin: 50px auto;
@@ -128,7 +125,7 @@
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 
-}
+} */
 
 .error-code {
     font-size: 80px;

@@ -40,9 +40,9 @@
     </div>
 
 
-
+    <app-loading *ngIf="cargando"></app-loading>
     <!-- Contenedor de la Tabla -->
-    <div class="tabla-contenedor">
+    <div *ngIf="!e500 && !cargando" class="tabla-contenedor">
         <table class="table table-bordered table-hover text-center">
             <thead class="table-dark">
                 <tr>
@@ -76,12 +76,14 @@
                 <tr class="bg-info-subtle">
                     <td colspan="5" class="fw-bold text-end">Total</td>
                     <td class="fw-bold text-dark"> S/ {{ totalVentas | number:'1.2-2' }}</td>
-                    <td class="fw-bold text-dark" colspan="2">{{ venta.length === 0 ? '' : mesSeleccionado + ' del ' + anioSeleccionado }}
+                    <td class="fw-bold text-dark" colspan="2">{{ venta.length === 0 ? '' : mesSeleccionado + ' del ' +
+                        anioSeleccionado }}
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
+    <app-error-servidor *ngIf="e500"></app-error-servidor>
 
     <!-- --Modal -->
     <div class="modal fade" id="modalActualizarVenta" tabindex="-1" aria-labelledby="exampleModalLabel"
