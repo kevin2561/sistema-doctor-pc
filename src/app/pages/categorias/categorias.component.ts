@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Categoria } from '../../entites/categoria';
 import { CategoriasService } from '../../services/categorias.service';
 import { MensajesService } from '../../services/mensajes.service';
+import { error } from 'node:console';
 
 @Component({
   selector: 'app-categorias',
@@ -11,6 +12,7 @@ import { MensajesService } from '../../services/mensajes.service';
 })
 export class CategoriasComponent implements OnInit {
   categoria: Categoria[] = [];
+  categoriaSelect: Categoria = { idCategoria: 0, nombre: "", estado: true }
   cargando: boolean = false;
   e500: boolean = false
   mensaje: string = "";
@@ -19,9 +21,9 @@ export class CategoriasComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.mensajeService.mensaje$.subscribe(mensaje => this.mensaje = mensaje)
-    this.mensajeService.esExito$.subscribe(esExito => this.esExito = esExito)
-    this.mostrarCategorias()
+    this.mensajeService.mensaje$.subscribe(mensaje => this.mensaje = mensaje);
+    this.mensajeService.esExito$.subscribe(esExito => this.esExito = esExito);
+    this.mostrarCategorias();
   }
 
   mostrarCategorias(): void {
@@ -48,7 +50,7 @@ export class CategoriasComponent implements OnInit {
 
   }
 
-  desactivarCategoria(id: number, nombre:string) {
+  desactivarCategoria(id: number, nombre: string) {
 
     this.categoriaService.desactivarC(id).subscribe({
       next: () => {
@@ -65,8 +67,38 @@ export class CategoriasComponent implements OnInit {
       },
     })
   }
-  actualizarCategoria() {
+
+  seleccionarCategoria(categoria: Categoria) {
+    return this.categoriaSelect = { ...categoria };
 
   }
 
+  actualizarCategoria() {
+    this.categoriaSelect
+    this.categoriaService.actualizarC(this.categoriaSelect.idCategoria, this.categoriaSelect).subscribe({
+      next: (data) => {
+        console.log("Categoría actualizada con éxito:", data);
+        alert("Categoría actualizada correctamente");
+        this.mostrarCategorias();
+      },
+      error: (err) => {
+        console.error("Error al actualizar la categoría", err);
+        alert("Error al actualizar la categoría");
+      }
+    })
+
+  }
+  eliminarCategoria(id: number) {
+    this.categoriaService.eliminarC(id).subscribe({
+      next: (mensaje) => {
+        console.log("Categoría eliminada:", mensaje);
+        alert(mensaje); // Muestra el mensaje del backend
+        this.mostrarCategorias(); // Actualiza la lista
+      },
+      error: (err) => {
+        console.error("Error al eliminar la categoría", err);
+        alert("Error al eliminar la categoría");
+      }
+    });
+  }
 }

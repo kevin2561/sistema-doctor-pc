@@ -13,10 +13,10 @@ export class ProductosComponent implements OnInit {
   productos: Producto[] = [];
   productosActivadosFiltrados: Producto[] = [];
   cargando: boolean = false;
-  mensaje: string = "";
   filtro: string = "";
   filtroTemporal: string = "";
   esExito: boolean = false;
+  mensaje: string = "";
   e500: boolean = false
   ceroProductosFiltrados: boolean = false;
 
@@ -32,19 +32,16 @@ export class ProductosComponent implements OnInit {
   mostrarProductos(): void {
     this.cargando = true;
     this.e500 = false
+    this.productos = [];
 
     this.productosService.getAllProductos().subscribe({
       next: (data) => {
+        this.cargando = false
         this.productos = data;
-        this.cargando = false
       },
-      error: (error) => {
+      error: () => {
         this.e500 = true
-
         this.cargando = false
-
-
-
       }
     });
 

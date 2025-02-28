@@ -1,48 +1,66 @@
-<app-loading *ngIf="cargando"></app-loading>
 <app-mesaje-validacion [mensaje]="mensaje" [esExito]="esExito"></app-mesaje-validacion>
-<app-error-servidor *ngIf="e500"></app-error-servidor>
 
-<section id="contenedor-productos-desactivados" class="container">
-    <div class="page-titulo">
-        <h1 class="page-titulo text-center mb-3">Productos Desactivados</h1>
+<ng-container *ngIf="e500; else contenido">
+    <app-error-servidor></app-error-servidor>
+</ng-container>
 
-        <p class="text-center text-muted">Aquí se muestran todos los productos que actualmente están inactivos.</p>
+<ng-template #contenido>
+    <ng-container *ngIf="cargando; else listaProductos">
+        <app-loading></app-loading>
+    </ng-container>
 
-    </div>
-    <div class="tabla-contenedor" *ngIf="!cargando">
-        <table class="table table-bordered table-hover text-center">
-            <thead class="table-dark">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Marca</th>
-                    <th scope="col">Modelo</th>
-                    <th scope="col">stock</th>
-                    <th scope="col">Precio</th>
-                    <th scope="col">Imagen</th>
-                    <th scope="col">Activar</th>
-                </tr>
-            </thead>
-            <tbody id="t-body">
-                <tr *ngFor="let producto of pDesactivados; let i= index">
-                    <td>{{i + 1}}</td>
-                    <td>{{producto.nombre}}</td>
-                    <td>{{producto.marca}}</td>
-                    <td>{{producto.modelo}}</td>
-                    <td>{{producto.stock}}</td>
-                    <td>S/ {{producto.precio | number:'1.2-2'}}</td>
-                    <td><img class="img-table" [src]="producto.imagen || 'assets/no-imagen.jpg'"></td>
-                    <td><button  (click)="activarProducto(producto.idProducto, producto.nombre)"
-                            class="btn btn-success">Activar</button></td>
-                </tr>
-            </tbody>
+    <ng-template #listaProductos>
+        <ng-container *ngIf="pDesactivados.length > 0; else sinProductos">
+            <section id="contenedor-productos-desactivados" class="container">
+                <div class="page-titulo">
+                    <h1 class="page-titulo text-center mb-3">Productos Desactivados</h1>
 
-        </table>
-    </div>
-</section>
+                    <p class="text-center text-muted">Aquí se muestran todos los productos que actualmente están
+                        inactivos.</p>
 
-<!-- <section *ngIf="cDesactivadas.length === 0 && !cargando" class="no-contenido ">
-    <i class="bi bi-folder-x no-contenido-icono"></i>
-    <h2 class="text-muted">No hay categorías desactivadas</h2>
-    <p class="text-muted">¡Todas las categorías están activas! 🎉</p>
-</section> -->
+                </div>
+                <div class="tabla-contenedor" >
+                    <table class="table table-bordered table-hover text-center">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Marca</th>
+                                <th scope="col">Modelo</th>
+                                <th scope="col">stock</th>
+                                <th scope="col">Precio</th>
+                                <th scope="col">Imagen</th>
+                                <th scope="col">Activar</th>
+                            </tr>
+                        </thead>
+                        <tbody id="t-body">
+                            <tr *ngFor="let producto of pDesactivados; let i= index">
+                                <td>{{i + 1}}</td>
+                                <td>{{producto.nombre}}</td>
+                                <td>{{producto.marca}}</td>
+                                <td>{{producto.modelo}}</td>
+                                <td>{{producto.stock}}</td>
+                                <td>S/ {{producto.precio | number:'1.2-2'}}</td>
+                                <td><img class="img-table" [src]="producto.imagen || 'assets/no-imagen.jpg'"></td>
+                                <td><button (click)="activarProducto(producto.idProducto, producto.nombre)"
+                                        class="btn btn-success">Activar</button></td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+            </section>
+        </ng-container>
+
+        <ng-template #sinProductos>
+            <section class="no-contenido text-center">
+                <i class="bi bi-folder-x no-contenido-icono"></i>
+                <h2>No hay categorías desactivadas</h2>
+                <p>Todas las categorías están activas.</p>
+              </section>
+            </ng-template>
+        </ng-template>
+      </ng-template>
+
+
+

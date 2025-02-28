@@ -24,24 +24,22 @@
                         </tr>
                     </thead>
                     <tbody id="t-body">
-                        <tr *ngFor="let categoria of categoriaActivadas; let i= index">
+                        <tr *ngFor="let item of categoriaActivadas; let i= index">
                             <td>{{i + 1 }}</td>
 
-                            <td>{{categoria.nombre}}</td>
-                            <td>{{categoria.estado == true ? "Activo" : "False"}}</td>
+                            <td>{{item.nombre}}</td>
+                            <td>{{item.estado == true ? "Activo" : "False"}}</td>
 
-                            <td><i class="bi bi-pencil-square accion-iconos text-primary" title="Editar"></i></td>
-                            <td><button (click)="desactivarCategoria(categoria.idCategoria, categoria.nombre)"
+                            <td><i class="bi bi-pencil-square accion-iconos text-primary" data-bs-toggle="modal"
+                                    (click)="seleccionarCategoria(item)" data-bs-target="#modalActualizarCategoria"
+                                    title="Editar"></i></td>
+
+                            <td><button (click)="desactivarCategoria(item.idCategoria, item.nombre)"
                                     class="btn btn-danger">Desactivar</button></td>
+
+                            <td><i class="bi bi-trash accion-iconos text-danger"
+                                    (click)="eliminarCategoria(item.idCategoria)" title="Eliminar"></i></td>
                         </tr>
-                        <!-- <tr>
-                    <td>x</td>
-                    <td>x</td>
-                    <td>x</td>
-                    <td><i class="bi bi-pencil-square accion-iconos text-primary" title="Editar" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal"></i></td>
-                    <td><button (click)="desactivarCategoria()" class="btn btn-danger">Desactivar</button></td>
-                </tr> -->
                     </tbody>
 
                 </table>
@@ -50,7 +48,8 @@
 
 
         <!-- -------------------------MODAL------------ -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="modalActualizarCategoria"
+            aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -62,36 +61,47 @@
                         <form #formularioCategoriaNuevo="ngForm" (ngSubmit)="actualizarCategoria()"
                             class="p-4 border rounded shadow-lg bg-white" style="max-width: 500px; width: 100%;">
 
-                            <!-- Campo Nombre -->
+                            <!-- Campo Id - Solo lectura -->
+
                             <div class="mb-3">
                                 <label class="form-label fw-bold">Nombre</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="bi bi-tag"></i></span>
-                                    <!-- <input type="text" [(ngModel)]="categoria.nombre" name="nombre" class="form-control"
-                            placeholder="Ej: Electrónica" required #nombreRef="ngModel"> -->
-                                    <input type="text" class="form-control">
+                                    <input type="text" readonly class="form-control"
+                                        [(ngModel)]="categoriaSelect.idCategoria" name="idCategoria">
+                                    >
+                                </div>
+                            </div>
+                            <!-- Campo Nombre -->
+                            <div class=" mb-3">
+                                <label class="form-label fw-bold">Nombre</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-tag"></i></span>
+                                    <input type="text" class="form-control" placeholder="Nombre"
+                                        [(ngModel)]="categoriaSelect.nombre" name="nombre">
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label fw-bold">Estado</label>
                                 <div class="input-group">
 
-                                    <select class="form-select" aria-label="Default select example">
+                                    <select class="form-select" [(ngModel)]="categoriaSelect.estado"
+                                        aria-label="Default select example">
                                         <option selected>Elija una acción</option>
-                                        <option value="1">Activo</option>
-                                        <option value="0">Inactivo</option>
+                                        <option [value]="true">Activo</option>
+                                        <option [value]="false">Inactivo</option>
                                     </select>
 
                                 </div>
                             </div>
-
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-primary">Actualizar</button>
+                            </div>
 
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary">Actualizar</button>
-                    </div>
+
                 </div>
             </div>
         </div>

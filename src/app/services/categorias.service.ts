@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Categoria } from '../entites/categoria';
+import { text } from 'node:stream/consumers';
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +16,11 @@ export class CategoriasService {
 
 
 
+  //BUSCAR
   getAllCategoria(): Observable<Categoria[]> {
     return this.http.get<Categoria[]>(`${this.url}` + "get")
   }
+  //CREAR
   postCategoria(categoria: Partial<Categoria>): Observable<Categoria> {
     return this.http.post<Categoria>(`${this.url}post`, categoria)
   }
@@ -32,9 +35,13 @@ export class CategoriasService {
   }
 
   //UPDATE
-  actualizarC(id: number): Observable<Categoria> {
-    return this.http.put<Categoria>(`${this.url}put/${id}`, {});
+  actualizarC(id: number, categoria: Categoria): Observable<Categoria> {
+    return this.http.put<Categoria>(`${this.url}put/${id}`, categoria);
   }
 
+  //UPDATE
+  eliminarC(id: number): Observable<any> {
+   return this.http.delete(`${this.url}delete/${id}`, { responseType: 'text' });
+  }
 
 }

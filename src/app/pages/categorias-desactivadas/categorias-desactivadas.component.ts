@@ -48,8 +48,6 @@ export class CategoriasDesactivadasComponent implements OnInit {
 
   get cDesactivadas(): Categoria[] {
     return this.categorias?.filter(c => !c.estado)
-
-
   }
 
   activarCategoria(id: number, nombre: string) {
