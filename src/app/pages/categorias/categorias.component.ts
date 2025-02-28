@@ -77,28 +77,31 @@ export class CategoriasComponent implements OnInit {
     this.categoriaSelect
     this.categoriaService.actualizarC(this.categoriaSelect.idCategoria, this.categoriaSelect).subscribe({
       next: (data) => {
-        console.log("Categoría actualizada con éxito:", data);
-        alert("Categoría actualizada correctamente");
+        this.mensajeService.mostrarMensaje(`Categoria ${data.nombre.toUpperCase()} Actualiza`, true)
         this.mostrarCategorias();
       },
       error: (err) => {
-        console.error("Error al actualizar la categoría", err);
-        alert("Error al actualizar la categoría");
+        this.mensajeService.mostrarMensaje("Error, No se puedo actualizar la categoria", true)
+
       }
     })
 
   }
-  eliminarCategoria(id: number) {
-    this.categoriaService.eliminarC(id).subscribe({
-      next: (mensaje) => {
-        console.log("Categoría eliminada:", mensaje);
-        alert(mensaje); // Muestra el mensaje del backend
-        this.mostrarCategorias(); // Actualiza la lista
-      },
-      error: (err) => {
-        console.error("Error al eliminar la categoría", err);
-        alert("Error al eliminar la categoría");
-      }
-    });
+  eliminarCategoria(id: number, nombre: string) {
+    if (window.confirm("¿Estás seguro de que deseas eliminar esta categoría?")) {
+      this.categoriaService.eliminarC(id).subscribe({
+        next: (mensaje) => {
+          this.mensajeService.mostrarMensaje(`Se Eliminó la categoria ${nombre.toUpperCase()} correctamente`, true);
+          this.mostrarCategorias();
+        },
+        error: (err) => {
+          this.mensajeService.mostrarMensaje(
+            `No puedes eliminar esta categoría ya que está vinculada a un producto.<br>` +
+            `Elimina primero el(los) producto(s) vinculados a la categoría <strong>${nombre.toUpperCase()}</strong>`,
+            false
+          );
+            }
+      });
+    }
   }
 }

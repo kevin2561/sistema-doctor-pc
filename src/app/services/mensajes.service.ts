@@ -23,6 +23,6 @@ export class MensajesService {
 
     this.timeoutId = setTimeout(() => { // 🔹 Aquí sí se guarda el timeout
       this.mensajeSource.next('');
-    }, 5000); 
+    }, 8000); 
   }
 }

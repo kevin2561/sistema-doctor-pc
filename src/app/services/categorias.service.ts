@@ -39,7 +39,7 @@ export class CategoriasService {
     return this.http.put<Categoria>(`${this.url}put/${id}`, categoria);
   }
 
-  //UPDATE
+  //DELETE
   eliminarC(id: number): Observable<any> {
    return this.http.delete(`${this.url}delete/${id}`, { responseType: 'text' });
   }

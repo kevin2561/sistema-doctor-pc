@@ -20,6 +20,8 @@
                             <th scope="col">Estado</th>
                             <th scope="col">Editar</th>
                             <th scope="col">Desactivar</th>
+                            <th scope="col">Eliminar</th>
+
 
                         </tr>
                     </thead>
@@ -38,7 +40,7 @@
                                     class="btn btn-danger">Desactivar</button></td>
 
                             <td><i class="bi bi-trash accion-iconos text-danger"
-                                    (click)="eliminarCategoria(item.idCategoria)" title="Eliminar"></i></td>
+                                    (click)="eliminarCategoria(item.idCategoria,item.nombre)" title="Eliminar"></i></td>
                         </tr>
                     </tbody>
 
@@ -48,7 +50,7 @@
 
 
         <!-- -------------------------MODAL------------ -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="modalActualizarCategoria"
+        <div class="modal fade" id="modalActualizarCategoria" tabindex="-1" aria-labelledby="modalActualizarCategoria"
             aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -64,19 +66,17 @@
                             <!-- Campo Id - Solo lectura -->
 
                             <div class="mb-3">
-                                <label class="form-label fw-bold">Nombre</label>
+                                <label class="form-label fw-bold">Código</label>
                                 <div class="input-group">
-                                    <span class="input-group-text"><i class="bi bi-tag"></i></span>
                                     <input type="text" readonly class="form-control"
                                         [(ngModel)]="categoriaSelect.idCategoria" name="idCategoria">
-                                    >
+
                                 </div>
                             </div>
                             <!-- Campo Nombre -->
                             <div class=" mb-3">
                                 <label class="form-label fw-bold">Nombre</label>
                                 <div class="input-group">
-                                    <span class="input-group-text"><i class="bi bi-tag"></i></span>
                                     <input type="text" class="form-control" placeholder="Nombre"
                                         [(ngModel)]="categoriaSelect.nombre" name="nombre">
                                 </div>
@@ -86,7 +86,7 @@
                                 <div class="input-group">
 
                                     <select class="form-select" [(ngModel)]="categoriaSelect.estado"
-                                        aria-label="Default select example">
+                                        aria-label="Default select example" name="estado">
                                         <option selected>Elija una acción</option>
                                         <option [value]="true">Activo</option>
                                         <option [value]="false">Inactivo</option>
@@ -96,7 +96,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary">Actualizar</button>
+                                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Actualizar</button>
                             </div>
 
                         </form>

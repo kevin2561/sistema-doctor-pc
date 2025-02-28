@@ -3,6 +3,6 @@
         <span>
             <i [ngClass]="esExito ? 'bi bi-check-circle text-success' : 'bi bi-x-circle text-danger'"></i>
         </span>
-        <p>{{ mensaje }}</p>
+        <p [innerHTML]="mensaje"></p>
     </div>
 </div>
