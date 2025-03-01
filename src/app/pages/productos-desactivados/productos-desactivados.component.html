@@ -43,12 +43,17 @@
                                 <td>{{producto.categoria.nombre}}</td>
                                 <td>{{producto.stock === 0 ? "Agotado" : producto.stock}}</td>
                                 <td>S/ {{producto.precio | number:'1.2-2'}}</td>
+                                
                                 <td><img class="img-table" [src]="producto.imagen || 'assets/no-imagen.jpg'"></td>
-                                <td><button (click)="activarProducto(producto.idProducto, producto.nombre)"
-                                        class="btn btn-success">Activar</button></td>
+
+
+                                <td>
+                                    <button (click)="activarProducto(producto.idProducto, producto.nombre)"
+                                        class="btn btn-success">Activar</button>
+                              
 
                                 <i (click)="eliminarProductoDesactivado(producto.idProducto, producto.nombre)"
-                                    class="bi bi-trash text-danger accion-iconos ms-2" title="Eliminar"></i>
+                                    class="bi bi-trash text-danger accion-iconos ms-5" title="Eliminar"></i>  </td>
 
                             </tr>
                         </tbody>
@@ -61,8 +66,8 @@
         <ng-template #sinProductos>
             <section class="no-contenido text-center">
                 <i class="bi bi-folder-x no-contenido-icono"></i>
-                <h2>No hay categorías desactivadas</h2>
-                <p>Todas las categorías están activas.</p>
+                <h2>No hay Productos desactivadas</h2>
+                <p>Todas las Productos están activos.</p>
             </section>
         </ng-template>
     </ng-template>

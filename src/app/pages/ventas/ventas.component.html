@@ -50,10 +50,10 @@
                     <th scope="col">Nombre</th>
                     <th scope="col">Documento</th>
                     <th scope="col">Descripción</th>
+                    <th scope="col">Metodo de Pago</th>
                     <th scope="col">Fecha</th>
                     <th scope="col">Monto</th>
-                    <th scope="col">Editar</th>
-                    <th scope="col">Eliminar</th>
+                    <th scope="col" colspan="2">Acciones</th>
                 </tr>
             </thead>
             <tbody id="t-body">
@@ -62,6 +62,7 @@
                     <td>{{item.nombre}}</td>
                     <td>{{item.documento}}</td>
                     <td>{{item.descripcion}}</td>
+                    <td>{{item.metodoPago}}</td>
                     <td>{{item.fecha}}</td>
                     <td>S/ {{item.total | number:'1.2-2'}}</td>
                     <td>

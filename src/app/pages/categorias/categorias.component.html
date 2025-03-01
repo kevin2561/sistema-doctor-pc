@@ -18,9 +18,7 @@
                             <th scope="col">#</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Estado</th>
-                            <th scope="col">Editar</th>
-                            <th scope="col">Desactivar</th>
-                            <th scope="col">Eliminar</th>
+                            <th scope="col" colspan="3">Acciones</th>
 
 
                         </tr>
@@ -32,15 +30,27 @@
                             <td>{{item.nombre}}</td>
                             <td>{{item.estado == true ? "Activo" : "False"}}</td>
 
-                            <td><i class="bi bi-pencil-square accion-iconos text-primary" data-bs-toggle="modal"
+
+
+                            <td>
+
+                                <i class="bi bi-pencil-square accion-iconos text-primary" data-bs-toggle="modal"
                                     (click)="seleccionarCategoria(item)" data-bs-target="#modalActualizarCategoria"
-                                    title="Editar"></i></td>
+                                    title="Editar"></i>
+                            </td>
 
-                            <td><button (click)="desactivarCategoria(item.idCategoria, item.nombre)"
-                                    class="btn btn-danger">Desactivar</button></td>
+                            <td>
 
-                            <td><i class="bi bi-trash accion-iconos text-danger"
-                                    (click)="eliminarCategoria(item.idCategoria,item.nombre)" title="Eliminar"></i></td>
+                                <button (click)="desactivarCategoria(item.idCategoria, item.nombre)"
+                                    class="btn btn-danger">Desactivar</button>
+
+                            </td>
+                            <td>
+
+
+                                <i class="bi bi-trash accion-iconos text-danger"
+                                    (click)="eliminarCategoria(item.idCategoria,item.nombre)" title="Eliminar"></i>
+                            </td>
                         </tr>
                     </tbody>
 
@@ -87,7 +97,7 @@
 
                                     <select class="form-select" [(ngModel)]="categoriaSelect.estado"
                                         aria-label="Default select example" name="estado">
-                                        <option selected>Elija una acción</option>
+                                        <option disabled selected>Elija una acción</option>
                                         <option [value]="true">Activo</option>
                                         <option [value]="false">Inactivo</option>
                                     </select>
@@ -96,7 +106,8 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Actualizar</button>
+                                <button type="submit" class="btn btn-primary"
+                                    data-bs-dismiss="modal">Actualizar</button>
                             </div>
 
                         </form>

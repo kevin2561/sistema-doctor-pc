@@ -20,16 +20,16 @@ export class VentasService {
   }
 
   crearV(venta: Partial<Ventas>): Observable<Ventas> {
-    return this.http.post<Ventas>(`${this.url}`, venta)
+    return this.http.post<Ventas>(`${this.url}/post`, venta)
   }
 
   actualizarV(id: number): Observable<number> {
-    return this.http.post<number>(`${this.url}/`, {});
+    return this.http.post<number>(`${this.url}/put/${id}`, {});
 
   }
 
   eliminarV(id: number): Observable<any> {
-    return this.http.delete(`${this.url}/${id}`, { responseType: 'text'})
+    return this.http.delete(`${this.url}/delete/${id}`, { responseType: 'text'})
 
   }
 }

@@ -66,4 +66,21 @@ export class CategoriasDesactivadasComponent implements OnInit {
 
   }
 
+  eliminarCategoria(id: number, nombre: string) {
+    if (window.confirm(`¿Estás seguro de que deseas eliminar la categoría ${nombre}?`)) {
+      this.categoriaService.eliminarC(id).subscribe({
+        next: (mensaje) => {
+          this.mensajeService.mostrarMensaje(`Se Eliminó la categoria ${nombre.toUpperCase()} correctamente`, true);
+          this.mostrarCategorias();
+        },
+        error: (err) => {
+          this.mensajeService.mostrarMensaje(
+            `No puedes eliminar esta categoría ya que está vinculada a un producto.<br>` +
+            `Elimina primero el(los) producto(s) vinculados a la categoría <strong>${nombre.toUpperCase()}</strong>`,
+            false
+          );
+        }
+      });
+    }
+  }
 }

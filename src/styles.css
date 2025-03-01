@@ -52,6 +52,7 @@
 
 /*-----------SCROLL - TABLA----------*/
 .scroll-tabla {
+  
     max-height: 500px;
     /* O ajusta a 600px según necesites */
     overflow-y: auto;
@@ -169,16 +170,7 @@
 }
 
 /* TABLE IMG */
-.img-table{
+.img-table {
     width: 75px;
     height: 75px;
- }
- 
-/*
-Abre VS Code.
-Ve a Archivo > Preferencias > Configuración o usa el atajo Ctrl + , (coma).
-En la barra de búsqueda de configuración, escribe:
-Copiar
-Editar
-workbench.editor.enablePreview
-*/
+}

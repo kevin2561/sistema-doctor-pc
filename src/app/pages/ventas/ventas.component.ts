@@ -74,11 +74,17 @@ export class VentasComponent implements OnInit {
         }
         this.venta = data
         this.calcularVentas();
-        const registroText = data.length === 1 ? "registro" : "registros"
-        this.mensajeService.mostrarMensaje(
-          `Se encontraron ${data.length} ${registroText} de ventas de ${this.meses[mesNum - 1][0]} del ${anio}`,
-          true
-        );
+        data.length === 1
+          ? this.mensajeService.mostrarMensaje(
+            `Se encontraro ${data.length} registro de ventas de ${this.meses[mesNum - 1][0]} del ${anio}`,
+            true
+          )
+          : this.mensajeService.mostrarMensaje(
+            `Se encontraron ${data.length} registros  de ventas de ${this.meses[mesNum - 1][0]} del ${anio}`,
+            true
+          )
+
+
       }, error: (err) => {
         this.cargando = false;
         this.e500 = true
@@ -89,13 +95,15 @@ export class VentasComponent implements OnInit {
   }
 
   eliminarVenta(id: number, indice: number) {
-    if (window.confirm(`¿Está seguro de que desea eliminar la Venta ${indice} ?`)) {
+    if (window.confirm(`¿Está seguro de que desea eliminar la Venta ${indice + 1} ?`)) {
       this.ventasService.eliminarV(id).subscribe({
-        next: (value) => {
-          this.mensajeService.mostrarMensaje(`Se elimino la Venta ${indice}`, true)
+        next: () => {
+          this.venta.splice(indice, 1);
+          this.mensajeService.mostrarMensaje(`Se elimino la Venta ${indice + 1}`, true)
           // this.generarAnios();
+          this.calcularVentas();
         },
-        error: (err) => {
+        error: () => {
           this.mensajeService.mostrarMensaje(`Error al eliminar, inténtelo más tarde`, false)
 
         }

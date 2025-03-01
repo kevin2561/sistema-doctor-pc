@@ -49,7 +49,7 @@ export class ProductosService {
 
   //ELIMINAR
   eliminarP(id: number): Observable<any> {
-    return this.http.delete(`${this.url}/${id}`, { responseType: 'text' })
+    return this.http.delete(`${this.url}/delete/${id}`, { responseType: 'text' })
 
   }
 }

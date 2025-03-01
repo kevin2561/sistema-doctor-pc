@@ -22,7 +22,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Estado</th>
-                <th scope="col">Activar</th>
+                <th scope="col" colspan="2">Acciones</th>
               </tr>
             </thead>
             <tbody>
@@ -34,6 +34,10 @@
                   <button (click)="activarCategoria(item.idCategoria, item.nombre)" class="btn btn-success">
                     Activar
                   </button>
+
+
+                  <i class="bi bi-trash accion-iconos text-danger ms-5"
+                    (click)="eliminarCategoria(item.idCategoria,item.nombre)" title="Eliminar"></i>
                 </td>
               </tr>
             </tbody>
