@@ -67,5 +67,21 @@ export class ProductosDesactivadosComponent implements OnInit {
     })
   }
 
+  eliminarProductoDesactivado(id: number, nombre: string){
+    if (window.confirm(`¿Esta seguro que quiere eliminar el Producto ${nombre}?`)) {
+      this.productoService.eliminarP(id).subscribe({
+        next: () => {
+          this.mensajeService.mostrarMensaje(`Producto ${nombre} eliminado correctamente`, true)
+          this.mostrarProductos();
+        },
+        error: () => {
+          this.mensajeService.mostrarMensaje(`Error al eliminar, intento más tarde`, false)
+
+
+        },
+      })
+    }
+
+  }
 
 }

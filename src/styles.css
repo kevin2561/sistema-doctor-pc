@@ -174,4 +174,11 @@
     height: 75px;
  }
  
-
+/*
+Abre VS Code.
+Ve a Archivo > Preferencias > Configuración o usa el atajo Ctrl + , (coma).
+En la barra de búsqueda de configuración, escribe:
+Copiar
+Editar
+workbench.editor.enablePreview
+*/

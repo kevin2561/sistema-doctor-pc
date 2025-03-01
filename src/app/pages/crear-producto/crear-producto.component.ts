@@ -34,8 +34,8 @@ export class CrearProductoComponent implements OnInit {
   cargarCategorias() {
     this.categoriaService.getAllCategoria().subscribe({
       next: (data) => {
-        this.categoria = data;
-        console.log(this.producto.categoria)
+        this.categoria = data.filter((c) => c.estado);
+        // console.log(this.producto.categoria)
       },
       error: (error) => {
         console.error(error);

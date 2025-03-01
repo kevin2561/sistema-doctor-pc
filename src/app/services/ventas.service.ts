@@ -19,8 +19,8 @@ export class VentasService {
 
   }
 
-  crearV(venta: Ventas): Observable<Ventas> {
-    return this.http.post<Ventas>(`${this.url}`, {})
+  crearV(venta: Partial<Ventas>): Observable<Ventas> {
+    return this.http.post<Ventas>(`${this.url}`, venta)
   }
 
   actualizarV(id: number): Observable<number> {
@@ -28,8 +28,8 @@ export class VentasService {
 
   }
 
-  eliminarV(id: number): Observable<String> {
-    return this.http.delete<string>(`${this.url}`, {})
+  eliminarV(id: number): Observable<any> {
+    return this.http.delete(`${this.url}/${id}`, { responseType: 'text'})
 
   }
 }

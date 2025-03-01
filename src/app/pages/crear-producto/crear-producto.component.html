@@ -66,8 +66,9 @@
 
             <!-- Categoría -->
             <div class="mt-3">
-                <label class="form-label fw-bold">Seleccione una Categoría</label>
-                <select [(ngModel)]="producto.categoria" name="categoria" class="form-select" required>
+                <label for="categoria" class="form-label fw-bold">Seleccione una Categoría</label>
+                <select id="categoria" [(ngModel)]="producto.categoria" name="categoria" class="form-select" required>
+
                     <option value="" disabled selected>Seleccione una categoría</option>
                     <option *ngFor="let item of categoria" [value]="item.idCategoria">{{item.nombre}} </option>
 

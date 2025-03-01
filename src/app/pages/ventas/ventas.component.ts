@@ -88,8 +88,19 @@ export class VentasComponent implements OnInit {
 
   }
 
-  eliminarVenta() {
-    console.log("Eliminado")
+  eliminarVenta(id: number, indice: number) {
+    if (window.confirm(`¿Está seguro de que desea eliminar la Venta ${indice} ?`)) {
+      this.ventasService.eliminarV(id).subscribe({
+        next: (value) => {
+          this.mensajeService.mostrarMensaje(`Se elimino la Venta ${indice}`, true)
+          // this.generarAnios();
+        },
+        error: (err) => {
+          this.mensajeService.mostrarMensaje(`Error al eliminar, inténtelo más tarde`, false)
+
+        }
+      })
+    }
   }
 
 

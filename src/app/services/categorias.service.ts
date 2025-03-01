@@ -18,7 +18,7 @@ export class CategoriasService {
 
   //BUSCAR
   getAllCategoria(): Observable<Categoria[]> {
-    return this.http.get<Categoria[]>(`${this.url}` + "get")
+    return this.http.get<Categoria[]>(`${this.url}get`)
   }
   //CREAR
   postCategoria(categoria: Partial<Categoria>): Observable<Categoria> {

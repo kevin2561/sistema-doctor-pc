@@ -86,4 +86,21 @@ export class ProductosComponent implements OnInit {
 
   }
 
+  eliminarProducto(id: number, nombre: string) {
+    if (window.confirm(`¿Esta seguro que quiere eliminar el Producto ${nombre}?`)) {
+      this.productosService.eliminarP(id).subscribe({
+        next: () => {
+          this.mensajeSerive.mostrarMensaje(`Producto ${nombre} eliminado correctamente`, true)
+          this.mostrarProductos();
+        },
+        error: () => {
+          this.mensajeSerive.mostrarMensaje(`Error al eliminar, intento más tarde`, false)
+
+
+        },
+      })
+    }
+
+  }
+
 }

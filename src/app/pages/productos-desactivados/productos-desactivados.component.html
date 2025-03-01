@@ -19,7 +19,7 @@
                         inactivos.</p>
 
                 </div>
-                <div class="tabla-contenedor" >
+                <div class="tabla-contenedor">
                     <table class="table table-bordered table-hover text-center">
                         <thead class="table-dark">
                             <tr>
@@ -27,10 +27,11 @@
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Marca</th>
                                 <th scope="col">Modelo</th>
+                                <th scope="col">Categoria</th>
                                 <th scope="col">stock</th>
                                 <th scope="col">Precio</th>
                                 <th scope="col">Imagen</th>
-                                <th scope="col">Activar</th>
+                                <th scope="col" colspan="2">Acciones</th>
                             </tr>
                         </thead>
                         <tbody id="t-body">
@@ -39,11 +40,16 @@
                                 <td>{{producto.nombre}}</td>
                                 <td>{{producto.marca}}</td>
                                 <td>{{producto.modelo}}</td>
-                                <td>{{producto.stock}}</td>
+                                <td>{{producto.categoria.nombre}}</td>
+                                <td>{{producto.stock === 0 ? "Agotado" : producto.stock}}</td>
                                 <td>S/ {{producto.precio | number:'1.2-2'}}</td>
                                 <td><img class="img-table" [src]="producto.imagen || 'assets/no-imagen.jpg'"></td>
                                 <td><button (click)="activarProducto(producto.idProducto, producto.nombre)"
                                         class="btn btn-success">Activar</button></td>
+
+                                <i (click)="eliminarProductoDesactivado(producto.idProducto, producto.nombre)"
+                                    class="bi bi-trash text-danger accion-iconos ms-2" title="Eliminar"></i>
+
                             </tr>
                         </tbody>
 
@@ -57,10 +63,7 @@
                 <i class="bi bi-folder-x no-contenido-icono"></i>
                 <h2>No hay categorías desactivadas</h2>
                 <p>Todas las categorías están activas.</p>
-              </section>
-            </ng-template>
+            </section>
         </ng-template>
-      </ng-template>
-
-
-
+    </ng-template>
+</ng-template>

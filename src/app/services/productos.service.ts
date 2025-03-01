@@ -11,9 +11,11 @@ export class ProductosService {
   constructor(private http: HttpClient) { }
 
 
+  //MOSTRAR
   getAllProductos(): Observable<Producto[]> {
     return this.http.get<Producto[]>(`${this.url}/get`);
   }
+  //CREAR
   postProducto(producto: Producto, imagen?: File): Observable<Producto> {
     const formData = new FormData();
 
@@ -31,13 +33,23 @@ export class ProductosService {
 
     return this.http.post<Producto>(`${this.url}/post`, formData);
   }
+  //ACTIVAR
   activarP(id: number): Observable<Producto> {
     return this.http.patch<Producto>(`${this.url}/activar/${id}`, {});
   }
+  //DESACTIVAR
   desactivarP(id: number): Observable<Producto> {
     return this.http.patch<Producto>(`${this.url}/desactivar/${id}`, {});
   }
+
+  //ACTUALIZAR
   actualizarP(id: number): Observable<Producto> {
-    return this.http.patch<Producto>(`${this.url}/put/${id}`, {});
+    return this.http.put<Producto>(`${this.url}/put/${id}`, {});
+  }
+
+  //ELIMINAR
+  eliminarP(id: number): Observable<any> {
+    return this.http.delete(`${this.url}/${id}`, { responseType: 'text' })
+
   }
 }

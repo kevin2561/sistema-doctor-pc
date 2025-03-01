@@ -88,7 +88,7 @@ export class CategoriasComponent implements OnInit {
 
   }
   eliminarCategoria(id: number, nombre: string) {
-    if (window.confirm("¿Estás seguro de que deseas eliminar esta categoría?")) {
+    if (window.confirm(`¿Estás seguro de que deseas eliminar la categoría ${nombre}?`)) {
       this.categoriaService.eliminarC(id).subscribe({
         next: (mensaje) => {
           this.mensajeService.mostrarMensaje(`Se Eliminó la categoria ${nombre.toUpperCase()} correctamente`, true);
