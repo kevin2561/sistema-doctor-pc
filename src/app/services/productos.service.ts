@@ -16,22 +16,24 @@ export class ProductosService {
     return this.http.get<Producto[]>(`${this.url}/get`);
   }
   //CREAR
-  postProducto(producto: Producto, imagen?: File): Observable<Producto> {
+  postProducto(producto: Producto, imagen?: File): Observable<Producto | number> {
     const formData = new FormData();
 
     formData.append("nombre", producto.nombre);
-    formData.append("precio", producto.precio.toString());
-    formData.append("stock", producto.stock.toString());
-    formData.append("estado", producto.estado.toString());
+    formData.append("precio", producto.precio ? producto.precio.toString() : "0");
+    formData.append("stock", producto.stock ? producto.stock.toString() : "0");
+    formData.append("estado", producto.estado?.toString());
     formData.append("marca", producto.marca);
     formData.append("modelo", producto.modelo);
+
+    // 🛠️ Aquí aseguramos que idCategoria no sea undefined
     formData.append("idCategoria", producto.categoria.idCategoria.toString());
 
     if (imagen) {
       formData.append("imagen", imagen);
-    }
-
-    return this.http.post<Producto>(`${this.url}/post`, formData);
+    } 
+    console.log(formData);
+    return this.http.post<Producto | number>(`${this.url}/post`, formData);
   }
   //ACTIVAR
   activarP(id: number): Observable<Producto> {

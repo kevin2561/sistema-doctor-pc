@@ -12,7 +12,7 @@ import { Categoria } from '../../entites/categoria';
 })
 export class CrearProductoComponent implements OnInit {
   errorImagen: boolean = false;
-  imagenSeleccionada: File | null = null;
+  imagenSeleccionada?: File;
   producto: Producto = {
     idProducto: 0,
     nombre: '',
@@ -22,7 +22,7 @@ export class CrearProductoComponent implements OnInit {
     imagen: '',
     marca: '',
     modelo: '',
-    categoria: { idCategoria: 0, nombre: '', estado: true }
+    categoria: { idCategoria: 1, nombre: '', estado: true }
   };
   categoria: Categoria[] = [];
 
@@ -48,15 +48,24 @@ export class CrearProductoComponent implements OnInit {
 
   crearNuevoProducto() {
     if (this.producto.nombre && this.producto.precio && this.producto.stock) {
-      this.productoService.postProducto(this.producto, this.imagenSeleccionada || undefined)
-        .subscribe(
-          (respuesta) => {
+      if (!this.producto.categoria || !this.producto.categoria.idCategoria) {
+        alert("Debe seleccionar una categoría válida");
+        return;
+      }
+
+      this.productoService.postProducto(this.producto, this.imagenSeleccionada)
+        .subscribe({
+          next: (respuesta) => {
+            if (respuesta === 0) {
+              alert("Este producto ya exitse")
+            }
             console.log("Producto creado:", respuesta);
+
           },
-          (error) => {
+          error: (error) => {
             console.error("Error al crear producto:", error);
           }
-        );
+        });
     } else {
       alert("Todos los campos son obligatorios");
     }
@@ -87,6 +96,7 @@ export class CrearProductoComponent implements OnInit {
       }
 
       // Si el archivo es válido, puedes hacer algo con él aquí
+      this.imagenSeleccionada = file;
       console.log("Archivo válido:", file);
     }
   }

@@ -13,7 +13,7 @@
 
 *::-webkit-scrollbar {
     width: 8px;
-    height: 8px;
+    height: 4px;
 }
 
 *::-webkit-scrollbar-track {
@@ -53,11 +53,22 @@
 /*-----------SCROLL - TABLA----------*/
 .scroll-tabla {
   
-    max-height: 500px;
-    /* O ajusta a 600px según necesites */
+    max-height: 600px;
     overflow-y: auto;
     scroll-behavior: smooth;
     position: relative;
+}
+.scroll-tabla::-webkit-scrollbar {
+    width: 15px;
+}
+
+.scroll-tabla::-webkit-scrollbar-track {
+    background: blue;
+}
+
+.scroll-tabla::-webkit-scrollbar-thumb {
+    background-color: #dc3545;
+    border-radius: 0px;
 }
 
 .scroll-tabla thead {
@@ -115,19 +126,6 @@
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* .contenido-error {
-    padding: 40px;
-    max-width: 500px;
-    margin: 50px auto;
-    background: #f8d7da;
-    border: 2px solid #f5c6cb;
-    text-align: center;
-
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-
-} */
-
 .error-code {
     font-size: 80px;
     font-weight: bold;
@@ -171,6 +169,8 @@
 
 /* TABLE IMG */
 .img-table {
-    width: 75px;
-    height: 75px;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: 1px solid #ccc; /* 🔹 Agrega un borde ligero */
 }

@@ -70,7 +70,8 @@
                             data-bs-toggle="modal" data-bs-target="#modalActualizarVenta"></i>
                     </td>
                     <td>
-                        <i (click)="eliminarVenta(item.idVenta, i)" class="bi bi-trash text-danger accion-iconos" title="Eliminar"></i>
+                        <i (click)="eliminarVenta(item.idVenta, i)" class="bi bi-trash text-danger accion-iconos"
+                            title="Eliminar"></i>
                     </td>
                 </tr>
 
@@ -111,7 +112,7 @@
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Método de Pago</label>
                                 <select class="form-select">
-                                    <option selected>Seleccione</option>
+                                    <option disabled selected>Seleccione</option>
                                     <option value="efectivo">Efectivo</option>
                                     <option value="plin">Plin</option>
                                     <option value="tarjeta">Tarjeta</option>

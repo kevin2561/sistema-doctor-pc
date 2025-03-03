@@ -6,7 +6,7 @@ export interface Producto {
     precio: number
     stock: number
     estado: boolean
-    imagen?: string
+    imagen?: string | "" | null
     marca: string
     modelo: string
     categoria: Categoria
