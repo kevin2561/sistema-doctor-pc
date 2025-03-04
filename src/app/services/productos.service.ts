@@ -12,6 +12,16 @@ export class ProductosService {
   private url: String = "http://localhost:9090/producto"
   imagenGrande: string = '';
   constructor(private http: HttpClient) { }
+  verImagenGrande(imagen: string | null | undefined) {
+    this.imagenGrande = imagen ?? 'assets/no-imagen.jpg';
+
+    const modalElement = document.getElementById('imageModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
+  }
+
 
 
   //MOSTRAR
@@ -58,13 +68,5 @@ export class ProductosService {
   }
 
 
-  verImagenGrande(imagen: string | null | undefined) {
-    this.imagenGrande = imagen ?? 'assets/no-imagen.jpg';
 
-    const modalElement = document.getElementById('imageModal');
-    if (modalElement) {
-      const modal = new bootstrap.Modal(modalElement);
-      modal.show();
-    }
-  }
 }

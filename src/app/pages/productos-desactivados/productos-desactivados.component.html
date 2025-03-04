@@ -44,7 +44,7 @@
                                 <td>{{producto.stock === 0 ? "Agotado" : producto.stock}}</td>
                                 <td>S/ {{producto.precio | number:'1.2-2'}}</td>
                                 
-                                <td><img class="img-table" [src]="producto.imagen || 'assets/no-imagen.jpg'"></td>
+                                <td><img (click)="productoService.verImagenGrande(producto.imagen)" class="img-table" [src]="producto.imagen || 'assets/no-imagen.jpg'" style="cursor: zoom-in;"></td>
 
 
                                 <td>
@@ -71,4 +71,26 @@
             </section>
         </ng-template>
     </ng-template>
+
+
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="contendor-modal modal-content bg-transparent border-0">
+                <div class="modal-header border-0">
+                    <button type="button" class="btn-close cerrar-imagen-grande" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="contenedor-imagen text-center">
+                    <img [src]="productoService.imagenGrande" class="img-fluid" alt="Imagen Producto" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
 </ng-template>
+
+
+
+

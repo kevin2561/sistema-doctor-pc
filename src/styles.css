@@ -51,9 +51,12 @@
 }
 
 /*-----------SCROLL - TABLA----------*/
+/* Victoria Romero Iñigo
+victoriaromeroinigo@gmail.com */
+/* victoriaromero2025 */
 .scroll-tabla {
   
-    max-height: 600px;
+    max-height: 700px;
     overflow-y: auto;
     scroll-behavior: smooth;
     position: relative;
@@ -174,3 +177,21 @@
     object-fit: cover;
     border: 1px solid #ccc; /* 🔹 Agrega un borde ligero */
 }
+
+/*--CONTENIDO DEL MODAL IMAGEN GRANDE*/
+
+.contendor-modal {
+    background: black;
+  }
+  
+  .contenedor-imagen img {
+    background-color: #fff;
+    max-height: 80vh;
+    object-fit: contain;
+  }
+  .cerrar-imagen-grande {
+    filter: invert(1) !important; /* Cambia a blanco */
+    font-size: 30px;
+    --bs-btn-close-focus-shadow: none !important;
+ 
+  }

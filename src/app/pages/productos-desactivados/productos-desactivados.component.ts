@@ -16,7 +16,7 @@ export class ProductosDesactivadosComponent implements OnInit {
   cargando: boolean = false;
   e500: boolean = false;
 
-  constructor(private productoService: ProductosService, private mensajeService: MensajesService) {
+  constructor(public productoService: ProductosService, private mensajeService: MensajesService) {
 
   }
   ngOnInit(): void {

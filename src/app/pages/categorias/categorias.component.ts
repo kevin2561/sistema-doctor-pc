@@ -77,7 +77,7 @@ export class CategoriasComponent implements OnInit {
     this.categoriaSelect
     this.categoriaService.actualizarC(this.categoriaSelect.idCategoria, this.categoriaSelect).subscribe({
       next: (data) => {
-        this.mensajeService.mostrarMensaje(`Categoria ${data.nombre.toUpperCase()} Actualiza`, true)
+        this.mensajeService.mostrarMensaje(`Categoria ${data.nombre.toUpperCase()} Actualizada`, true)
         this.mostrarCategorias();
       },
       error: (err) => {
