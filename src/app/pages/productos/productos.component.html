@@ -1,3 +1,20 @@
+<img (click)="productosService.verImagenGrande('assets/no-imagen.jpg')" class="img-table" src='assets/no-imagen.jpg'
+    alt="" style="cursor: pointer; width: 50px; height: 50px">
+<!-- Modal para mostrar la imagen en grande -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-transparent border-0">
+            <div class="modal-header border-0">
+                <!-- Ícono de cierre en la esquina -->
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="assets/no-imagen.jpg" class="img-fluid" alt="Imagen Producto" />
+            </div>
+        </div>
+    </div>
+</div>
+
 <app-mesaje-validacion [mensaje]="mensaje" [esExito]="esExito"></app-mesaje-validacion>
 <ng-container *ngIf="!e500; else errorTemplate">
 
@@ -54,8 +71,9 @@
                             <td>{{producto.categoria.nombre}}</td>
                             <td>{{producto.stock === 0 ? "Agotado" : producto.stock}}</td>
                             <td>S/ {{producto.precio | number:'1.2-2'}}</td>
-                            <td><img class="img-table" [src]="producto.imagen || 'assets/no-imagen.jpg'" alt=""></td>
-
+                            <!-- <td><img (click)="verImagenGrande(producto.imagen)" class="img-table"
+                                    [src]="producto.imagen || 'assets/no-imagen.jpg'" alt=""></td>
+ -->
 
                             <td><i class="bi bi-pencil-square accion-iconos" title="Editar"></i></td>
                             <td><button (click)="desactivarProducto(producto.idProducto, producto.nombre)"

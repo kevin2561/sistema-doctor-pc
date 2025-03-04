@@ -1,0 +1,12 @@
+.modal-content {
+    background: black;
+  }
+  
+  .modal-body img {
+    background-color: green;
+    max-height: 80vh;
+    object-fit: contain;
+  }
+  .btn-close {
+    filter: invert(1) !important; /* Cambia a blanco */
+  }

@@ -3,6 +3,9 @@ import { Producto } from '../../entites/producto';
 import { ProductosService } from '../../services/productos.service';
 import { MensajesService } from '../../services/mensajes.service';
 
+// declare var bootstrap: any;
+
+
 @Component({
   selector: 'app-productos',
   standalone: false,
@@ -19,8 +22,9 @@ export class ProductosComponent implements OnInit {
   mensaje: string = "";
   e500: boolean = false
   ceroProductosFiltrados: boolean = false;
+  // imagenSeleccionada: string = ""
 
-  constructor(private productosService: ProductosService, private mensajeSerive: MensajesService) { }
+  constructor(public productosService: ProductosService, private mensajeSerive: MensajesService) { }
 
 
   ngOnInit(): void {
@@ -102,5 +106,16 @@ export class ProductosComponent implements OnInit {
     }
 
   }
+  // verImagenGrande() {
+  //   this.imagenSeleccionada = 'assets/no-imagen.jpg'; // Usa una imagen por defecto si es null/undefined
+
+  //   // Abre el modal manualmente
+  //   const modalElement = document.getElementById('imageModal');
+  //   if (modalElement) {
+  //     const modal = new bootstrap.Modal(modalElement)
+  //     modal.show();
+  //   }
+
+  // }
 
 }

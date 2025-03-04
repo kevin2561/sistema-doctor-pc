@@ -2,12 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Producto } from '../entites/producto';
+declare var bootstrap: any;
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductosService {
   private url: String = "http://localhost:9090/producto"
+  imagenGrande: string = '';
   constructor(private http: HttpClient) { }
 
 
@@ -31,7 +34,7 @@ export class ProductosService {
 
     if (imagen) {
       formData.append("imagen", imagen);
-    } 
+    }
     console.log(formData);
     return this.http.post<Producto | number>(`${this.url}/post`, formData);
   }
@@ -52,6 +55,16 @@ export class ProductosService {
   //ELIMINAR
   eliminarP(id: number): Observable<any> {
     return this.http.delete(`${this.url}/delete/${id}`, { responseType: 'text' })
+  }
 
+
+  verImagenGrande(imagen: string | null | undefined) {
+    this.imagenGrande = imagen ?? 'assets/no-imagen.jpg';
+
+    const modalElement = document.getElementById('imageModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
   }
 }
