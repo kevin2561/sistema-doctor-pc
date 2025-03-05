@@ -83,9 +83,9 @@
 
 /* ------MENSAJE DE VALIDACION */
 .accion-iconos {
-    font-size: 24px;
+    font-size: 28px;
     cursor: pointer;
-    color: var(--color-negro);
+    /* color: var(--color-negro); */
 }
 
 .no-contenido {

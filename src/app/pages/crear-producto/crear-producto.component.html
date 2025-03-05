@@ -71,7 +71,7 @@
                 <label for="categoria" class="form-label fw-bold">Seleccione una Categoría</label>
                 <select id="categoria" [(ngModel)]="producto.categoria" name="categoria" class="form-select" required>
                     <option [ngValue]="null" disabled selected>Seleccione una categoría</option>
-                    <option *ngFor="let item of categoria" [ngValue]="item">{{ item.nombre }}</option>
+                    <option *ngFor="let item of categoriaActivas" [ngValue]="item">{{ item.nombre }}</option>
                 </select>
             </div>
 

@@ -13,7 +13,7 @@ export class ProductosService {
   imagenGrande: string = '';
   imagenSeleccionada?: File;
   constructor(private http: HttpClient) { }
-  
+
   //MOSTRAR
   getAllProductos(): Observable<Producto[]> {
     return this.http.get<Producto[]>(`${this.url}/get`);
@@ -21,12 +21,12 @@ export class ProductosService {
   //CREAR
   postProducto(producto: Producto, imagen?: File): Observable<Producto | number> {
     const formdata = this.crearFormData(producto, imagen)
-    return this.http.put<Producto | number>(`${this.url}/post`, formdata)
+    return this.http.post<Producto | number>(`${this.url}/post`, formdata)
   }
   //ACTUALIZAR
-  actualizarP(id: number, producto: Producto, imagen?: File): Observable<Producto> {
+  actualizarP(id: number, producto: Producto, imagen?: File): Observable<Producto | number> {
     const formdata = this.crearFormData(producto, imagen)
-    return this.http.put<Producto>(`${this.url}/put/${id}`, formdata)
+    return this.http.put<Producto | number>(`${this.url}/put/${id}`, formdata)
 
   }
 
@@ -45,8 +45,8 @@ export class ProductosService {
     return this.http.delete(`${this.url}/delete/${id}`, { responseType: 'text' })
   }
   //STOCK0
-  stockCero(id: number): Observable<any> {
-    return this.http.patch(`${this.url}/stock/${id}`, { responseType: 'text' })
+  stockCero(id: number): Observable<number> {
+    return this.http.patch<number>(`${this.url}/stock/${id}`, {})
   }
 
   verImagenGrande(imagen: string | null | undefined) {
@@ -69,7 +69,10 @@ export class ProductosService {
     formData.append("estado", producto.estado?.toString());
     formData.append("marca", producto.marca);
     formData.append("modelo", producto.modelo);
-    formData.append("idCategoria", producto.categoria.idCategoria.toString());
+    if (producto.categoria?.idCategoria) {
+      formData.append("idCategoria", producto.categoria.idCategoria.toString());
+
+    }
 
     if (imagen) {
       formData.append("imagen", imagen);
@@ -105,5 +108,5 @@ export class ProductosService {
       console.log("Archivo válido:", file);
     }
   }
-  
+
 }

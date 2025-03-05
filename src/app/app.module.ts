@@ -39,7 +39,8 @@ import { ErrorServidorComponent } from './mensaje/error-servidor/error-servidor.
     VentasComponent,
     MesajeValidacionComponent,
     LoadingComponent,
-    ErrorServidorComponent
+    ErrorServidorComponent,
+    
   ],
   imports: [
     BrowserModule,

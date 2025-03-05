@@ -15,7 +15,7 @@ import { CategoriasService } from '../../services/categorias.service';
   styleUrls: ['./productos.component.css']
 })
 export class ProductosComponent implements OnInit {
-  errorImagen: boolean= false;
+  errorImagen: boolean = false;
   productos: Producto[] = [];
   productosActivadosFiltrados: Producto[] = [];
   cargando: boolean = false;
@@ -34,9 +34,9 @@ export class ProductosComponent implements OnInit {
     imagen: "",
     marca: "",
     modelo: "",
-    categoria: { idCategoria: 1, nombre: "", estado: true }
+    categoria: { idCategoria: 0, nombre: "", estado: true } as Categoria // Inicializa con un objeto vacío
   }
-  categoria: Categoria[] = []
+  categoriaSelect: Categoria[] = []
   constructor(public productosService: ProductosService, private mensajeSerive: MensajesService, private categoriaService: CategoriasService) { }
 
 
@@ -55,7 +55,8 @@ export class ProductosComponent implements OnInit {
     this.productosService.getAllProductos().subscribe({
       next: (data) => {
         this.cargando = false
-        this.productos = data;
+        this.productos = data.sort((a,b)=> a.nombre.localeCompare(b.nombre));
+        console.log(this.productos)
       },
       error: () => {
         this.e500 = true
@@ -83,23 +84,18 @@ export class ProductosComponent implements OnInit {
     );
     this.ceroProductosFiltrados = this.productosActivadosFiltrados.length === 0;
   }
-  productoSeleccionado(producto: Producto) {
-    return this.productoActualizado = { ...producto }
+  productoSeleccionado(producto: Producto): void {
+    this.productoActualizado = {
+      ...producto
+    }
+    // ...producto, categoria: producto.categoria ?? { idCategoria: 0, nombre: "", estado: true } // Garantizar un objeto válido
   }
-  actualizarProduto() {
-    // this.productosService.actualizarP(id).subscribe({
-    //   next: (value) => {
 
-    //   },
-    //   error: (err) => {
-
-    //   }
-    // })
-  }
   cargarCategorias() {
     this.categoriaService.getAllCategoria().subscribe({
       next: (data) => {
-        this.categoria = data.filter((c) => c.estado)
+        this.categoriaSelect = data.filter((c) => c.estado)
+        console.log("Categorías cargadas:", this.categoriaSelect);
 
       },
       error: (err) => {
@@ -109,7 +105,29 @@ export class ProductosComponent implements OnInit {
     })
 
   }
-  
+
+  actualizarProduto() {
+    const id = this.productoActualizado.idProducto;
+    const imagenInput = document.getElementById("formFile") as HTMLInputElement;
+    const imagen = imagenInput.files?.length ? imagenInput.files[0] : null;
+    this.productosService.actualizarP(id, this.productoActualizado, imagen || undefined).subscribe({
+      next: (data) => {
+        console.log(data)
+        if (data == 0) {
+          this.mensajeSerive.mostrarMensaje("Este Producto ya Existe", false);
+          return;
+        }
+        this.mensajeSerive.mostrarMensaje(`Producto ${this.productoActualizado.nombre} actualizado`, true);
+
+        // this.mensajeSerive.mostrarMensaje("Producto actualizado correctamente", true);
+        this.mostrarProductos(); // Recargar productos
+      },
+      error: (err) => {
+        console.error("Error al actualizar:", err);
+        this.mensajeSerive.mostrarMensaje("Error al actualizar el producto", false);
+      }
+    });
+  }
   desactivarProducto(id: number, nombre: string): void {
 
     this.productosService.desactivarP(id).subscribe({
@@ -148,19 +166,26 @@ export class ProductosComponent implements OnInit {
 
   }
 
-  ponerStockCero(id: number) {
+  ponerStockCero(id: number, nombreP: string, event: Event) {
+    event.stopPropagation(); // Detiene la propagación del evento y evita recargas
+    // console.log(id, "---------" + nombreP + "---------" + stocx)
     this.productosService.stockCero(id).subscribe({
-      next: () => {
-
+      next: (respuesta) => {
+        // console.log("Respuesta: ", respuesta)
+        if (respuesta == 0) {
+          this.mensajeSerive.mostrarMensaje(`El Producto ${nombreP} ya esta agotado`, false)
+        } else {
+          this.mensajeSerive.mostrarMensaje(`El Producto ${nombreP} se actualizado su Stock`, true)
+        }
         this.mostrarProductos();
-
       },
       error: (err) => {
+        this.mensajeSerive.mostrarMensaje(`Error, Intentenlo más tarde`, false)
 
       },
     })
 
   }
 
- 
+
 }

@@ -1,5 +1,5 @@
 export interface Categoria {
-    idCategoria: number
+    idCategoria: number 
     nombre: string
     estado: boolean
   }
