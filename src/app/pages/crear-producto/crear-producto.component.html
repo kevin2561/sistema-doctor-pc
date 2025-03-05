@@ -59,8 +59,10 @@
             <!-- Imagen -->
             <div class="mt-3">
                 <label for="formFile" class="form-label fw-bold">Imagen del Producto</label>
-                <input (change)="validarSizeImagen($event)" class="form-control" accept=".jpg, .jpeg, .png" type="file"
-                    id="formFile" name="imagen">
+                <!-- <input (change)="validarSizeImagen($event)" class="form-control" accept=".jpg, .jpeg, .png" type="file"
+                    id="formFile" name="imagen"> -->
+                <input (change)="productoService.validarSizeImagen($event)" class="form-control"
+                    accept=".jpg, .jpeg, .png" type="file" id="formFile" name="imagen">
                 <div *ngIf="errorImagen" class="text-danger mt-1">La imagen debe ser menor a 10MB.</div>
             </div>
 

@@ -29,25 +29,16 @@
 
                             <td>{{item.nombre}}</td>
                             <td>{{item.estado == true ? "Activo" : "False"}}</td>
-
-
-
                             <td>
-
                                 <i class="bi bi-pencil-square accion-iconos text-primary" data-bs-toggle="modal"
                                     (click)="seleccionarCategoria(item)" data-bs-target="#modalActualizarCategoria"
                                     title="Editar"></i>
                             </td>
-
                             <td>
-
                                 <button (click)="desactivarCategoria(item.idCategoria, item.nombre)"
                                     class="btn btn-danger">Desactivar</button>
-
                             </td>
                             <td>
-
-
                                 <i class="bi bi-trash accion-iconos text-danger"
                                     (click)="eliminarCategoria(item.idCategoria,item.nombre)" title="Eliminar"></i>
                             </td>

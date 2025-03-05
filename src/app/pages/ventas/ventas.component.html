@@ -67,7 +67,8 @@
                     <td>S/ {{item.total | number:'1.2-2'}}</td>
                     <td>
                         <i class="bi bi-pencil-square text-primary accion-iconos" title="Editar" style="cursor:pointer;"
-                            data-bs-toggle="modal" data-bs-target="#modalActualizarVenta"></i>
+                            (click)="seleccionarVenta(item)" data-bs-toggle="modal"
+                            data-bs-target="#modalActualizarVenta"></i>
                     </td>
                     <td>
                         <i (click)="eliminarVenta(item.idVenta, i)" class="bi bi-trash text-danger accion-iconos"
@@ -106,17 +107,15 @@
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Código de la Venta</label>
-                                <input type="text" readonly name="Id" value="50" class="form-control">
+                                <input type="text" [(readonly)]="ventaSeleccionada.idVenta" name="Id" value="50"
+                                    class="form-control" readonly>
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Método de Pago</label>
                                 <select class="form-select">
-                                    <option disabled selected>Seleccione un Método de Pago</option>
-                                    <option value="efectivo">Efectivo</option>
-                                    <option value="plin">Plin</option>
-                                    <option value="tarjeta">Tarjeta</option>
-                                    <option value="yape">Yape</option>
+                                    <option disabled selected [(ngModel)]="ventaSeleccionada.metodoPago">Seleccione un Método de Pago</option>
+                                    <option [value]="metodo" *ngFor="let metodo of metodoPagos">{{metodo}}</option>
                                 </select>
                             </div>
                         </div>
@@ -125,12 +124,14 @@
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Nombre del Comprador</label>
-                                <input type="text" name="nombre" class="form-control" placeholder="Ej: Dante Alighieri">
+                                <input type="text" [(ngModel)]="ventaSeleccionada.nombre" name="nombre"
+                                    class="form-control" placeholder="Ej: Dante Alighieri">
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Documento (Opcional)</label>
-                                <input type="text" name="documento" class="form-control" placeholder="Ej: DNI o RUC">
+                                <input type="text" name="documento" [(ngModel)]="ventaSeleccionada.documento"
+                                    class="form-control" placeholder="Ej: DNI o RUC">
                             </div>
                         </div>
 
@@ -138,20 +139,22 @@
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Fecha</label>
-                                <input type="date" name="fecha" class="form-control">
+                                <input type="date" name="fecha" [(ngModel)]="ventaSeleccionada.fecha"
+                                    class="form-control">
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Total</label>
-                                <input type="text" step="0.01" name="total" class="form-control"
-                                    placeholder="Ej: 150.00">
+                                <input type="text" step="0.01" name="total" [(ngModel)]="ventaSeleccionada.total"
+                                    class="form-control" placeholder="Ej: 150.00">
                             </div>
                         </div>
 
                         <!-- Campo Descripción -->
                         <div class="mb-3">
                             <label class="form-label fw-bold">Descripción de la Venta</label>
-                            <textarea name="descripcion" class="form-control" rows="3"
+                            <textarea name="descripcion" [(ngModel)]="ventaSeleccionada.descripcion"
+                                class="form-control" rows="3"
                                 placeholder="Ej: Venta de productos electrónicos"></textarea>
                         </div>
 

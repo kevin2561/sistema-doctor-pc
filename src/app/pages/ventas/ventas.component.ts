@@ -36,6 +36,18 @@ export class VentasComponent implements OnInit {
   anioSeleccionado: string = ""
   e500: boolean = false;
   cargando: boolean = false;
+  ventaSeleccionada: Ventas = {
+    idVenta: 0,
+    nombre: "",
+    documento: "",
+    descripcion: "",
+    fecha: "",
+    metodoPago: "",
+    total: 0
+
+  }
+  metodoPagos=["Yape", "Plin", "Tarjeta", "Efectivo"]
+
   generarAnios() {
     for (let i = this.anioMaximo; i >= this.anioInicio; i--) {
       this.anios.push(i);
@@ -110,7 +122,10 @@ export class VentasComponent implements OnInit {
       })
     }
   }
+  seleccionarVenta(venta: Ventas) {
+   return this.ventaSeleccionada= {...venta}
 
+  }
 
   actualizarVenta() {
     console.log("UPT")

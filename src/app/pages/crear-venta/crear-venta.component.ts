@@ -20,8 +20,9 @@ export class CrearVentaComponent {
     fecha: "",
     metodoPago: "",
     total: 0
-
   }
+  metodoPagos=["Yape", "Plin", "Tarjeta", "Efectivo"]
+
 
 
   constructor(private ventasService: VentasService) {

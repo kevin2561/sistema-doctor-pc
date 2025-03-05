@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Producto } from '../../entites/producto';
 import { ProductosService } from '../../services/productos.service';
 import { MensajesService } from '../../services/mensajes.service';
+import { Categoria } from '../../entites/categoria';
+import { CategoriasService } from '../../services/categorias.service';
 
 // declare var bootstrap: any;
 
@@ -13,6 +15,7 @@ import { MensajesService } from '../../services/mensajes.service';
   styleUrls: ['./productos.component.css']
 })
 export class ProductosComponent implements OnInit {
+  errorImagen: boolean= false;
   productos: Producto[] = [];
   productosActivadosFiltrados: Producto[] = [];
   cargando: boolean = false;
@@ -22,15 +25,26 @@ export class ProductosComponent implements OnInit {
   mensaje: string = "";
   e500: boolean = false
   ceroProductosFiltrados: boolean = false;
-  // imagenSeleccionada: string = ""
-
-  constructor(public productosService: ProductosService, private mensajeSerive: MensajesService) { }
+  productoActualizado: Producto = {
+    idProducto: 1,
+    nombre: "",
+    precio: 0,
+    stock: 0,
+    estado: true,
+    imagen: "",
+    marca: "",
+    modelo: "",
+    categoria: { idCategoria: 1, nombre: "", estado: true }
+  }
+  categoria: Categoria[] = []
+  constructor(public productosService: ProductosService, private mensajeSerive: MensajesService, private categoriaService: CategoriasService) { }
 
 
   ngOnInit(): void {
     this.mensajeSerive.mensaje$.subscribe(mensaje => this.mensaje = mensaje)
     this.mensajeSerive.esExito$.subscribe(esExito => this.esExito = esExito)
     this.mostrarProductos();
+    this.cargarCategorias();
   }
 
   mostrarProductos(): void {
@@ -69,6 +83,33 @@ export class ProductosComponent implements OnInit {
     );
     this.ceroProductosFiltrados = this.productosActivadosFiltrados.length === 0;
   }
+  productoSeleccionado(producto: Producto) {
+    return this.productoActualizado = { ...producto }
+  }
+  actualizarProduto() {
+    // this.productosService.actualizarP(id).subscribe({
+    //   next: (value) => {
+
+    //   },
+    //   error: (err) => {
+
+    //   }
+    // })
+  }
+  cargarCategorias() {
+    this.categoriaService.getAllCategoria().subscribe({
+      next: (data) => {
+        this.categoria = data.filter((c) => c.estado)
+
+      },
+      error: (err) => {
+        console.log("Error," + err)
+
+      },
+    })
+
+  }
+  
   desactivarProducto(id: number, nombre: string): void {
 
     this.productosService.desactivarP(id).subscribe({
@@ -106,16 +147,20 @@ export class ProductosComponent implements OnInit {
     }
 
   }
-  // verImagenGrande() {
-  //   this.imagenSeleccionada = 'assets/no-imagen.jpg'; // Usa una imagen por defecto si es null/undefined
 
-  //   // Abre el modal manualmente
-  //   const modalElement = document.getElementById('imageModal');
-  //   if (modalElement) {
-  //     const modal = new bootstrap.Modal(modalElement)
-  //     modal.show();
-  //   }
+  ponerStockCero(id: number) {
+    this.productosService.stockCero(id).subscribe({
+      next: () => {
 
-  // }
+        this.mostrarProductos();
 
+      },
+      error: (err) => {
+
+      },
+    })
+
+  }
+
+ 
 }

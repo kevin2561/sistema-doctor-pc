@@ -12,7 +12,7 @@ import { Categoria } from '../../entites/categoria';
 })
 export class CrearProductoComponent implements OnInit {
   errorImagen: boolean = false;
-  imagenSeleccionada?: File;
+  // imagenSeleccionada?: File;
   producto: Producto = {
     idProducto: 0,
     nombre: '',
@@ -25,8 +25,9 @@ export class CrearProductoComponent implements OnInit {
     categoria: { idCategoria: 1, nombre: '', estado: true }
   };
   categoria: Categoria[] = [];
+  //PRIVATE
+  constructor(public productoService: ProductosService, private categoriaService: CategoriasService) { }
 
-  constructor(private productoService: ProductosService, private categoriaService: CategoriasService) { }
   ngOnInit() {
     this.cargarCategorias();
 
@@ -44,8 +45,6 @@ export class CrearProductoComponent implements OnInit {
 
   }
 
-
-
   crearNuevoProducto() {
     if (this.producto.nombre && this.producto.precio && this.producto.stock) {
       if (!this.producto.categoria || !this.producto.categoria.idCategoria) {
@@ -53,7 +52,7 @@ export class CrearProductoComponent implements OnInit {
         return;
       }
 
-      this.productoService.postProducto(this.producto, this.imagenSeleccionada)
+      this.productoService.postProducto(this.producto, this.productoService.imagenSeleccionada) //this.imagenSeleccionada
         .subscribe({
           next: (respuesta) => {
             if (respuesta === 0) {
@@ -71,33 +70,31 @@ export class CrearProductoComponent implements OnInit {
     }
   }
 
+  // validarSizeImagen(event: any) {
+  //   const maxSize = 10 * 1024 * 1024; // 10MB en bytes
+  //   const file = event.target.files[0];
 
+  //   if (file) {
+  //     // Obtener la extensión del archivo
+  //     const extensionesPermitidas = ["jpg", "jpeg", "png"];
+  //     const extension = file.name.split('.').pop().toLowerCase();
 
-  validarSizeImagen(event: any) {
-    const maxSize = 10 * 1024 * 1024; // 10MB en bytes
-    const file = event.target.files[0];
+  //     if (!extensionesPermitidas.includes(extension)) {
+  //       alert("Solo se permiten imágenes JPG, JPEG y PNG.");
+  //       event.target.value = ""; // Limpia el input
+  //       return;
+  //     }
 
-    if (file) {
-      // Obtener la extensión del archivo
-      const extensionesPermitidas = ["jpg", "jpeg", "png"];
-      const extension = file.name.split('.').pop().toLowerCase();
+  //     // Verificar el tamaño
+  //     if (file.size > maxSize) {
+  //       alert("El archivo debe ser menor a 10MB.");
+  //       event.target.value = ""; // Limpia el input
+  //       return;
+  //     }
 
-      if (!extensionesPermitidas.includes(extension)) {
-        alert("Solo se permiten imágenes JPG, JPEG y PNG.");
-        event.target.value = ""; // Limpia el input
-        return;
-      }
-
-      // Verificar el tamaño
-      if (file.size > maxSize) {
-        alert("El archivo debe ser menor a 10MB.");
-        event.target.value = ""; // Limpia el input
-        return;
-      }
-
-      // Si el archivo es válido, puedes hacer algo con él aquí
-      this.imagenSeleccionada = file;
-      console.log("Archivo válido:", file);
-    }
-  }
+  //     // Si el archivo es válido, puedes hacer algo con él aquí
+  //     this.imagenSeleccionada = file;
+  //     console.log("Archivo válido:", file);
+  //   }
+  // }
 }
