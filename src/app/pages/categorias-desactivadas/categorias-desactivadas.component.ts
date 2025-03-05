@@ -30,7 +30,7 @@ export class CategoriasDesactivadasComponent implements OnInit {
     this.e500 = false
     this.categoriaService.getAllCategoria().subscribe({
       next: (data) => {
-        this.categorias = data;
+        this.categorias = data.sort((a, b) => a.nombre.localeCompare(b.nombre)); //Ordnear x nombre
         // console.log(data)
         setTimeout(() => {
           this.cargando = false

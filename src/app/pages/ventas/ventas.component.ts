@@ -46,7 +46,7 @@ export class VentasComponent implements OnInit {
     total: 0
 
   }
-  metodoPagos=["Yape", "Plin", "Tarjeta", "Efectivo"]
+  metodoPagos = ["Yape", "Plin", "Tarjeta", "Efectivo"]
 
   generarAnios() {
     for (let i = this.anioMaximo; i >= this.anioInicio; i--) {
@@ -123,12 +123,24 @@ export class VentasComponent implements OnInit {
     }
   }
   seleccionarVenta(venta: Ventas) {
-   return this.ventaSeleccionada= {...venta}
+    return this.ventaSeleccionada = { ...venta }
 
   }
 
   actualizarVenta() {
-    console.log("UPT")
+    const id = this.ventaSeleccionada.idVenta
+    this.ventasService.actualizarV(id, this.ventaSeleccionada).subscribe({
+      next: (data) => {
+        this.mensajeService.mostrarMensaje(`Venta ${id} actualizado correctamente.`,true)
+        console.log(data);
+        this.calcularVentas();
+
+      },
+      error: (err) => {
+        this.mensajeService.mostrarMensaje("Ocurrio un error, intenlo más tarde.", false)
+
+      },
+    })
   }
 
   calcularVentas() {

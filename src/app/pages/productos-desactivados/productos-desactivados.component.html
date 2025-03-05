@@ -43,18 +43,20 @@
                                 <td>{{producto.categoria?.nombre}}</td>
                                 <td>{{producto.stock === 0 ? "Agotado" : producto.stock}}</td>
                                 <td>S/ {{producto.precio | number:'1.2-2'}}</td>
-                                
-                                <td><img (click)="productoService.verImagenGrande(producto.imagen)" class="img-table" [src]="producto.imagen || 'assets/no-imagen.jpg'" style="cursor: zoom-in;"></td>
+
+                                <td><img (click)="productoService.verImagenGrande(producto.imagen)" class="img-table"
+                                        [src]="producto.imagen || 'assets/no-imagen.jpg'" style="cursor: zoom-in;"></td>
 
 
                                 <td>
-                                    <button (click)="activarProducto(producto.idProducto, producto.nombre)"
-                                        class="btn btn-success">Activar</button>
-                              
-                                        <!-- <i class="bi bi-toggle-on"></i> -->
-
-                                <i (click)="eliminarProductoDesactivado(producto.idProducto, producto.nombre)"
-                                    class="bi bi-trash text-danger accion-iconos ms-5" title="Eliminar"></i>  </td>
+                                    <!-- <button class="btn btn-success">Activar</button> -->
+                                    <i class="bi bi-toggle-on accion-iconos text-success" title="Activar"
+                                        (click)="activarProducto(producto.idProducto, producto.nombre)"></i>
+                                </td>
+                                <td>
+                                    <i (click)="eliminarProductoDesactivado(producto.idProducto, producto.nombre)"
+                                        class="bi bi-trash text-danger accion-iconos ms-5" title="Eliminar"></i>
+                                </td>
 
                             </tr>
                         </tbody>
@@ -78,7 +80,8 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="contendor-modal modal-content bg-transparent border-0">
                 <div class="modal-header border-0">
-                    <button type="button" class="btn-close cerrar-imagen-grande" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    <button type="button" class="btn-close cerrar-imagen-grande" data-bs-dismiss="modal"
+                        aria-label="Cerrar"></button>
                 </div>
                 <div class="contenedor-imagen text-center">
                     <img [src]="productoService.imagenGrande" class="img-fluid" alt="Imagen Producto" />
@@ -91,7 +94,3 @@
 
 
 </ng-template>
-
-
-
-

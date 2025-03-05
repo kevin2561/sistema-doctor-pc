@@ -12,7 +12,7 @@ export class UsuarioService {
   constructor(private http: HttpClient) { }
 
 
-  loginUsuario(nombre: string, password: string): Observable<void> {
-    return this.http.post<void>(`${this.url}`, { nombre, password })
+  loginUsuario(nombre: string, password: string): Observable<number> {
+    return this.http.post<number>(`${this.url}`, { nombre, password })
   }
 }

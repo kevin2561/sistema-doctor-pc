@@ -31,11 +31,14 @@
                 <td>{{ item.nombre }}</td>
                 <td>Inactivo</td>
                 <td>
-                  <button (click)="activarCategoria(item.idCategoria, item.nombre)" class="btn btn-success">
+                  <!-- <button (click)="activarCategoria(item.idCategoria, item.nombre)" class="btn btn-success">
                     Activar
-                  </button>
+                  </button> -->
 
-
+                  <i class="bi bi-toggle-on accion-iconos text-success" title="Activar"
+                    (click)="activarCategoria(item.idCategoria, item.nombre)"></i>
+                </td>
+                <td>
                   <i class="bi bi-trash accion-iconos text-danger ms-5"
                     (click)="eliminarCategoria(item.idCategoria,item.nombre)" title="Eliminar"></i>
                 </td>

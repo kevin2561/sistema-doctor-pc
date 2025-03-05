@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { UsuarioService } from '../../services/usuario.service';
 
 
 @Component({
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  constructor(private router: Router) { }
+  constructor(private router: Router, private usuarioService: UsuarioService) { }
   mostrarPassword: boolean = false;
   usuario: string = "kevin";
   password: string = "123456";
@@ -25,13 +26,33 @@ export class LoginComponent {
 
   }
   login() {
+    // this.usuarioService.loginUsuario(this.usuario, this.password).subscribe({
+    //   next: (data) => {
+    //     switch (data) {
+    //       case 1:
+    //         this.errorUsuario = this.usuarioInput !== this.usuario;
+    //         break;
+    //       case 2:
+    //         this.errorPassword = this.passwordInput !== this.password;
+    //         break;
+    //       default:
+    //         alert("Exito")
+    //         this.router.navigate(["/inicio"])
+    //     }
+
+    //   },
+    //   error: (err) => {
+    //     console.log(err)
+
+    //   }
+    // })
+
     this.errorUsuario = this.usuarioInput !== this.usuario;
     this.errorPassword = this.passwordInput !== this.password;
 
     if (!this.errorUsuario && !this.errorPassword) {
       console.log("Exitoso")
       this.router.navigate(["/inicio"])
-
     } else {
       setTimeout(() => {
         this.errorUsuario = false;

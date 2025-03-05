@@ -23,13 +23,13 @@ export class VentasService {
     return this.http.post<Ventas>(`${this.url}/post`, venta)
   }
 
-  actualizarV(id: number): Observable<number> {
-    return this.http.post<number>(`${this.url}/put/${id}`, {});
+  actualizarV(id: number, venta: Ventas): Observable<Ventas | number> {
+    return this.http.post<Ventas | number>(`${this.url}/put/${id}`, venta);
 
   }
 
   eliminarV(id: number): Observable<any> {
-    return this.http.delete(`${this.url}/delete/${id}`, { responseType: 'text'})
+    return this.http.delete(`${this.url}/delete/${id}`, { responseType: 'text' })
 
   }
 }

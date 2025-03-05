@@ -34,7 +34,7 @@ export class CategoriasComponent implements OnInit {
     this.categoriaService.getAllCategoria().subscribe({
       next: (data) => {
         this.cargando = false;
-        this.categoria = data;
+        this.categoria = data.sort((a,b)=> a.nombre.localeCompare(b.nombre)); //Ordenar x nombre
         // console.log(this.categoria)
 
       },
@@ -81,6 +81,7 @@ export class CategoriasComponent implements OnInit {
         this.mostrarCategorias();
       },
       error: (err) => {
+        console.log(err)
         this.mensajeService.mostrarMensaje("Error, No se puedo actualizar la categoria", true)
 
       }

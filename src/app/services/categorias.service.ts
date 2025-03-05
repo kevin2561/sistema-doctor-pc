@@ -14,8 +14,6 @@ export class CategoriasService {
   }
   url: string = "http://localhost:9090/categoria/"
 
-
-
   //BUSCAR
   getAllCategoria(): Observable<Categoria[]> {
     return this.http.get<Categoria[]>(`${this.url}get`)

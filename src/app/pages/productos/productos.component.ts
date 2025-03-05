@@ -55,7 +55,7 @@ export class ProductosComponent implements OnInit {
     this.productosService.getAllProductos().subscribe({
       next: (data) => {
         this.cargando = false
-        this.productos = data.sort((a,b)=> a.nombre.localeCompare(b.nombre));
+        this.productos = data.sort((a, b) => a.nombre.localeCompare(b.nombre));
         console.log(this.productos)
       },
       error: () => {
@@ -110,6 +110,7 @@ export class ProductosComponent implements OnInit {
     const id = this.productoActualizado.idProducto;
     const imagenInput = document.getElementById("formFile") as HTMLInputElement;
     const imagen = imagenInput.files?.length ? imagenInput.files[0] : null;
+    // imagenInput.value=""; //Limpia el input
     this.productosService.actualizarP(id, this.productoActualizado, imagen || undefined).subscribe({
       next: (data) => {
         console.log(data)
@@ -118,8 +119,6 @@ export class ProductosComponent implements OnInit {
           return;
         }
         this.mensajeSerive.mostrarMensaje(`Producto ${this.productoActualizado.nombre} actualizado`, true);
-
-        // this.mensajeSerive.mostrarMensaje("Producto actualizado correctamente", true);
         this.mostrarProductos(); // Recargar productos
       },
       error: (err) => {
@@ -129,14 +128,10 @@ export class ProductosComponent implements OnInit {
     });
   }
   desactivarProducto(id: number, nombre: string): void {
-
     this.productosService.desactivarP(id).subscribe({
-
       next: () => {
         this.mostrarProductos();
         this.mensajeSerive.mostrarMensaje(`El producto ${nombre.toUpperCase()} fue Desactivado Correctamente`, true);
-
-
       },
       error: (err) => {
         this.mensajeSerive.mostrarMensaje(`Error, No se pudo Desactivar el Producto  ${nombre.toUpperCase()}`, false);
@@ -145,8 +140,6 @@ export class ProductosComponent implements OnInit {
 
       },
     })
-
-
   }
 
   eliminarProducto(id: number, nombre: string) {
@@ -158,12 +151,9 @@ export class ProductosComponent implements OnInit {
         },
         error: () => {
           this.mensajeSerive.mostrarMensaje(`Error al eliminar, intento más tarde`, false)
-
-
         },
       })
     }
-
   }
 
   ponerStockCero(id: number, nombreP: string, event: Event) {
@@ -175,17 +165,23 @@ export class ProductosComponent implements OnInit {
         if (respuesta == 0) {
           this.mensajeSerive.mostrarMensaje(`El Producto ${nombreP} ya esta agotado`, false)
         } else {
-          this.mensajeSerive.mostrarMensaje(`El Producto ${nombreP} se actualizado su Stock`, true)
+          this.mensajeSerive.mostrarMensaje(`El Producto ${nombreP} se actualizado su Stock con 0`, true)
         }
         this.mostrarProductos();
       },
       error: (err) => {
         this.mensajeSerive.mostrarMensaje(`Error, Intentenlo más tarde`, false)
-
       },
     })
-
   }
+
+
+
+
+
+
+
+
 
 
 }
