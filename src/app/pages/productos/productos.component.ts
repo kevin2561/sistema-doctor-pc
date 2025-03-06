@@ -85,9 +85,12 @@ export class ProductosComponent implements OnInit {
     this.ceroProductosFiltrados = this.productosActivadosFiltrados.length === 0;
   }
   productoSeleccionado(producto: Producto): void {
-    this.productoActualizado = {
-      ...producto
+    this.productoActualizado = { ...producto }
+    const imagenInput = document.getElementById("formFile") as HTMLInputElement;
+    if (imagenInput) {
+      imagenInput.value = ""; // Limpia el input
     }
+
     // ...producto, categoria: producto.categoria ?? { idCategoria: 0, nombre: "", estado: true } // Garantizar un objeto válido
   }
 
@@ -163,9 +166,9 @@ export class ProductosComponent implements OnInit {
       next: (respuesta) => {
         // console.log("Respuesta: ", respuesta)
         if (respuesta == 0) {
-          this.mensajeSerive.mostrarMensaje(`El Producto ${nombreP} ya esta agotado`, false)
+          this.mensajeSerive.mostrarMensaje(`El producto ${nombreP} ya está agotado.`, false);
         } else {
-          this.mensajeSerive.mostrarMensaje(`El Producto ${nombreP} se actualizado su Stock con 0`, true)
+          this.mensajeSerive.mostrarMensaje(`El stock del producto ${nombreP} se ha actualizado a 0.`, true);
         }
         this.mostrarProductos();
       },

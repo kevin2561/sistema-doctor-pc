@@ -67,8 +67,6 @@ export class VentasComponent implements OnInit {
     }
     this.e500 = false
     this.cargando = true;
-
-
     this.mesSeleccionado = this.meses[mesNum - 1][0]
     this.anioSeleccionado = anio
 
@@ -80,12 +78,12 @@ export class VentasComponent implements OnInit {
           this.mensajeService.mostrarMensaje(`No hay ventas registradas para el mes ${this.meses[mesNum - 1][0]} del  ${anio}`, false);
           this.venta = [];
           this.totalVentas = 0;
-
           return;
-
         }
+
         this.venta = data
         this.calcularVentas();
+        console.log(this.venta)
         data.length === 1
           ? this.mensajeService.mostrarMensaje(
             `Se encontraro ${data.length} registro de ventas de ${this.meses[mesNum - 1][0]} del ${anio}`,
@@ -95,15 +93,12 @@ export class VentasComponent implements OnInit {
             `Se encontraron ${data.length} registros  de ventas de ${this.meses[mesNum - 1][0]} del ${anio}`,
             true
           )
-
-
       }, error: (err) => {
         this.cargando = false;
         this.e500 = true
 
       },
     })
-
   }
 
   eliminarVenta(id: number, indice: number) {
@@ -124,14 +119,13 @@ export class VentasComponent implements OnInit {
   }
   seleccionarVenta(venta: Ventas) {
     return this.ventaSeleccionada = { ...venta }
-
   }
 
   actualizarVenta() {
     const id = this.ventaSeleccionada.idVenta
     this.ventasService.actualizarV(id, this.ventaSeleccionada).subscribe({
       next: (data) => {
-        this.mensajeService.mostrarMensaje(`Venta ${id} actualizado correctamente.`,true)
+        this.mensajeService.mostrarMensaje(`Venta ${id} actualizado correctamente.`, true)
         console.log(data);
         this.calcularVentas();
 

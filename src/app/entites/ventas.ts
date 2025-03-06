@@ -4,7 +4,7 @@ export interface Ventas {
     documento: string,
     descripcion: string,
     fecha: string,
-    metodoPago: String,
+    metodoPago: String ,
     total: number
 
 }
