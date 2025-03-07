@@ -58,6 +58,11 @@
     scroll-behavior: smooth;
     position: relative;
 }
+
+.scroll-tabla th, td {
+
+    vertical-align: middle;
+  }
 .scroll-tabla::-webkit-scrollbar {
     width: 15px;
 }

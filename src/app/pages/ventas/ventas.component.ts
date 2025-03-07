@@ -10,13 +10,14 @@ import { MensajesService } from '../../services/mensajes.service';
   styleUrl: './ventas.component.css'
 })
 export class VentasComponent implements OnInit {
-  constructor(private ventasService: VentasService, private mensajeService: MensajesService) {}
+  constructor(private ventasService: VentasService, private mensajeService: MensajesService) { }
   ngOnInit(): void {
     this.mensajeService.mensaje$.subscribe(mensaje => this.mensaje = mensaje);
     this.mensajeService.esExito$.subscribe(esExito => this.esExito = esExito);
     this.generarAnios();
 
   }
+  divMensajeVentas: boolean = false;
   mensaje: string = "";
   esExito: boolean = false;
   meses: [string, number][] = [
@@ -51,7 +52,6 @@ export class VentasComponent implements OnInit {
       this.anios.push(i);
     }
     this.anios.sort((a, b) => a - b)
-    console.log(this.anios)
   }
 
   filtrarVentas(mes: string, anio: string) {
@@ -69,6 +69,7 @@ export class VentasComponent implements OnInit {
     this.cargando = true;
     this.mesSeleccionado = this.meses[mesNum - 1][0]
     this.anioSeleccionado = anio
+    this.divMensajeVentas = true;
 
     this.ventasService.mostrarXMesYear(mesNum, anioNum).subscribe({
       next: (data) => {
@@ -80,7 +81,6 @@ export class VentasComponent implements OnInit {
           this.totalVentas = 0;
           return;
         }
-
         this.venta = data
         this.calcularVentas();
         console.log(this.venta)
@@ -118,8 +118,14 @@ export class VentasComponent implements OnInit {
     }
   }
   seleccionarVenta(venta: Ventas) {
-    return this.ventaSeleccionada = { ...venta }
+    this.ventaSeleccionada = { ...venta}
+    this.ventaSeleccionada.total = parseFloat(venta.total.toFixed(2));
+    console.log(this.ventaSeleccionada.total);
+
+
+
   }
+
 
   actualizarVenta() {
     const id = this.ventaSeleccionada.idVenta

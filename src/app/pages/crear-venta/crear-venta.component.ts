@@ -58,14 +58,14 @@ export class CrearVentaComponent implements OnInit {
 
     this.ventasService.crearV(ventax).subscribe({
       next: (data) => {
-        this.mensajeService.mostrarMensaje(`Venta N°${data.idVenta} creada exitosamente`, true)
+        this.mensajeService.mostrarMensaje(`✅ Venta creada: Código N° ${data.idVenta}`, true);
 
         console.log("Venta creada:", data);
       },
       error: (err) => {
         console.error("Error:", err);
         console.error("Detalle del error:", JSON.stringify(err, null, 2));
-        this.mensajeService.mostrarMensaje("Error, intentelo más tarde", false)
+        this.mensajeService.mostrarMensaje("❌ Error, intentelo más tarde", false)
 
       },
     });

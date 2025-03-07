@@ -42,7 +42,12 @@
 
     <app-loading *ngIf="cargando"></app-loading>
     <!-- Contenedor de la Tabla -->
-    <div *ngIf="!e500 && !cargando" class="tabla-contenedor">
+    <div id="mensaje-ventas-filtrado" *ngIf="divMensajeVentas" class="text-center">
+        <h1 class="fw-bold">📢 Ventas de {{mesSeleccionado}} del {{anioSeleccionado}}</h1>
+        <p class="text-muted">Consulta el resumen detallado de las ventas registradas este mes.</p>
+    </div>
+    <div *ngIf="!e500 && !cargando" class="tabla-contenedor scroll-tabla">
+
         <table class="table table-bordered table-hover text-center">
             <thead class="table-dark">
                 <tr>
@@ -61,7 +66,7 @@
                     <td>{{ i + 1 }}</td>
                     <td>{{item.nombre}}</td>
                     <td>{{item.documento}}</td>
-                    <td>{{item.descripcion}}</td>
+                    <td class="descripcion-columna">{{item.descripcion}}</td>
                     <td>{{item.metodoPago}}</td>
                     <td>{{item.fecha | date: 'dd/MM/yy'}}</td>
                     <td>S/ {{item.total | number:'1.2-2'}}</td>
@@ -75,15 +80,15 @@
                             title="Eliminar"></i>
                     </td>
                 </tr>
-
-                <tr class="bg-info-subtle">
+            </tbody>
+            <tfoot>
+                <tr class="total-fila">
                     <td colspan="5" class="fw-bold text-end">Total</td>
                     <td class="fw-bold text-dark"> S/ {{ totalVentas | number:'1.2-2' }}</td>
                     <td class="fw-bold text-dark" colspan="2">{{ venta.length === 0 ? '' : mesSeleccionado + ' del ' +
-                        anioSeleccionado }}
-                    </td>
+                        anioSeleccionado }}</td>
                 </tr>
-            </tbody>
+            </tfoot>
         </table>
     </div>
     <app-error-servidor *ngIf="e500"></app-error-servidor>
@@ -113,7 +118,8 @@
 
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Método de Pago</label>
-                                <select class="form-select" [(ngModel)]="ventaSeleccionada.metodoPago">
+                                <select class="form-select" [(ngModel)]="ventaSeleccionada.metodoPago"
+                                    name="metodoPago">
                                     <option disabled selected>Seleccione un Método de Pago</option>
                                     <option [value]="metodo" *ngFor="let metodo of metodoPagos">{{metodo}}</option>
                                 </select>
@@ -145,8 +151,10 @@
 
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Total</label>
-                                <input type="text" step="0.01" name="total" [(ngModel)]="ventaSeleccionada.total"
+
+                                <input type="text" name="total" [(ngModel)]="ventaSeleccionada.total"
                                     class="form-control" placeholder="Ej: 150.00">
+
                             </div>
                         </div>
 
