@@ -1,3 +1,5 @@
+<app-mesaje-validacion [mensaje]="mensaje" [esExito]="esExito"></app-mesaje-validacion>
+
 <section class="container mt-5 mb-5">
     <h1 class="page-titulo text-center mb-3">Crear Producto</h1>
     <p class="text-center text-muted">Ingrese la información del producto para registrarlo</p>
@@ -68,7 +70,9 @@
 
             <!-- Categoría -->
             <div class="mt-3">
-                <label for="categoria" class="form-label fw-bold">Seleccione una Categoría</label>
+                <label for="categoria" class="form-label fw-bold">Seleccione una categoría (Solo se muestran las
+                    categorías activas)
+                </label>
                 <select id="categoria" [(ngModel)]="producto.categoria" name="categoria" class="form-select" required>
                     <option [ngValue]="null" disabled selected>Seleccione una categoría</option>
                     <option *ngFor="let item of categoriaActivas" [ngValue]="item">{{ item.nombre }}</option>

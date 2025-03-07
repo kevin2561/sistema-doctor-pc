@@ -10,9 +10,7 @@ import { MensajesService } from '../../services/mensajes.service';
   styleUrl: './ventas.component.css'
 })
 export class VentasComponent implements OnInit {
-  constructor(private ventasService: VentasService, private mensajeService: MensajesService) {
-    this.generarAnios();
-  }
+  constructor(private ventasService: VentasService, private mensajeService: MensajesService) {}
   ngOnInit(): void {
     this.mensajeService.mensaje$.subscribe(mensaje => this.mensaje = mensaje);
     this.mensajeService.esExito$.subscribe(esExito => this.esExito = esExito);
@@ -52,6 +50,8 @@ export class VentasComponent implements OnInit {
     for (let i = this.anioMaximo; i >= this.anioInicio; i--) {
       this.anios.push(i);
     }
+    this.anios.sort((a, b) => a - b)
+    console.log(this.anios)
   }
 
   filtrarVentas(mes: string, anio: string) {
@@ -111,7 +111,7 @@ export class VentasComponent implements OnInit {
           this.calcularVentas();
         },
         error: () => {
-          this.mensajeService.mostrarMensaje(`Error al eliminar, inténtelo más tarde`, false)
+          this.mensajeService.mostrarMensaje(`Error, inténtelo más tarde`, false)
 
         }
       })

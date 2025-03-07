@@ -183,7 +183,8 @@
                         <!-- CATEGORIA -->
 
                         <div class="mt-3" *ngIf="categoriaSelect.length > 0">
-                            <label for="categoria" class="form-label fw-bold">Seleccione una Categoría</label>
+                            <label for="categoria" class="form-label fw-bold">Seleccione una categoría (Solo se muestran las
+                                categorías activas)</label>
                             <select id="categoria" [(ngModel)]="productoActualizado.categoria!.idCategoria"
                                 name="categoria" class="form-select" required>
                                 <option [ngValue]="null" disabled selected>Seleccione una categoría</option>

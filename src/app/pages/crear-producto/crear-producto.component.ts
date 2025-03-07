@@ -3,6 +3,7 @@ import { Producto } from '../../entites/producto';
 import { ProductosService } from '../../services/productos.service';
 import { CategoriasService } from '../../services/categorias.service';
 import { Categoria } from '../../entites/categoria';
+import { MensajesService } from '../../services/mensajes.service';
 
 @Component({
   selector: 'app-crear-producto',
@@ -13,6 +14,8 @@ import { Categoria } from '../../entites/categoria';
 export class CrearProductoComponent implements OnInit {
   errorImagen: boolean = false;
   // imagenSeleccionada?: File;
+  mensaje: string = ""
+  esExito: boolean = false
   producto: Producto = {
     idProducto: 0,
     nombre: '',
@@ -26,9 +29,11 @@ export class CrearProductoComponent implements OnInit {
   };
   categoriaActivas: Categoria[] = [];
   //PRIVATE
-  constructor(public productoService: ProductosService, private categoriaService: CategoriasService) { }
+  constructor(public productoService: ProductosService, private categoriaService: CategoriasService, private mensajeService: MensajesService) { }
 
   ngOnInit() {
+    this.mensajeService.mensaje$.subscribe(mensaje => this.mensaje = mensaje)
+    this.mensajeService.esExito$.subscribe(esExito => this.esExito = esExito)
     this.cargarCategorias();
 
   }
@@ -56,13 +61,15 @@ export class CrearProductoComponent implements OnInit {
         .subscribe({
           next: (respuesta) => {
             if (respuesta === 0) {
-              alert("Este producto ya exitse")
+              // alert("Este producto ya exitse")
+              this.mensajeService.mostrarMensaje(`Este Producto ya existe${this.producto.nombre}`, false)
             }
-            console.log("Producto creado:", respuesta);
+            this.mensajeService.mostrarMensaje(`Producto ${this.producto.nombre} creado exitosamente`, true)
 
           },
           error: (error) => {
-            console.error("Error al crear producto:", error);
+            console.log(error)
+            this.mensajeService.mostrarMensaje(`Error, intento más tarde`, false)
           }
         });
     } else {

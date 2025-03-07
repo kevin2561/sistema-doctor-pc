@@ -63,7 +63,7 @@
                     <td>{{item.documento}}</td>
                     <td>{{item.descripcion}}</td>
                     <td>{{item.metodoPago}}</td>
-                    <td>{{item.fecha}}</td>
+                    <td>{{item.fecha | date: 'dd/MM/yy'}}</td>
                     <td>S/ {{item.total | number:'1.2-2'}}</td>
                     <td>
                         <i class="bi bi-pencil-square text-primary accion-iconos" title="Editar" style="cursor:pointer;"
@@ -107,14 +107,14 @@
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Código de la Venta</label>
-                                <input type="text" [(readonly)]="ventaSeleccionada.idVenta" name="Id" value="50"
+                                <input type="text" [(readonly)]="ventaSeleccionada.idVenta" name="idVenta" value="50"
                                     class="form-control" readonly>
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Método de Pago</label>
-                                <select class="form-select">
-                                    <option disabled selected [(ngModel)]="ventaSeleccionada.metodoPago">Seleccione un Método de Pago</option>
+                                <select class="form-select" [(ngModel)]="ventaSeleccionada.metodoPago">
+                                    <option disabled selected>Seleccione un Método de Pago</option>
                                     <option [value]="metodo" *ngFor="let metodo of metodoPagos">{{metodo}}</option>
                                 </select>
                             </div>
@@ -135,7 +135,7 @@
                             </div>
                         </div>
 
-                        <!-- Campo Total y Fecha -->
+                        <!-- Campo Fecha y Total -->
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Fecha</label>
