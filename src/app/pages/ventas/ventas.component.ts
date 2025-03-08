@@ -69,7 +69,7 @@ export class VentasComponent implements OnInit {
     this.cargando = true;
     this.mesSeleccionado = this.meses[mesNum - 1][0]
     this.anioSeleccionado = anio
-    this.divMensajeVentas = true;
+    this.divMensajeVentas = false;
 
     this.ventasService.mostrarXMesYear(mesNum, anioNum).subscribe({
       next: (data) => {
@@ -83,6 +83,8 @@ export class VentasComponent implements OnInit {
         }
         this.venta = data
         this.calcularVentas();
+        this.divMensajeVentas = true;
+
         console.log(this.venta)
         data.length === 1
           ? this.mensajeService.mostrarMensaje(
@@ -118,7 +120,7 @@ export class VentasComponent implements OnInit {
     }
   }
   seleccionarVenta(venta: Ventas) {
-    this.ventaSeleccionada = { ...venta}
+    this.ventaSeleccionada = { ...venta }
     this.ventaSeleccionada.total = parseFloat(venta.total.toFixed(2));
     console.log(this.ventaSeleccionada.total);
 
