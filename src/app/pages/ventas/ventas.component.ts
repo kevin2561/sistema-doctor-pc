@@ -17,6 +17,8 @@ export class VentasComponent implements OnInit {
     this.generarAnios();
 
   }
+  ceroVentasFiltrados: boolean = false;
+
   divMensajeVentas: boolean = false;
   mensaje: string = "";
   esExito: boolean = false;
@@ -76,23 +78,25 @@ export class VentasComponent implements OnInit {
         this.cargando = false;
 
         if (data.length === 0) {
-          this.mensajeService.mostrarMensaje(`No hay ventas registradas para el mes ${this.meses[mesNum - 1][0]} del  ${anio}`, false);
+          // this.mensajeService.mostrarMensaje(`No hay ventas registradas para el mes ${this.meses[mesNum - 1][0]} del  ${anio}`, false);
           this.venta = [];
           this.totalVentas = 0;
+          this.ceroVentasFiltrados = true
           return;
         }
-        this.venta = data
+        this.venta = data.sort((a, b) => b.idVenta - a.idVenta)
         this.calcularVentas();
         this.divMensajeVentas = true;
+        this.ceroVentasFiltrados = false
 
-        console.log(this.venta)
+        // console.log(this.venta)
         data.length === 1
           ? this.mensajeService.mostrarMensaje(
-            `Se encontraro ${data.length} registro de ventas de ${this.meses[mesNum - 1][0]} del ${anio}`,
+            `Se encontraro ${data.length} registro de venta de ${this.meses[mesNum - 1][0]} del ${anio}`,
             true
           )
           : this.mensajeService.mostrarMensaje(
-            `Se encontraron ${data.length} registros  de ventas de ${this.meses[mesNum - 1][0]} del ${anio}`,
+            `Se encontraron ${data.length} registros de ventas de ${this.meses[mesNum - 1][0]} del ${anio}`,
             true
           )
       }, error: (err) => {
@@ -103,12 +107,12 @@ export class VentasComponent implements OnInit {
     })
   }
 
-  eliminarVenta(id: number, indice: number) {
-    if (window.confirm(`¿Está seguro de que desea eliminar la Venta ${indice + 1} ?`)) {
+  eliminarVenta(id: number, indice: number,) {
+    if (window.confirm(`¿Está seguro de que desea eliminar la Venta ${id} ?`)) {
       this.ventasService.eliminarV(id).subscribe({
         next: () => {
           this.venta.splice(indice, 1);
-          this.mensajeService.mostrarMensaje(`Se elimino la Venta ${indice + 1}`, true)
+          this.mensajeService.mostrarMensaje(`Se elimino la Venta ${id}`, true)
           // this.generarAnios();
           this.calcularVentas();
         },
@@ -131,7 +135,6 @@ export class VentasComponent implements OnInit {
 
   actualizarVenta() {
     const id = this.ventaSeleccionada.idVenta
-    console.log(this.ventaSeleccionada)
     if (isNaN(this.ventaSeleccionada.total)) {
       this.mensajeService.mostrarMensaje(`La venta ${id} el total debe ser un número válido.`, false);
       return;
@@ -139,9 +142,17 @@ export class VentasComponent implements OnInit {
     }
     this.ventasService.actualizarV(id, this.ventaSeleccionada).subscribe({
       next: (data) => {
+        const index = this.venta.findIndex(v => v.idVenta === this.ventaSeleccionada.idVenta);
+        if (index !== -1) {
+          this.venta[index] = { ...this.ventaSeleccionada }; // Actualiza el objeto en el array
+        }
+        // this.filtrarVentas(this.mesSeleccionado, this.anioSeleccionado);
+
+
         this.mensajeService.mostrarMensaje(`Venta ${id} actualizado correctamente.`, true)
-        console.log(data);
         this.calcularVentas();
+        // console.log(data);
+
 
       },
       error: (err) => {
