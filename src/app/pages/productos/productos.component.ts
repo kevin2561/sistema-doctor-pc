@@ -79,7 +79,8 @@ export class ProductosComponent implements OnInit {
       producto.estado && (
         producto.nombre.toLowerCase().includes(this.filtro.toLowerCase()) ||
         producto.marca.toLowerCase().includes(this.filtro.toLowerCase()) ||
-        producto.modelo.toLowerCase().includes(this.filtro.toLowerCase())
+        producto.modelo.toLowerCase().includes(this.filtro.toLowerCase()) ||
+        producto.categoria?.nombre.toLowerCase().includes(this.filtro.toLowerCase())
       )
     );
     this.ceroProductosFiltrados = this.productosActivadosFiltrados.length === 0;

@@ -131,6 +131,12 @@ export class VentasComponent implements OnInit {
 
   actualizarVenta() {
     const id = this.ventaSeleccionada.idVenta
+    console.log(this.ventaSeleccionada)
+    if (isNaN(this.ventaSeleccionada.total)) {
+      this.mensajeService.mostrarMensaje(`La venta ${id} el total debe ser un número válido.`, false);
+      return;
+
+    }
     this.ventasService.actualizarV(id, this.ventaSeleccionada).subscribe({
       next: (data) => {
         this.mensajeService.mostrarMensaje(`Venta ${id} actualizado correctamente.`, true)

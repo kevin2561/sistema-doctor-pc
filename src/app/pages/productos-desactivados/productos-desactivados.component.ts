@@ -31,7 +31,7 @@ export class ProductosDesactivadosComponent implements OnInit {
     this.e500 = false;
     this.productoService.getAllProductos().subscribe({
       next: (data) => {
-        this.productos = data
+        this.productos = data.sort((a,b)=>a.nombre.localeCompare(b.nombre))
         setTimeout(() => {
           this.cargando = false
         }, 100)
@@ -67,7 +67,7 @@ export class ProductosDesactivadosComponent implements OnInit {
     })
   }
 
-  eliminarProductoDesactivado(id: number, nombre: string){
+  eliminarProductoDesactivado(id: number, nombre: string) {
     if (window.confirm(`¿Esta seguro que quiere eliminar el Producto ${nombre}?`)) {
       this.productoService.eliminarP(id).subscribe({
         next: () => {

@@ -111,8 +111,8 @@
                         <!-- Campo Id y Metodo de Pago -->
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
-                                <label class="form-label fw-bold">Código de la Venta</label>
-                                <input type="text" [(readonly)]="ventaSeleccionada.idVenta" name="idVenta" value="50"
+                                <label class="form-label fw-bold">Código (No modificable)</label>
+                                <input type="text" [(ngModel)]="ventaSeleccionada.idVenta" name="idVenta"
                                     class="form-control" readonly>
                             </div>
 
@@ -151,10 +151,20 @@
 
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Total</label>
-
-                                <input type="text" name="total" [(ngModel)]="ventaSeleccionada.total"
-                                    class="form-control" placeholder="Ej: 150.00">
-
+                                <input 
+                                    type="text" 
+                                    name="total" 
+                                    [(ngModel)]="ventaSeleccionada.total"
+                                    class="form-control" 
+                                    placeholder="Ej: 150.00"  
+                                    #total="ngModel"
+                                    required
+                                    pattern="^[0-9]+(\.[0-9]{1,2})?$">
+                                
+                                <!-- Mensaje de error cuando el campo está vacío o no es un número -->
+                                <div *ngIf="total.invalid && total.touched" class="text-danger mt-1">
+                                    El monto debe ser un número
+                                </div>
                             </div>
                         </div>
 
@@ -169,7 +179,7 @@
                         <!-- Botones -->
                         <div class="text-end">
                             <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-primary">Actualizar</button>
+                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Actualizar</button>
                         </div>
 
                     </form>

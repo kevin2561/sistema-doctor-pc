@@ -7,14 +7,17 @@
             <h1 class="page-titulo text-center mb-3">Productos</h1>
             <p class="text-center text-muted">Todos estos productos estan Activos.</p>
 
-            <div id="contenedor-filtros-ventas" class="row mb-4">
+            <div id="contenedor-filtros-ventas" class="row mb-4 mt-4">
 
                 <form (ngSubmit)="buscador()" class="row g-3 align-items-end">
+                    <div class="col-12 text-left">
+                        <h5 class="text-dark mb-2">Buscar producto por nombre, modelo, marca o categoría</h5>
+                    </div>
                     <!-- Filtro -->
                     <div class="col-md-10">
                         <!-- <label class="form-label fw-bold">Seleccionar Mes</label> -->
                         <input type="text" [(ngModel)]="filtroTemporal" name="filtroTemporal"
-                            placeholder="Ingrese un  Nombre, Modelo o Marca" class="form-control">
+                            placeholder="Ingrese datos de búsqueda" class="form-control">
 
                     </div>
                     <!-- Botón Filtrar -->

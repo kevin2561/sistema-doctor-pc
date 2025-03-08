@@ -23,8 +23,8 @@ export class VentasService {
     return this.http.post<Ventas>(`${this.url}/post`, venta);
   }
 
-  actualizarV(id: number, venta: Ventas): Observable<Ventas | number> {
-    return this.http.post<Ventas | number>(`${this.url}/put/${id}`, venta);
+  actualizarV(id: number, venta: Ventas): Observable<Ventas> {
+    return this.http.put<Ventas>(`${this.url}/put/${id}`, venta);
 
   }
 
