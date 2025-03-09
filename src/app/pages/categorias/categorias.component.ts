@@ -17,10 +17,11 @@ export class CategoriasComponent implements OnInit {
   e500: boolean = false
   mensaje: string = "";
   esExito: boolean = false;
-  busquedaCategoria: string = ""
-  busquedaTemporalCategoria: string = ""
+
+  filtro: string = "";
+  filtroTemporal: string = "";
   categoriasActivadasFiltradas: Categoria[] = [];
-  ceroCategoriasFiltrados:boolean= false ;
+  ceroCategoriasFiltrados: boolean = false;
 
   constructor(private categoriaService: CategoriasService, private mensajeService: MensajesService) { }
 
@@ -29,6 +30,20 @@ export class CategoriasComponent implements OnInit {
     this.mensajeService.mensaje$.subscribe(mensaje => this.mensaje = mensaje);
     this.mensajeService.esExito$.subscribe(esExito => this.esExito = esExito);
     this.mostrarCategorias();
+  }
+  buscarCategoria(): void {
+    this.filtro = this.filtroTemporal.trim();
+    this.categoriasActivadasFiltradas = this.categoria?.filter(cat =>
+      cat.estado && (
+        cat.nombre.toLowerCase().includes(this.filtro.toLowerCase())
+      )
+    );
+    this.ceroCategoriasFiltrados = this.categoriasActivadasFiltradas.length === 0;
+    console.log(this.filtro)
+    console.log(this.categoriasActivadasFiltradas)
+    console.log(this.ceroCategoriasFiltrados)
+
+
   }
 
   mostrarCategorias(): void {
@@ -50,6 +65,10 @@ export class CategoriasComponent implements OnInit {
     })
   }
   get categoriaActivadas(): Categoria[] {
+    if (this.filtro.trim() != "") {
+      return this.categoriasActivadasFiltradas;
+
+    }
     return this.categoria?.filter(c => c.estado)
 
   }
@@ -109,15 +128,7 @@ export class CategoriasComponent implements OnInit {
       });
     }
   }
-  buscarCategoria() {
-    this.busquedaCategoria = this.busquedaTemporalCategoria.trim();
-    this.categoriasActivadasFiltradas = this.categoria?.filter(c =>
-      c.estado && (
-        c.nombre.toLowerCase().includes(this.busquedaCategoria.toLowerCase())
-      )
-    );
-    this.ceroCategoriasFiltrados = this.categoriasActivadasFiltradas.length === 0
-  }
+
 
 
 

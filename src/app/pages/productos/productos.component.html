@@ -27,7 +27,7 @@
                     </div>
                 </form>
             </div>
-            
+
             <div class="tabla-contenedor scroll-tabla">
                 <table class="table table-bordered table-hover text-center">
                     <thead class="table-dark">
@@ -55,12 +55,11 @@
                             <td><img (click)="productosService.verImagenGrande(producto.imagen)" class="img-table"
                                     [src]="producto.imagen || 'assets/no-imagen.jpg'" alt="" style="cursor: zoom-in;">
                             </td>
-                            <td><i (click)="productoSeleccionado(producto)" class="bi bi-pencil-square accion-iconos text-primary"
-                                    data-bs-toggle="modal" data-bs-target="#modalActualizarProducto" title="Editar"></i>
+                            <td><i (click)="productoSeleccionado(producto)"
+                                    class="bi bi-pencil-square accion-iconos text-primary" data-bs-toggle="modal"
+                                    data-bs-target="#modalActualizarProducto" title="Editar"></i>
                             </td>
                             <td>
-                                <!-- <button (click)="desactivarProducto(producto.idProducto, producto.nombre)"
-                                    class="btn btn-danger">Desactivar</button> -->
                                 <i class="bi bi-toggle2-off accion-iconos text-danger" title="Desactivar"
                                     (click)="desactivarProducto(producto.idProducto, producto.nombre)"></i>
                             </td>
@@ -184,7 +183,8 @@
                         <!-- CATEGORIA -->
 
                         <div class="mt-3" *ngIf="categoriaSelect.length > 0">
-                            <label for="categoria" class="form-label fw-bold">Seleccione una categoría (Solo se muestran las
+                            <label for="categoria" class="form-label fw-bold">Seleccione una categoría (Solo se muestran
+                                las
                                 categorías activas)</label>
                             <select id="categoria" [(ngModel)]="productoActualizado.categoria!.idCategoria"
                                 name="categoria" class="form-select" required>

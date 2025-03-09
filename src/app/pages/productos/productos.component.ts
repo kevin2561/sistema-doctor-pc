@@ -17,14 +17,16 @@ import { CategoriasService } from '../../services/categorias.service';
 export class ProductosComponent implements OnInit {
   errorImagen: boolean = false;
   productos: Producto[] = [];
-  productosActivadosFiltrados: Producto[] = [];
   cargando: boolean = false;
+  
   filtro: string = "";
   filtroTemporal: string = "";
+  productosActivadosFiltrados: Producto[] = [];
+  ceroProductosFiltrados: boolean = false;
+
   esExito: boolean = false;
   mensaje: string = "";
   e500: boolean = false
-  ceroProductosFiltrados: boolean = false;
   productoActualizado: Producto = {
     idProducto: 1,
     nombre: "",
@@ -46,6 +48,19 @@ export class ProductosComponent implements OnInit {
     this.mostrarProductos();
     this.cargarCategorias();
   }
+  buscador(): void {
+    this.filtro = this.filtroTemporal.trim(); // Se actualiza solo al hacer submit
+    this.productosActivadosFiltrados = this.productos?.filter(producto =>
+      producto.estado && (
+        producto.nombre.toLowerCase().includes(this.filtro.toLowerCase()) ||
+        producto.marca.toLowerCase().includes(this.filtro.toLowerCase()) ||
+        producto.modelo.toLowerCase().includes(this.filtro.toLowerCase()) ||
+        producto.categoria?.nombre.toLowerCase().includes(this.filtro.toLowerCase())
+      )
+    );
+    this.ceroProductosFiltrados = this.productosActivadosFiltrados.length === 0;
+  }
+  
 
   mostrarProductos(): void {
     this.cargando = true;
@@ -73,19 +88,7 @@ export class ProductosComponent implements OnInit {
     return this.productos?.filter(p => p.estado); // Si no hay filtro, devuelve todos los activados
   }
 
-  buscador(): void {
-    this.filtro = this.filtroTemporal.trim(); // Se actualiza solo al hacer submit
-    this.productosActivadosFiltrados = this.productos?.filter(producto =>
-      producto.estado && (
-        producto.nombre.toLowerCase().includes(this.filtro.toLowerCase()) ||
-        producto.marca.toLowerCase().includes(this.filtro.toLowerCase()) ||
-        producto.modelo.toLowerCase().includes(this.filtro.toLowerCase()) ||
-        producto.categoria?.nombre.toLowerCase().includes(this.filtro.toLowerCase())
-      )
-    );
-    this.ceroProductosFiltrados = this.productosActivadosFiltrados.length === 0;
-  }
-  
+
   productoSeleccionado(producto: Producto): void {
     this.productoActualizado = { ...producto }
     const imagenInput = document.getElementById("formFile") as HTMLInputElement;

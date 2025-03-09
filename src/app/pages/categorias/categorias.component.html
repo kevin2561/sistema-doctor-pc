@@ -10,6 +10,7 @@
         <div *ngIf="!cargando" class="tabla-contenedor">
             <h1 class="page-titulo text-center mb-3">Categorias</h1>
             <p class="text-center text-muted">Todos estas categorias estan Activas.</p>
+          
             <div id="contenedor-filtros-ventas" class="row mb-4 mt-4">
                 <form (ngSubmit)="buscarCategoria()" class="row g-3 align-items-end">
                     <div class="col-12 text-left">
@@ -18,7 +19,7 @@
                     <!-- Filtro -->
                     <div class="col-md-10">
                         <!-- <label class="form-label fw-bold">Seleccionar Mes</label> -->
-                        <input type="text" [(ngModel)]="busquedaCategoria" name="busquedaCategoria"
+                        <input type="text" [(ngModel)]="filtroTemporal" name="filtroTemporal"
                             placeholder="Ingrese datos de búsqueda" class="form-control">
 
                     </div>

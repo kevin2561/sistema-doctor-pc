@@ -63,10 +63,11 @@
 
     vertical-align: middle;
   }
-.scroll-tabla::-webkit-scrollbar {
-    width: 15px;
+ .scroll-tabla::-webkit-scrollbar {
+    width: 10px;
+    cursor: pointer;
 }
-
+/*
 .scroll-tabla::-webkit-scrollbar-track {
     background: blue;
 }
@@ -74,7 +75,7 @@
 .scroll-tabla::-webkit-scrollbar-thumb {
     background-color: #dc3545;
     border-radius: 0px;
-}
+} */
 
 .scroll-tabla thead {
     position: sticky;
