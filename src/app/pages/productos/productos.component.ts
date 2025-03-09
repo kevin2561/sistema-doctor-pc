@@ -85,6 +85,7 @@ export class ProductosComponent implements OnInit {
     );
     this.ceroProductosFiltrados = this.productosActivadosFiltrados.length === 0;
   }
+  
   productoSeleccionado(producto: Producto): void {
     this.productoActualizado = { ...producto }
     const imagenInput = document.getElementById("formFile") as HTMLInputElement;

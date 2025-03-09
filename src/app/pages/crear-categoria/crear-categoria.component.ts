@@ -42,34 +42,22 @@ export class CrearCategoriaComponent implements OnInit {
     this.categoriaService.postCategoria(nuevaCategoria).subscribe({
       next: (data) => {
         console.log(`Cageoria "${data.nombre}" creado exitosamente`);
-        this.mensajeService.mostrarMensaje(`Categoría "${data.nombre}" creada exitosamente.`, true);
+        this.mensajeService.mostrarMensaje(`Categoría "${data.nombre}". Creada exitosamente.`, true);
         formularioCategoriaNuevo.resetForm();
 
       },
       error: (error) => {
         if (!error || !error.status) {
           // Error inesperado (por ejemplo, la API no responde)
-          this.mensajeService.mostrarMensaje(`Error de conexión. Inténtalo más tarde.`, false);
+          this.mensajeService.mostrarMensaje(`Error, inténtalo más tarde.`, false);
           formularioCategoriaNuevo.resetForm();
 
         } else {
           // Otros errores (500, 403, etc.)
           this.mensajeService.mostrarMensaje(`Esta categoría ya existe.`, false);
           formularioCategoriaNuevo.resetForm();
-
         }
       }
     });
-
-
   }
-  // mostrarMensaje(mensaje: string, esExito: boolean) {
-  //   this.mensaje = mensaje;
-  //   this.esExito = esExito;
-
-  //   setTimeout(() => {
-  //     this.mensaje = "";
-  //   }, 5000);
-
-  // }
 }

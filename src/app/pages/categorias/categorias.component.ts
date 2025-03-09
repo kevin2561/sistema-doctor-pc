@@ -17,6 +17,11 @@ export class CategoriasComponent implements OnInit {
   e500: boolean = false
   mensaje: string = "";
   esExito: boolean = false;
+  busquedaCategoria: string = ""
+  busquedaTemporalCategoria: string = ""
+  categoriasActivadasFiltradas: Categoria[] = [];
+  ceroCategoriasFiltrados:boolean= false ;
+
   constructor(private categoriaService: CategoriasService, private mensajeService: MensajesService) { }
 
 
@@ -34,14 +39,13 @@ export class CategoriasComponent implements OnInit {
     this.categoriaService.getAllCategoria().subscribe({
       next: (data) => {
         this.cargando = false;
-        this.categoria = data.sort((a,b)=> a.nombre.localeCompare(b.nombre)); //Ordenar x nombre
+        this.categoria = data.sort((a, b) => a.nombre.localeCompare(b.nombre)); //Ordenar x nombre
         // console.log(this.categoria)
 
       },
       error: () => {
         this.e500 = true;
         this.cargando = false;
-
       }
     })
   }
@@ -101,8 +105,21 @@ export class CategoriasComponent implements OnInit {
             `Elimina primero el(los) producto(s) vinculados a la categoría <strong>${nombre.toUpperCase()}</strong>`,
             false
           );
-            }
+        }
       });
     }
   }
-}
+  buscarCategoria() {
+    this.busquedaCategoria = this.busquedaTemporalCategoria.trim();
+    this.categoriasActivadasFiltradas = this.categoria?.filter(c =>
+      c.estado && (
+        c.nombre.toLowerCase().includes(this.busquedaCategoria.toLowerCase())
+      )
+    );
+    this.ceroCategoriasFiltrados = this.categoriasActivadasFiltradas.length === 0
+  }
+
+
+
+
+} //FIN

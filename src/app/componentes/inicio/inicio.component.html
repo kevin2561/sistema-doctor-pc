@@ -1,1 +1,40 @@
-<h1>INICIO</h1>
+<div class="container my-5">
+    <!-- Hero Section -->
+    <section class="text-center">
+      <h1 class="fw-bold">Bienvenido</h1>
+      <p class="lead">Administra tus productos, categorías y ventas de manera eficiente con nuestra plataforma.</p>
+      <a [routerLink]="['/productos']" class="btn btn-primary btn-lg">Ver Productos</a>
+      <div class="mt-4">
+        <i class="bi bi-boxes display-1 text-primary"></i>
+      </div>
+    </section>
+  
+    <!-- Features Section -->
+    <section class="mt-5">
+      <h2 class="text-center fw-bold">¿Qué puedes hacer aquí?</h2>
+      <div class="row text-center mt-4">
+        <div class="col-md-4">
+          <i class="bi bi-bag-check display-3 text-success"></i>
+          <h3 class="fw-semibold">Gestión de Productos</h3>
+          <p class="text-muted">Agrega, edita y desactiva productos de manera sencilla.</p>
+        </div>
+        <div class="col-md-4">
+          <i class="bi bi-tags display-3 text-warning"></i>
+          <h3 class="fw-semibold">Organización por Categorías</h3>
+          <p class="text-muted">Clasifica tus productos en diferentes categorías.</p>
+        </div>
+        <div class="col-md-4">
+          <i class="bi bi-cart-check display-3 text-danger"></i>
+          <h3 class="fw-semibold">Registro de Ventas</h3>
+          <p class="text-muted">Realiza y consulta ventas en tiempo real.</p>
+        </div>
+      </div>
+    </section>
+  
+    <!-- Call to Action -->
+    <section class="mt-5 text-center">
+      <h2 class="fw-bold">Empieza a administrar tu negocio ahora</h2>
+      <a [routerLink]="['/ventas']" class="btn btn-success btn-lg mt-3">Ver Ventas</a>
+    </section>
+  </div>
+  
