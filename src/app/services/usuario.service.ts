@@ -6,13 +6,13 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class UsuarioService {
-  url: string = "http://localhost:9090/categoria/"
+  export class UsuarioService {
+    url: string = "http://localhost:9090/usuario/login"
 
-  constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) { }
 
 
-  loginUsuario(nombre: string, password: string): Observable<number> {
-    return this.http.post<number>(`${this.url}`, { nombre, password })
+    loginUsuario(nombre: string, password: string): Observable<number | string> {
+      return this.http.post<number | string>(`${this.url}`, { nombre, password })
+    }
   }
-}

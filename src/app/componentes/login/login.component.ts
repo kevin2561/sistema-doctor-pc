@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsuarioService } from '../../services/usuario.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -12,8 +13,6 @@ import { UsuarioService } from '../../services/usuario.service';
 export class LoginComponent {
   constructor(private router: Router, private usuarioService: UsuarioService) { }
   mostrarPassword: boolean = false;
-  usuario: string = "kevin";
-  password: string = "123456";
   usuarioInput: string = "";
   passwordInput: string = "";
   errorUsuario: boolean = false;
@@ -26,41 +25,34 @@ export class LoginComponent {
 
   }
   login() {
-    // this.usuarioService.loginUsuario(this.usuario, this.password).subscribe({
-    //   next: (data) => {
-    //     switch (data) {
-    //       case 1:
-    //         this.errorUsuario = this.usuarioInput !== this.usuario;
-    //         break;
-    //       case 2:
-    //         this.errorPassword = this.passwordInput !== this.password;
-    //         break;
-    //       default:
-    //         alert("Exito")
-    //         this.router.navigate(["/inicio"])
-    //     }
+    this.errorUsuario = false;
+    this.errorPassword = false;
+    console.log("Usuario:", this.usuarioInput);
+    console.log("Contraseña:", this.passwordInput);
 
-    //   },
-    //   error: (err) => {
-    //     console.log(err)
-
-    //   }
-    // })
-
-    this.errorUsuario = this.usuarioInput !== this.usuario;
-    this.errorPassword = this.passwordInput !== this.password;
-
-    if (!this.errorUsuario && !this.errorPassword) {
-      console.log("Exitoso")
-      this.router.navigate(["/inicio"])
-    } else {
-      setTimeout(() => {
-        this.errorUsuario = false;
-        this.errorPassword = false;
-
-      }, 5000);
-    }
-
+    this.usuarioService.loginUsuario(this.usuarioInput, this.passwordInput).subscribe({
+      next: (data: any) => {
+        console.log("Respuesta del servidor:", data);
+        if (data.message === "2") {
+          this.router.navigate(["/inicio"]);
+        }
+      },
+      error: (err: HttpErrorResponse) => {
+        // console.log("Error en la petición:", err);
+        if (err.status === 401) {
+          // Captura la respuesta del servidor
+          const errorResponse = err.error;
+          if (errorResponse.message === "0") {
+            this.errorUsuario = true;
+            console.log("Usuario incorrecto");
+          } else if (errorResponse.message === "1") {
+            this.errorPassword = true;
+            console.log("Contraseña incorrecta");
+          }
+        }
+      }
+    });
   }
+
 
 }
