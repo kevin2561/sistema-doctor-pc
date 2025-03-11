@@ -7,7 +7,7 @@ import { Ventas } from '../entites/ventas';
   providedIn: 'root'
 })
 export class VentasService {
-  url: string = "http://localhost:9090/ventas"
+  url: string = "https://api-rest-docot-pc-railway-subido.onrender.com/ventas"
   // anio = new Date()
   constructor(private http: HttpClient) { }
 

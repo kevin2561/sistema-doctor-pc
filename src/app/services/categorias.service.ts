@@ -12,7 +12,7 @@ export class CategoriasService {
   constructor(private http: HttpClient) {
 
   }
-  url: string = "http://localhost:9090/categoria/"
+  url: string = "https://api-rest-docot-pc-railway-subido.onrender.com/categoria/"
 
   //BUSCAR
   getAllCategoria(): Observable<Categoria[]> {

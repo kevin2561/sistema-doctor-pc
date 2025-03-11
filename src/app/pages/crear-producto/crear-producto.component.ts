@@ -28,6 +28,7 @@ export class CrearProductoComponent implements OnInit {
     categoria: null
   };
   categoriaActivas: Categoria[] = [];
+  condicionSelect: string[] = ["Alternativo", "Nuevo", "Usado"];
   //PRIVATE
   constructor(public productoService: ProductosService, private categoriaService: CategoriasService, private mensajeService: MensajesService) { }
 
@@ -40,7 +41,7 @@ export class CrearProductoComponent implements OnInit {
   cargarCategorias() {
     this.categoriaService.getAllCategoria().subscribe({
       next: (data) => {
-        this.categoriaActivas = data.filter((c) => c.estado);
+        this.categoriaActivas = data.filter((c) => c.estado).sort((a, b) => a.nombre.localeCompare(b.nombre));
         console.log(this.categoriaActivas)
       },
       error: (error) => {

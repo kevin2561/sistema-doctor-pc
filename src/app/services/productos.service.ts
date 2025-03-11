@@ -9,7 +9,7 @@ declare var bootstrap: any;
   providedIn: 'root'
 })
 export class ProductosService {
-  private url: String = "http://localhost:9090/producto"
+  private url: String = "https://api-rest-docot-pc-railway-subido.onrender.com/producto"
   imagenGrande: string = '';
   imagenSeleccionada?: File;
   constructor(private http: HttpClient) { }
@@ -52,7 +52,7 @@ export class ProductosService {
   verImagenGrande(imagen: string | null | undefined) {
     this.imagenGrande = imagen ?? 'assets/no-imagen.jpg';
 
-    const modalElement = document.getElementById('imageModal');
+    const modalElement = document.getElementById('imagePreviewModal');
     if (modalElement) {
       const modal = new bootstrap.Modal(modalElement);
       modal.show();

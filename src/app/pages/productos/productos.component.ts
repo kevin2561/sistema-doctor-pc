@@ -15,10 +15,13 @@ import { CategoriasService } from '../../services/categorias.service';
   styleUrls: ['./productos.component.css']
 })
 export class ProductosComponent implements OnInit {
+  // https://chatgpt.com/share/67cf740d-07ec-8003-a576-86ffb0cbff84
   errorImagen: boolean = false;
   productos: Producto[] = [];
   cargando: boolean = false;
-  
+  condicionSelect: string[] = ["Alternativo", "Nuevo", "Usado"];
+
+
   filtro: string = "";
   filtroTemporal: string = "";
   productosActivadosFiltrados: Producto[] = [];
@@ -60,7 +63,7 @@ export class ProductosComponent implements OnInit {
     );
     this.ceroProductosFiltrados = this.productosActivadosFiltrados.length === 0;
   }
-  
+
 
   mostrarProductos(): void {
     this.cargando = true;
@@ -71,7 +74,7 @@ export class ProductosComponent implements OnInit {
       next: (data) => {
         this.cargando = false
         this.productos = data.sort((a, b) => a.nombre.localeCompare(b.nombre));
-        console.log(this.productos)
+        // console.log(this.productos)
       },
       error: () => {
         this.e500 = true
@@ -102,8 +105,8 @@ export class ProductosComponent implements OnInit {
   cargarCategorias() {
     this.categoriaService.getAllCategoria().subscribe({
       next: (data) => {
-        this.categoriaSelect = data.filter((c) => c.estado)
-        console.log("Categorías cargadas:", this.categoriaSelect);
+        this.categoriaSelect = data.filter((c) => c.estado).sort((a, b) => a.nombre.localeCompare(b.nombre))
+        // console.log("Categorías cargadas:", this.categoriaSelect);
 
       },
       error: (err) => {

@@ -38,6 +38,7 @@
                     <thead class="table-dark">
                         <tr>
                             <th scope="col">#</th>
+                            <th scope="col">Código</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Estado</th>
                             <th scope="col" colspan="3">Acciones</th>
@@ -48,7 +49,7 @@
                     <tbody id="t-body">
                         <tr *ngFor="let item of categoriaActivadas; let i= index">
                             <td>{{i + 1 }}</td>
-
+                            <td>{{item.idCategoria}}</td>
                             <td>{{item.nombre}}</td>
                             <td>{{item.estado == true ? "Activo" : "False"}}</td>
                             <td>
