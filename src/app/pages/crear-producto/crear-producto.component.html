@@ -5,7 +5,7 @@
     <p class="text-center text-muted">Ingrese la información del producto para registrarlo</p>
 
     <div id="contenedor-form-crear-producto" class="d-flex justify-content-center">
-        <form #formularioProductoNuevo="ngForm" (ngSubmit)="crearNuevoProducto()"
+        <form #formularioProductoNuevo="ngForm" (ngSubmit)="crearNuevoProducto(formularioProductoNuevo)"
             class="p-4 border rounded shadow-lg bg-white w-100" style="max-width: 600px;">
 
             <!-- Nombre y Precio -->
@@ -62,10 +62,14 @@
 
                 <div class="col-md-6">
                     <label for="condicion" class="form-label fw-bold">Condición </label>
-                    <select id="condicion" name="condicion" class="form-select" required>
-                        <option [ngValue]="null" disabled selected>Eliga la condicion</option>
-                        <option *ngFor="let item of condicionSelect" [ngValue]="item.toLowerCase()">{{ item }}</option>
+                    <select id="condicion" [(ngModel)]="producto.condicion" name="condicion" class="form-select"
+                        required #condicionRef="ngModel">
+                        <option value="" disabled selected>Eliga la condicion</option>
+                        <option [ngValue]="item.toLowerCase()" *ngFor="let item of condicionSelect">{{ item }}</option>
                     </select>
+                    <div *ngIf="condicionRef.invalid && condicionRef.touched" class="text-danger mt-1">
+                        La condición es obligatoria.
+                    </div>
                 </div>
 
             </div>

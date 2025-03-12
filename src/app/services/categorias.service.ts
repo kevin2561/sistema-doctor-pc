@@ -12,7 +12,9 @@ export class CategoriasService {
   constructor(private http: HttpClient) {
 
   }
-  url: string = "https://api-rest-docot-pc-railway-subido.onrender.com/categoria/"
+  // private url: string = "https://api-rest-docot-pc-railway-subido.onrender.com/categoria/"
+  private url: string = "http://localhost:9090/categoria/"
+
 
   //BUSCAR
   getAllCategoria(): Observable<Categoria[]> {
@@ -39,7 +41,7 @@ export class CategoriasService {
 
   //DELETE
   eliminarC(id: number): Observable<any> {
-   return this.http.delete(`${this.url}delete/${id}`, { responseType: 'text' });
+    return this.http.delete(`${this.url}delete/${id}`, { responseType: 'text' });
   }
 
 }

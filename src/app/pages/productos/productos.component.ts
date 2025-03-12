@@ -39,6 +39,7 @@ export class ProductosComponent implements OnInit {
     imagen: "",
     marca: "",
     modelo: "",
+    condicion: "",
     categoria: { idCategoria: 0, nombre: "", estado: true } as Categoria // Inicializa con un objeto vacío
   }
   categoriaSelect: Categoria[] = []

@@ -9,7 +9,8 @@ declare var bootstrap: any;
   providedIn: 'root'
 })
 export class ProductosService {
-  private url: String = "https://api-rest-docot-pc-railway-subido.onrender.com/producto"
+  // private url: String = "https://api-rest-docot-pc-railway-subido.onrender.com/producto"
+  private url: String = "http://localhost:9090/producto"
   imagenGrande: string = '';
   imagenSeleccionada?: File;
   constructor(private http: HttpClient) { }
@@ -69,6 +70,7 @@ export class ProductosService {
     formData.append("estado", producto.estado?.toString());
     formData.append("marca", producto.marca);
     formData.append("modelo", producto.modelo);
+    formData.append("condicion", producto.condicion);
     if (producto.categoria?.idCategoria) {
       formData.append("idCategoria", producto.categoria.idCategoria.toString());
 

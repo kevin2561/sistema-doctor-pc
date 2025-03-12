@@ -50,8 +50,7 @@
                             <td>{{producto.nombre}}</td>
                             <td>{{producto.marca}}</td>
                             <td>{{producto.modelo}}</td>
-                            <td>Alternativo</td>
-
+                            <td style="text-transform: capitalize;">{{producto.condicion}}</td>
                             <td>{{producto.categoria?.nombre}}</td>
                             <td>{{producto.stock === 0 ? "Agotado" : producto.stock}}</td>
                             <td>S/ {{producto.precio | number:'1.2-2'}}</td>
@@ -179,9 +178,9 @@
 
                         <!-- Conficion-->
                         <div class="mt-3"> <label for="condicion" class="form-label fw-bold">Condición</label>
-                            <select id="condicion" name="condicion" class="form-select" required>
+                            <select id="condicion" name="condicion" [(ngModel)]="productoActualizado.condicion" class="form-select" required>
                                 <option [ngValue]="null" disabled selected>Eliga la condicion</option>
-                                <option *ngFor="let item of condicionSelect" [ngValue]="item.toLowerCase()">{{ item }}
+                                <option [ngValue]="item.toLowerCase()" *ngFor="let item of condicionSelect" >{{ item }}
                                 </option>
                             </select>
 

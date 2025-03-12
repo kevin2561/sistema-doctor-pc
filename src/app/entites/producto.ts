@@ -10,4 +10,5 @@ export interface Producto {
     marca: string
     modelo: string
     categoria: Categoria | null
+    condicion: string
 }

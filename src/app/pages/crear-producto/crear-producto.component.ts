@@ -4,6 +4,7 @@ import { ProductosService } from '../../services/productos.service';
 import { CategoriasService } from '../../services/categorias.service';
 import { Categoria } from '../../entites/categoria';
 import { MensajesService } from '../../services/mensajes.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-crear-producto',
@@ -25,7 +26,8 @@ export class CrearProductoComponent implements OnInit {
     imagen: '',
     marca: '',
     modelo: '',
-    categoria: null
+    categoria: null,
+    condicion: ""
   };
   categoriaActivas: Categoria[] = [];
   condicionSelect: string[] = ["Alternativo", "Nuevo", "Usado"];
@@ -51,7 +53,7 @@ export class CrearProductoComponent implements OnInit {
 
   }
 
-  crearNuevoProducto() {
+  crearNuevoProducto(formularioProductoNuevo :NgForm) {
     if (this.producto.nombre && this.producto.precio && this.producto.stock) {
       if (!this.producto.categoria || !this.producto.categoria.idCategoria) {
         alert("Debe seleccionar una categoría válida");
@@ -63,9 +65,13 @@ export class CrearProductoComponent implements OnInit {
           next: (respuesta) => {
             if (respuesta === 0) {
               // alert("Este producto ya exitse")
-              this.mensajeService.mostrarMensaje(`Este Producto ya existe${this.producto.nombre}`, false)
+              this.mensajeService.mostrarMensaje(`Este Producto ya existe ${this.producto.nombre}`, false)
+              console.log(respuesta)
+              return;
             }
             this.mensajeService.mostrarMensaje(`Producto ${this.producto.nombre} creado exitosamente`, true)
+            console.log(respuesta)
+            formularioProductoNuevo.resetForm();
 
           },
           error: (error) => {
