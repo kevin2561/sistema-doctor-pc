@@ -48,8 +48,8 @@
         <div class="text-center p-4 rounded bg-success text-white shadow-lg">
             <h2 class="fw-bold display-4">Total: S/ {{ totalVentas | number:'1.2-2' }}</h2>
         </div>
-        
-        
+
+
     </div>
     <div *ngIf="!e500 && !cargando" class="tabla-contenedor scroll-tabla">
 
@@ -72,7 +72,7 @@
                     <td>{{ i + 1 }}</td>
                     <td>{{ item.idVenta }}</td>
                     <td>{{item.nombre}}</td>
-                    <td>{{item.documento}}</td>
+                    <td>{{item.documento === "" ? "Dato omitido" : item.documento}}</td>
                     <td class="descripcion-columna">{{item.descripcion}}</td>
                     <td>{{item.metodoPago}}</td>
                     <td>{{item.fecha | date: 'dd/MM/yy'}}</td>

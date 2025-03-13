@@ -4,7 +4,7 @@
     <p class="text-center text-muted">Ingrese los datos para agregar una nueva Venta</p>
 
     <div id="contenedor-form-crear-venta" class="d-flex justify-content-center">
-        <form #formularioNuevaVenta="ngForm" (ngSubmit)="crearNuevoReporteVentas(ventas)"
+        <form #formularioNuevaVenta="ngForm" (ngSubmit)="crearNuevoReporteVentas(ventas, formularioNuevaVenta)"
             class="mb-4 p-4 border rounded shadow-lg bg-white mx-auto" style="max-width: 600px; width: 100%;">
 
 
@@ -51,10 +51,15 @@
             <div class="row g-3 mt-3">
                 <div class="col-md-12">
                     <label class="form-label fw-bold">Método de Pago</label>
-                    <select class="form-select" [(ngModel)]="ventas.metodoPago" name="metodoPago">
+                    <select class="form-select" [(ngModel)]="ventas.metodoPago" name="metodoPago"
+                        #metodopagoRef="ngModel" required>
+
                         <option value="" disabled selected>Seleccione un Método de Pago</option>
                         <option *ngFor="let metodo of metodoPagos" [ngValue]="metodo">{{metodo}}</option>
                     </select>
+                    <div *ngIf="metodopagoRef.invalid && metodopagoRef.touched" class="text-danger mt-1">
+                        El metodo de pago es obligatoria.
+                    </div>
                 </div>
             </div>
 

@@ -27,6 +27,7 @@
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Marca</th>
                                 <th scope="col">Modelo</th>
+                                <th scope="col">Modelo</th>
                                 <th scope="col">Categoria</th>
                                 <th scope="col">stock</th>
                                 <th scope="col">Precio</th>
@@ -39,6 +40,7 @@
                                 <td>{{i + 1}}</td>
                                 <td>{{producto.nombre}}</td>
                                 <td>{{producto.marca}}</td>
+                                <td style="text-transform: capitalize;">{{producto.condicion}}</td>
                                 <td>{{producto.modelo}}</td>
                                 <td>{{producto.categoria?.nombre}}</td>
                                 <td>{{producto.stock === 0 ? "Agotado" : producto.stock}}</td>
@@ -76,19 +78,20 @@
     </ng-template>
 
 
-    <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="contendor-modal modal-content bg-transparent border-0">
-                <div class="modal-header border-0">
-                    <button type="button" class="btn-close cerrar-imagen-grande" data-bs-dismiss="modal"
-                        aria-label="Cerrar"></button>
-                </div>
-                <div class="contenedor-imagen text-center">
-                    <img [src]="productoService.imagenGrande" class="img-fluid" alt="Imagen Producto" />
-                </div>
+   <!-- -------------------------MODAL IMAGEN------------ -->
+<div class="modal fade" id="imagePreviewModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content bg-transparent border-0">
+            <div class="modal-header border-0 mb-4">
+                <button type="button" class="btn-close cerrar-imagen-grande" data-bs-dismiss="modal"
+                    aria-label="Cerrar"></button>
+            </div>
+            <div class="contenedor-imagen-modal d-flex justify-content-center align-items-center mt-4">
+                <img [src]="productoService.imagenGrande" alt="Imagen Producto" class="imagen-modal-grande" />
             </div>
         </div>
     </div>
+</div>
 
 
 

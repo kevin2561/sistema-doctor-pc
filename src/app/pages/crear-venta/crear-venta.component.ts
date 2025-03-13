@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Ventas } from '../../entites/ventas';
 import { VentasService } from '../../services/ventas.service';
 import { MensajesService } from '../../services/mensajes.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-crear-venta',
@@ -25,7 +26,7 @@ export class CrearVentaComponent implements OnInit {
   } as Ventas
   metodoPagos = ["Efectivo", "Plin", "Tarjeta", "Yape"]
 
-  constructor(private ventasService: VentasService, private mensajeService:MensajesService) {
+  constructor(private ventasService: VentasService, private mensajeService: MensajesService) {
     this.fechaFormateada = this.ventasService.formateoFechPE(this.fecha)
     this.ventas.fecha = this.fechaFormateada;
     // console.log("Fecha FORMATEADA:", this.ventas.fecha);
@@ -39,8 +40,8 @@ export class CrearVentaComponent implements OnInit {
   }
 
 
-  crearNuevoReporteVentas(ventax: Ventas) {
- 
+  crearNuevoReporteVentas(ventax: Ventas, formularioNuevaVenta: NgForm) {
+
     // Formatea la fecha en el formato yyyy-MM-dd
     const fecha = new Date(ventax.fecha);
     const año = fecha.getFullYear();
@@ -58,14 +59,14 @@ export class CrearVentaComponent implements OnInit {
 
     this.ventasService.crearV(ventax).subscribe({
       next: (data) => {
-        this.mensajeService.mostrarMensaje(`✅ Venta creada: Código N° ${data.idVenta}`, true);
-
+        this.mensajeService.mostrarMensaje(`Venta creada: Código N° ${data.idVenta}`, true);
+        formularioNuevaVenta.reset()
         console.log("Venta creada:", data);
       },
       error: (err) => {
         console.error("Error:", err);
         console.error("Detalle del error:", JSON.stringify(err, null, 2));
-        this.mensajeService.mostrarMensaje("❌ Error, intentelo más tarde", false)
+        this.mensajeService.mostrarMensaje("Error, intentelo más tarde", false)
 
       },
     });

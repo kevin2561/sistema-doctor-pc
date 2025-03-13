@@ -21,7 +21,7 @@
                 <div class="col-md-6">
                     <label class="form-label fw-bold">Precio</label>
                     <input type="text" [(ngModel)]="producto.precio" name="precio" class="form-control"
-                        placeholder="Ej: 500" required #precioRef="ngModel">
+                        placeholder="Ej: 58.00" required #precioRef="ngModel">
                     <div *ngIf="precioRef.invalid && precioRef.touched" class="text-danger mt-1">
                         El precio es obligatorio.
                     </div>
@@ -33,7 +33,7 @@
                 <div class="col-md-6">
                     <label class="form-label fw-bold">Marca</label>
                     <input type="text" [(ngModel)]="producto.marca" name="marca" class="form-control"
-                        placeholder="Ej: Apple" required #marcaRef="ngModel">
+                        placeholder="Ej: Microsoft" required #marcaRef="ngModel">
                     <div *ngIf="marcaRef.invalid && marcaRef.touched" class="text-danger mt-1">
                         La marca es obligatoria.
                     </div>
@@ -41,14 +41,14 @@
                 <div class="col-md-6">
                     <label class="form-label fw-bold">Modelo</label>
                     <input type="text" [(ngModel)]="producto.modelo" name="modelo" class="form-control"
-                        placeholder="Ej: A1657L" required #modeloRef="ngModel">
+                        placeholder="Ej: IntelliMouse" required #modeloRef="ngModel">
                     <div *ngIf="modeloRef.invalid && modeloRef.touched" class="text-danger mt-1">
                         El modelo es obligatorio.
                     </div>
                 </div>
             </div>
 
-            <!-- Stock y Conficion-->
+            <!-- Stock y Conficion--> 
             <div class="row mt-3">
                 <div class="col-md-6">
                     <label class="form-label fw-bold">Stock</label>
@@ -95,7 +95,7 @@
                     <option *ngFor="let item of categoriaActivas" [ngValue]="item">{{ item.nombre }}</option>
                 </select>
                 <div *ngIf="categoriaRef.invalid && categoriaRef.touched" class="text-danger mt-1">
-                    La Categoria es obligatorio.
+                    La categoría es obligatorio.
                 </div>
             </div>
 
