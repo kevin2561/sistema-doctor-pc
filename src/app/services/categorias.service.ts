@@ -12,8 +12,8 @@ export class CategoriasService {
   constructor(private http: HttpClient) {
 
   }
-  // private url: string = "https://api-rest-docot-pc-railway-subido.onrender.com/categoria/"
-  private url: string = "http://localhost:9090/categoria/"
+   private url: string = "https://api-rest-doctor-pc-render-production.up.railway.app/categoria/"
+  // private url: string = "http://localhost:9090/categoria/"
 
 
   //BUSCAR

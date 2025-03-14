@@ -7,9 +7,9 @@ import { Ventas } from '../entites/ventas';
   providedIn: 'root'
 })
 export class VentasService {
-  // url: string = "https://api-rest-docot-pc-railway-subido.onrender.com/ventas"
+  url: string = "https://api-rest-doctor-pc-render-production.up.railway.app/ventas"
   // anio = new Date()
-  private url: string = "http://localhost:9090/ventas";
+  // private url: string = "http://localhost:9090/ventas";
   constructor(private http: HttpClient) { }
 
   mostrarXMesYear(mes: number, anio: number): Observable<Ventas[]> {

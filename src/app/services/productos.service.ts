@@ -9,8 +9,8 @@ declare var bootstrap: any;
   providedIn: 'root'
 })
 export class ProductosService {
-  // private url: String = "https://api-rest-docot-pc-railway-subido.onrender.com/producto"
-  private url: String = "http://localhost:9090/producto"
+  private url: String = "https://api-rest-doctor-pc-render-production.up.railway.app/producto"
+  // private url: String = "http://localhost:9090/producto"
   imagenGrande: string = '';
   imagenSeleccionada?: File;
   constructor(private http: HttpClient) { }
