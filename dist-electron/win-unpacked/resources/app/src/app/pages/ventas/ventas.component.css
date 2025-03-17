@@ -1,0 +1,17 @@
+.scroll-tabla tfoot {
+    position: sticky;
+    bottom: 0;
+    background-color: #f8f9fa; /* Color de fondo para que no se mezcle con el contenido */
+    z-index: 2;
+    font-weight: bold;
+}
+#mensaje-ventas-filtrado{
+    margin:5% 0%;
+}
+
+.descripcion-columna {
+    max-width: 300px; /* Ajusta según necesidad */
+    white-space: normal; /* Permite que la descripción tenga múltiples líneas */
+    word-wrap: break-word; /* Asegura que el texto largo no desborde */
+    text-align: left;
+  }

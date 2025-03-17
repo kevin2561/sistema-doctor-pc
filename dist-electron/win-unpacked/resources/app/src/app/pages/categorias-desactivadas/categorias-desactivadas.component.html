@@ -1,0 +1,56 @@
+<app-mesaje-validacion [mensaje]="mensaje" [esExito]="esExito"></app-mesaje-validacion>
+
+<ng-container *ngIf="e500; else contenido">
+
+  <app-error-servidor>
+  </app-error-servidor>
+</ng-container>
+
+<ng-template #contenido>
+  <ng-container *ngIf="cargando; else listaCategorias">
+    <app-loading></app-loading>
+  </ng-container>
+
+  <ng-template #listaCategorias>
+    <ng-container *ngIf="cDesactivadas.length > 0; else sinCategorias">
+      <section id="contenedor-categorias-desactivadas" class="container">
+        <h1 class="page-titulo text-center">Categorías Desactivadas</h1>
+        <div class="scroll-tabla">
+          <table class="table table-bordered table-hover text-center">
+            <thead class="table-dark">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Estado</th>
+                <th scope="col" colspan="2">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of cDesactivadas; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ item.nombre }}</td>
+                <td>Inactivo</td>
+                <td>
+                  <i class="bi bi-toggle-on accion-iconos text-success" title="Activar"
+                    (click)="activarCategoria(item.idCategoria, item.nombre)"></i>
+                <!-- </td>
+                <td> -->
+                  <i class="bi bi-trash accion-iconos text-danger ms-5"
+                    (click)="eliminarCategoria(item.idCategoria,item.nombre)" title="Eliminar"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </ng-container>
+
+    <ng-template #sinCategorias>
+      <section class="no-contenido text-center">
+        <i class="bi bi-folder-x no-contenido-icono"></i>
+        <h2>No hay categorías desactivadas</h2>
+        <p>Todas las categorías están activas.</p>
+      </section>
+    </ng-template>
+  </ng-template>
+</ng-template>

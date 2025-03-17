@@ -1,0 +1,99 @@
+<app-mesaje-validacion [mensaje]="mensaje" [esExito]="esExito"></app-mesaje-validacion>
+
+<ng-container *ngIf="e500; else contenido">
+    <app-error-servidor></app-error-servidor>
+</ng-container>
+
+<ng-template #contenido>
+    <ng-container *ngIf="cargando; else listaProductos">
+        <app-loading></app-loading>
+    </ng-container>
+
+    <ng-template #listaProductos>
+        <ng-container *ngIf="pDesactivados.length > 0; else sinProductos">
+            <section id="contenedor-productos-desactivados" class="container">
+                <div class="page-titulo">
+                    <h1 class="page-titulo text-center mb-3">Productos Desactivados</h1>
+
+                    <p class="text-center text-muted">Aquí se muestran todos los productos que actualmente están
+                        inactivos.</p>
+
+                </div>
+                <div class="tabla-contenedor">
+                    <table class="table table-bordered table-hover text-center">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Marca</th>
+                                <th scope="col">Modelo</th>
+                                <th scope="col">Modelo</th>
+                                <th scope="col">Categoria</th>
+                                <th scope="col">stock</th>
+                                <th scope="col">Precio</th>
+                                <th scope="col">Imagen</th>
+                                <th scope="col" colspan="2">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="t-body">
+                            <tr *ngFor="let producto of pDesactivados; let i= index">
+                                <td>{{i + 1}}</td>
+                                <td>{{producto.nombre}}</td>
+                                <td>{{producto.marca}}</td>
+                                <td style="text-transform: capitalize;">{{producto.condicion}}</td>
+                                <td>{{producto.modelo}}</td>
+                                <td>{{producto.categoria?.nombre}}</td>
+                                <td>{{producto.stock === 0 ? "Agotado" : producto.stock}}</td>
+                                <td>S/ {{producto.precio | number:'1.2-2'}}</td>
+
+                                <td><img (click)="productoService.verImagenGrande(producto.imagen)" class="img-table"
+                                        [src]="producto.imagen || 'assets/no-imagen.jpg'" style="cursor: zoom-in;"></td>
+
+
+                                <td>
+                                    <!-- <button class="btn btn-success">Activar</button> -->
+                                    <i class="bi bi-toggle-on accion-iconos text-success" title="Activar"
+                                        (click)="activarProducto(producto.idProducto, producto.nombre)"></i>
+                                </td>
+                                <td>
+                                    <i (click)="eliminarProductoDesactivado(producto.idProducto, producto.nombre)"
+                                        class="bi bi-trash text-danger accion-iconos ms-5" title="Eliminar"></i>
+                                </td>
+
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+            </section>
+        </ng-container>
+
+        <ng-template #sinProductos>
+            <section class="no-contenido text-center">
+                <i class="bi bi-folder-x no-contenido-icono"></i>
+                <h2>No hay Productos desactivadas</h2>
+                <p>Todas las Productos están activos.</p>
+            </section>
+        </ng-template>
+    </ng-template>
+
+
+   <!-- -------------------------MODAL IMAGEN------------ -->
+<div class="modal fade" id="imagePreviewModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content bg-transparent border-0">
+            <div class="modal-header border-0 mb-4">
+                <button type="button" class="btn-close cerrar-imagen-grande" data-bs-dismiss="modal"
+                    aria-label="Cerrar"></button>
+            </div>
+            <div class="contenedor-imagen-modal d-flex justify-content-center align-items-center mt-4">
+                <img [src]="productoService.imagenGrande" alt="Imagen Producto" class="imagen-modal-grande" />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</ng-template>

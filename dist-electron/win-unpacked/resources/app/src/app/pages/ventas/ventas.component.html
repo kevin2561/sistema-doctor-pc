@@ -1,0 +1,199 @@
+<app-mesaje-validacion [mensaje]="mensaje" [esExito]="esExito"></app-mesaje-validacion>
+
+<section id="contenedor-ventas" class="container mt-4">
+    <h1 class="page-titulo text-center mb-3">Ventas</h1>
+
+    <p class="text-center text-muted">Ingrese un mes y año para poder ver los registros</p>
+
+
+    <!-- Filtros de Ventas -->
+    <div id="contenedor-filtros-ventas" class="row mb-4">
+
+        <form (ngSubmit)="filtrarVentas(mes.value, anio.value)" class="row g-3 align-items-end">
+            <!-- Filtro de Mes -->
+            <div class="col-md-5">
+                <label class="form-label fw-bold">Seleccionar Mes</label>
+                <select #mes class="form-select" name="mes">
+                    <option selected disabled>Seleccione un mes</option>
+                    <option *ngFor="let mes of meses" [value]="mes[1]"> {{ mes[0] }}</option>
+                </select>
+            </div>
+
+            <!-- Filtro de Año -->
+            <div class="col-md-5">
+                <label class="form-label fw-bold">Seleccionar Año</label>
+                <select #anio class="form-select" name="anio">
+                    <option selected disabled>Seleccione un año</option>
+                    <option *ngFor="let anio of anios" [value]="anio">{{ anio }}</option>
+                </select>
+            </div>
+
+            <!-- Botón Filtrar -->
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="bi bi-search"></i> Filtrar
+                </button>
+            </div>
+        </form>
+
+
+    </div>
+
+
+    <app-loading *ngIf="cargando"></app-loading>
+    <!-- Contenedor de la Tabla -->
+    <div id="mensaje-ventas-filtrado" *ngIf="divMensajeVentas" class="text-center">
+        <h1 class="fw-bold">📢 Ventas de {{mesSeleccionado}} del {{anioSeleccionado}}</h1>
+        <p class="text-muted">Consulta el resumen detallado de las ventas registradas este mes.</p>
+        <div class="text-center p-4 rounded bg-success text-white shadow-lg">
+            <h2 class="fw-bold display-4">Total: S/ {{ totalVentas | number:'1.2-2' }}</h2>
+        </div>
+
+
+    </div>
+    <div *ngIf="!e500 && !cargando" class="tabla-contenedor scroll-tabla">
+
+        <table class="table table-bordered table-hover text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Código Venta</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Documento</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Metodo de Pago</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Monto</th>
+                    <th scope="col" colspan="2">Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="t-body">
+                <tr *ngFor="let item of venta; let i= index;">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ item.idVenta }}</td>
+                    <td>{{item.nombre}}</td>
+                    <td>{{item.documento === "" ? "Dato omitido" : item.documento}}</td>
+                    <td class="descripcion-columna">{{item.descripcion}}</td>
+                    <td>{{item.metodoPago}}</td>
+                    <td>{{item.fecha | date: 'dd/MM/yy'}}</td>
+                    <td>S/ {{item.total | number:'1.2-2'}}</td>
+                    <td>
+                        <i class="bi bi-pencil-square text-primary accion-iconos" title="Editar" style="cursor:pointer;"
+                            (click)="seleccionarVenta(item)" data-bs-toggle="modal"
+                            data-bs-target="#modalActualizarVenta"></i>
+                    </td>
+                    <td>
+                        <i (click)="eliminarVenta(item.idVenta, i)" class="bi bi-trash text-danger accion-iconos"
+                            title="Eliminar"></i>
+                    </td>
+                </tr>
+            </tbody>
+            <!-- <tfoot>
+                <tr class="total-fila">
+                    <td colspan="5" class="fw-bold text-end">Total</td>
+                    <td class="fw-bold text-dark"> S/ {{ totalVentas | number:'1.2-2' }}</td>
+                    <td class="fw-bold text-dark" colspan="2">{{ venta.length === 0 ? '' : mesSeleccionado + ' del ' +
+                        anioSeleccionado }}</td>
+                </tr>
+            </tfoot> -->
+        </table>
+        <div *ngIf="ceroVentasFiltrados" class="alert alert-warning text-center mt-3">
+            No se encontraron ventas para dicha fecha. {{this.mesSeleccionado}} del {{this.anioSeleccionado}}.
+        </div>
+
+    </div>
+    <app-error-servidor *ngIf="e500"></app-error-servidor>
+
+    <!-- --Modal -->
+    <div class="modal fade" id="modalActualizarVenta" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Actualizar Venta</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form (ngSubmit)="actualizarVenta()" #formularioNuevaVenta="ngForm"
+                        class="mb-4 p-4 border rounded shadow-lg bg-white mx-auto"
+                        style="max-width: 600px; width: 100%;">
+
+                        <!-- Campo Id y Metodo de Pago -->
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Código (No modificable)</label>
+                                <input type="text" [(ngModel)]="ventaSeleccionada.idVenta" name="idVenta"
+                                    class="form-control" readonly>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Método de Pago</label>
+                                <select class="form-select" [(ngModel)]="ventaSeleccionada.metodoPago"
+                                    name="metodoPago">
+                                    <option disabled selected>Seleccione un Método de Pago</option>
+                                    <option [value]="metodo" *ngFor="let metodo of metodoPagos">{{metodo}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Campo Nombre y Documento -->
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Nombre del Comprador</label>
+                                <input type="text" [(ngModel)]="ventaSeleccionada.nombre" name="nombre"
+                                    class="form-control" placeholder="Ej: Dante Alighieri" #nombre="ngModel">
+                                <div *ngIf="nombre.invalid && nombre.touched" class="text-danger mt-1">
+                                    xd
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Documento (Opcional)</label>
+                                <input type="text" name="documento" [(ngModel)]="ventaSeleccionada.documento"
+                                    class="form-control" placeholder="Ej: DNI o RUC">
+                            </div>
+                        </div>
+
+                        <!-- Campo Fecha y Total -->
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Fecha</label>
+                                <input type="date" name="fecha" [(ngModel)]="ventaSeleccionada.fecha"
+                                    class="form-control">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Total</label>
+                                <input type="text" name="total" [(ngModel)]="ventaSeleccionada.total"
+                                    class="form-control" placeholder="Ej: 150.00" #total="ngModel" required
+                                    pattern="^[0-9]+(\.[0-9]{1,2})?$">
+
+                                <!-- Mensaje de error cuando el campo está vacío o no es un número -->
+                                <div *ngIf="total.invalid && total.touched" class="text-danger mt-1">
+                                    El monto debe ser un número
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Campo Descripción -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Descripción de la Venta</label>
+                            <textarea name="descripcion" [(ngModel)]="ventaSeleccionada.descripcion"
+                                class="form-control" rows="3"
+                                placeholder="Ej: Venta de productos electrónicos"></textarea>
+                        </div>
+
+                        <!-- Botones -->
+                        <div class="text-end">
+                            <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Actualizar</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
