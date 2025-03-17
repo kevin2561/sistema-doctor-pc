@@ -1,8 +1,0 @@
-<div id="contenedor-mensajes" *ngIf="mensaje">
-    <div class="contenedor-resultado d-flex align-items-center" [ngClass]="{ 'exito': esExito, 'error': !esExito }">
-        <span>
-            <i [ngClass]="esExito ? 'bi bi-check-circle text-success' : 'bi bi-x-circle text-danger'"></i>
-        </span>
-        <p [innerHTML]="mensaje"></p>
-    </div>
-</div>

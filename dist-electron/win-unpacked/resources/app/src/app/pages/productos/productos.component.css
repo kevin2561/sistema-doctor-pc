@@ -1,6 +1,0 @@
-.imagen-modal-grande {
-    width: 100%; /* Ocupa todo el ancho disponible */
-    height: 500px; /* Ocupa todo el alto disponible */
-    object-fit: contain; /* Ajusta la imagen sin deformarla */
-
-}
