@@ -12,9 +12,20 @@
   </ng-container>
 
   <ng-template #listaCategorias>
+
     <ng-container *ngIf="cDesactivadas.length > 0; else sinCategorias">
+ 
+
+
+
       <section id="contenedor-categorias-desactivadas" class="container">
         <h1 class="page-titulo text-center">Categorías Desactivadas</h1>
+
+        <div>
+          <h2>Buscar Categoria</h2>
+          <input type="text" placeholder="Buscar Categoría" class="form-control">
+        </div>
+
         <div class="scroll-tabla">
           <table class="table table-bordered table-hover text-center">
             <thead class="table-dark">

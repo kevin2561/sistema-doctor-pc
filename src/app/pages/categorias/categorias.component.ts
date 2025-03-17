@@ -113,46 +113,49 @@ export class CategoriasComponent implements OnInit {
   }
   eliminarCategoria(id: number, nombre: string) {
     if ((window as any).require) {
-      // 🔹 Estamos en Electron, usamos dialog.showMessageBox()
-      const { dialog } = (window as any).require('electron').remote;
-      dialog.showMessageBox({
-        type: 'warning',
-        title: 'Confirmación',
-        message: `¿Estás seguro de que deseas eliminar la categoría ${nombre}?`,
-        buttons: ['Cancelar', 'Eliminar'],
-        defaultId: 0,
-        cancelId: 0
-      }).then((result:any) => {
-        if (result.response === 1) { // Si el usuario presiona "Eliminar"
-          this.procesarEliminacion(id, nombre);
-        }
-      });
+        // 🔹 Estamos en Electron, usamos dialog.showMessageBox()
+        const { dialog } = (window as any).require('electron').remote;
+        dialog.showMessageBox({
+            type: 'warning',
+            title: 'Confirmación',
+            message: `¿Estás seguro de que deseas eliminar la categoría ${nombre}?`,
+            buttons: ['Cancelar', 'Eliminar'],
+            defaultId: 0,
+            cancelId: 0
+        }).then((result: any) => {
+            setTimeout(() => window.focus(), 100); // 🔥 Solución rápida para evitar bloqueo
+
+            if (result.response === 1) { // Si el usuario presiona "Eliminar"
+                this.procesarEliminacion(id, nombre);
+            }
+        });
     } else {
-      // 🔹 Estamos en el navegador, usamos window.confirm()
-      if (window.confirm(`¿Estás seguro de que deseas eliminar la categoría ${nombre}?`)) {
-        this.procesarEliminacion(id, nombre);
-      }
+        // 🔹 Estamos en el navegador, usamos window.confirm()
+        if (window.confirm(`¿Estás seguro de que deseas eliminar la categoría ${nombre}?`)) {
+            this.procesarEliminacion(id, nombre);
+        }
     }
-  }
-  
-  // ✅ Función para procesar la eliminación (Evita repetir código)
-  private procesarEliminacion(id: number, nombre: string) {
+}
+
+// ✅ Función para procesar la eliminación (Evita repetir código)
+private procesarEliminacion(id: number, nombre: string) {
     this.categoriaService.eliminarC(id).subscribe({
-      next: () => {
-        this.mensajeService.mostrarMensaje(
-          `Se eliminó la categoría ${nombre.toUpperCase()} correctamente`, true);
-        this.mostrarCategorias();
-      },
-      error: () => {
-        this.mensajeService.mostrarMensaje(
-          `No puedes eliminar esta categoría ya que está vinculada a un producto.<br>` +
-          `Elimina primero el(los) producto(s) vinculados a la categoría <strong>${nombre.toUpperCase()}</strong>`,
-          false
-        );
-      }
+        next: () => {
+            this.mensajeService.mostrarMensaje(
+                `Se eliminó la categoría ${nombre.toUpperCase()} correctamente`, true);
+            this.mostrarCategorias();
+        },
+        error: () => {
+            this.mensajeService.mostrarMensaje(
+                `No puedes eliminar esta categoría ya que está vinculada a un producto.<br>` +
+                `Elimina primero el(los) producto(s) vinculados a la categoría <strong>${nombre.toUpperCase()}</strong>`,
+                false
+            );
+        }
     });
-  }
-  
+}
+
+
 
 
 
