@@ -10,7 +10,7 @@
         <div *ngIf="!cargando" class="tabla-contenedor">
             <h1 class="page-titulo text-center mb-3">Categorias</h1>
             <p class="text-center text-muted">Todos estas categorias estan Activas.</p>
-          
+
             <div id="contenedor-filtros-ventas" class="row mb-4 mt-4">
                 <form (ngSubmit)="buscarCategoria()" class="row g-3 align-items-end">
                     <div class="col-12 text-left">
@@ -71,7 +71,8 @@
 
                 </table>
                 <div *ngIf="ceroCategoriasFiltrados" class="alert alert-warning text-center mt-3">
-                    No se encontraron categorias con ese criterio de búsqueda.
+                    No se encontraron categorías con ese criterio de búsqueda. Inténtelo nuevamente.<br>
+                    Para ver todas las categorías, realice una búsqueda en blanco (sin escribir nada en el buscador).
                 </div>
             </div>
         </div>

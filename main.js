@@ -8,20 +8,20 @@ app.whenReady().then(() => {
   mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
-    fullscreen: false,
-    maximizable: true,
-    resizable: true,
-    autoHideMenuBar: true,
+    // fullscreen: false,
+    // maximizable: true,
+    // resizable: true,
+    // autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
       webSecurity: false,
-      spellcheck: true,
-      partition: "persist:loginSession"
+      // spellcheck: true,
+      // partition: "persist:loginSession"
     }
   });
 
-  mainWindow.setMenu(null);
+  // mainWindow.setMenu(null);
 
   mainWindow.webContents.session.setUserAgent(
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"

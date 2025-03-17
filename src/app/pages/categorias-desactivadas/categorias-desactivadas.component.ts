@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CategoriasService } from '../../services/categorias.service';
 import { Categoria } from '../../entites/categoria';
 import { MensajesService } from '../../services/mensajes.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-categorias-desactivadas',
@@ -15,6 +16,13 @@ export class CategoriasDesactivadasComponent implements OnInit {
   esExito: boolean = false
   cargando: boolean = false
   e500: boolean = false
+  filtroTemporal: string = "";
+  filtro: string = "";
+  categoriasDesactivadasFiltradas: Categoria[] = []
+  ceroCategoriasFiltradas: boolean = false
+  controlar: boolean = false;
+
+
 
 
   constructor(private categoriaService: CategoriasService, private mensajeService: MensajesService) { }
@@ -23,6 +31,10 @@ export class CategoriasDesactivadasComponent implements OnInit {
     this.mensajeService.esExito$.subscribe(esExito => this.esExito = esExito)
     this.mostrarCategorias()
 
+  }
+  get existenCategoriasDesactivadas(): boolean {
+    // Indica si existen categorías desactivadas en todo el sistema
+    return this.categorias.some(c => !c.estado);
   }
 
   mostrarCategorias() {
@@ -47,6 +59,9 @@ export class CategoriasDesactivadasComponent implements OnInit {
   }
 
   get cDesactivadas(): Categoria[] {
+    if (this.filtro.trim() != "") {
+      return this.categoriasDesactivadasFiltradas
+    }
     return this.categorias?.filter(c => !c.estado)
   }
 
@@ -83,4 +98,26 @@ export class CategoriasDesactivadasComponent implements OnInit {
       });
     }
   }
+
+  buscarCategoriaDesactivadas(): void {
+    this.filtro = this.filtroTemporal.trim(); // Asegurar que filtro se actualiza correctamente
+    this.controlar = true;
+
+    if (this.filtro) {
+      this.categoriasDesactivadasFiltradas = this.categorias?.filter(c =>
+        !c.estado && c.nombre.toLowerCase().includes(this.filtro.toLowerCase())
+      );
+    } else {
+      this.categoriasDesactivadasFiltradas = this.categorias?.filter(c => !c.estado);
+    }
+    this.ceroCategoriasFiltradas = this.categoriasDesactivadasFiltradas.length === 0;
+
+
+    console.log("Filtro:", this.filtro);
+    console.log("Categorías Filtradas:", this.categoriasDesactivadasFiltradas);
+    console.log("Cero Categorías Filtradas:", this.ceroCategoriasFiltradas);
+  }
+
+
+
 }

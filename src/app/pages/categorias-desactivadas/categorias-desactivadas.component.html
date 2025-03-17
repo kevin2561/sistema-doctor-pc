@@ -1,32 +1,42 @@
 <app-mesaje-validacion [mensaje]="mensaje" [esExito]="esExito"></app-mesaje-validacion>
 
 <ng-container *ngIf="e500; else contenido">
-
-  <app-error-servidor>
-  </app-error-servidor>
+  <app-error-servidor></app-error-servidor>
 </ng-container>
 
 <ng-template #contenido>
+  <!-- Mientras cargue, se muestra el componente de loading -->
   <ng-container *ngIf="cargando; else listaCategorias">
     <app-loading></app-loading>
   </ng-container>
 
   <ng-template #listaCategorias>
-
-    <ng-container *ngIf="cDesactivadas.length > 0; else sinCategorias">
- 
-
-
-
+    <!-- Verificamos si existen categorías desactivadas en general -->
+    <ng-container *ngIf="existenCategoriasDesactivadas; else sinCategoriasGlobal">
       <section id="contenedor-categorias-desactivadas" class="container">
         <h1 class="page-titulo text-center">Categorías Desactivadas</h1>
 
-        <div>
-          <h2>Buscar Categoria</h2>
-          <input type="text" placeholder="Buscar Categoría" class="form-control">
+        <div class="row mb-4 mt-4">
+          <form (ngSubmit)="buscarCategoriaDesactivadas()" class="row g-3 align-items-end">
+            <div class="col-12 text-left">
+              <h5 class="text-dark mb-2">Buscar categoría</h5>
+            </div>
+            <!-- Filtro -->
+            <div class="col-md-10">
+              <input type="text" [(ngModel)]="filtroTemporal" name="filtroTemporal"
+                placeholder="Ingrese datos de búsqueda" class="form-control">
+            </div>
+            <!-- Botón Filtrar -->
+            <div class="col-md-2">
+              <button type="submit" class="btn btn-primary w-100">
+                <i class="bi bi-search"></i> Buscar
+              </button>
+            </div>
+          </form>
         </div>
 
-        <div class="scroll-tabla">
+        <!-- Si la búsqueda arroja resultados, se muestra la tabla -->
+        <div class="scroll-tabla" *ngIf="cDesactivadas.length > 0; else sinCoincidencias">
           <table class="table table-bordered table-hover text-center">
             <thead class="table-dark">
               <tr>
@@ -44,19 +54,27 @@
                 <td>
                   <i class="bi bi-toggle-on accion-iconos text-success" title="Activar"
                     (click)="activarCategoria(item.idCategoria, item.nombre)"></i>
-                <!-- </td>
-                <td> -->
-                  <i class="bi bi-trash accion-iconos text-danger ms-5"
-                    (click)="eliminarCategoria(item.idCategoria,item.nombre)" title="Eliminar"></i>
+                  <i class="bi bi-trash accion-iconos text-danger ms-5" title="Eliminar"
+                    (click)="eliminarCategoria(item.idCategoria, item.nombre)"></i>
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
+
+        <!-- Si la búsqueda no arroja resultados, se muestra este mensaje -->
+        <ng-template #sinCoincidencias>
+          <div *ngIf="filtro.trim() !== ''" class="alert alert-warning text-center mt-3">
+            No se encontraron categorías con ese criterio de búsqueda. Inténtelo nuevamente.<br>
+            Para ver todas las categorías, realice una búsqueda en blanco (sin escribir nada en el buscador).
+          </div>
+          <!-- Si no hay filtro aplicado pero tampoco hay resultados, no se mostrará nada aquí -->
+        </ng-template>
       </section>
     </ng-container>
 
-    <ng-template #sinCategorias>
+    <!-- Si no existen categorías desactivadas en general -->
+    <ng-template #sinCategoriasGlobal>
       <section class="no-contenido text-center">
         <i class="bi bi-folder-x no-contenido-icono"></i>
         <h2>No hay categorías desactivadas</h2>

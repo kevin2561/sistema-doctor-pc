@@ -57,7 +57,7 @@
     "asar": false,
     "win": {
       "target": "nsis",
-      "icon": "dist/doctorpc-stock/browser/assets/logo.ico"
+      "icon": "logo.ico"
     },
     "directories": {
       "output": "dist-electron"
