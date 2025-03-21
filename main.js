@@ -1,4 +1,4 @@
-const { app, BrowserWindow, dialog } = require('electron');
+const { app, BrowserWindow, dialog, globalShortcut } = require('electron');
 const { autoUpdater } = require('electron-updater');
 const path = require('path');
 
@@ -12,6 +12,8 @@ app.whenReady().then(() => {
     // maximizable: true,
     // resizable: true,
     // autoHideMenuBar: true,
+    icon: path.join(__dirname, 'logo.ico'), // O el path a tu .ico o .png
+
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
@@ -23,6 +25,10 @@ app.whenReady().then(() => {
 
   // mainWindow.setMenu(null);
   mainWindow.webContents.openDevTools();
+
+  globalShortcut.register('Ctrl+Shift+I', () => {
+    mainWindow.webContents.openDevTools();
+  });
 
 
   mainWindow.webContents.session.setUserAgent(
