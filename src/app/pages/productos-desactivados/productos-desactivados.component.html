@@ -11,15 +11,34 @@
 
     <ng-template #listaProductos>
         <ng-container *ngIf="pDesactivados.length > 0; else sinProductos">
+
             <section id="contenedor-productos-desactivados" class="container">
-                <div class="page-titulo">
+                <div class="">
                     <h1 class="page-titulo text-center mb-3">Productos Desactivados</h1>
 
-                    <p class="text-center text-muted">Aquí se muestran todos los productos que actualmente están
-                        inactivos.</p>
+                    <div id="contenedor-filtros-ventas" class="row mb-4 mt-4">
+                        <form (ngSubmit)="buscarProductosDesactivados()" class="row g-3 align-items-end">
+                            <div class="col-12 text-left">
+                                <h5 class="text-dark mb-2">Buscar producto por nombre, modelo, marca o categoría</h5>
+                            </div>
+                            <!-- Filtro -->
+                            <div class="col-md-10">
+                                <!-- <label class="form-label fw-bold">Seleccionar Mes</label> -->
+                                <input type="text" [(ngModel)]="filtroTemporal" name="filtroTemporal"
+                                    placeholder="Ingrese datos de búsqueda" class="form-control">
+
+                            </div>
+                            <!-- Botón Filtrar -->
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-primary w-100">
+                                    <i class="bi bi-search"></i> Buscar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
 
                 </div>
-                <div class="tabla-contenedor">
+                <div class="tabla-contenedor scroll-tabla">
                     <table class="table table-bordered table-hover text-center">
                         <thead class="table-dark">
                             <tr>
@@ -51,7 +70,6 @@
 
 
                                 <td>
-                                    <!-- <button class="btn btn-success">Activar</button> -->
                                     <i class="bi bi-toggle-on accion-iconos text-success" title="Activar"
                                         (click)="activarProducto(producto.idProducto, producto.nombre)"></i>
                                 </td>

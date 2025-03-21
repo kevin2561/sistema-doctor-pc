@@ -29,6 +29,8 @@ export class ProductosDesactivadosComponent implements OnInit {
     categoria: { idCategoria: 0, nombre: "", estado: true } as Categoria // Inicializa con un objeto vacío
   }
   categoriaSelect: Categoria[] = []
+  filtroTemporal: string= "";
+  filtro: string= "";
 
   constructor(public productoService: ProductosService, private mensajeService: MensajesService) {
 
@@ -101,4 +103,7 @@ export class ProductosDesactivadosComponent implements OnInit {
 
   }
 
+  buscarProductosDesactivados(){
+
+  }
 }
