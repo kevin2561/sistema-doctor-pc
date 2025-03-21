@@ -54,13 +54,20 @@
                 <td>
                   <i class="bi bi-toggle-on accion-iconos text-success" title="Activar"
                     (click)="activarCategoria(item.idCategoria, item.nombre)"></i>
-                  <i class="bi bi-trash accion-iconos text-danger ms-5" title="Eliminar"
-                    (click)="eliminarCategoria(item.idCategoria, item.nombre)"></i>
+
+                  <i class="bi bi-trash accion-iconos text-danger ms-5" title="Eliminar" data-bs-toggle="modal"
+                    data-bs-target="#eliminarCategoriaDModal" (click)="categoriaSeleccionada(item)"></i>
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
+
+
+
+
+
+
 
         <!-- Si la búsqueda no arroja resultados, se muestra este mensaje -->
         <ng-template #sinCoincidencias>
@@ -81,5 +88,31 @@
         <p>Todas las categorías están activas.</p>
       </section>
     </ng-template>
+
+
+
   </ng-template>
 </ng-template>
+
+<!-- MODAL ELIMINAR CATEGORIA DESACTIVADA -->
+<div class="modal fade" id="eliminarCategoriaDModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar Cátegoria</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="" (ngSubmit)="eliminarCategoriaDesactivada()" >
+          ¿Está seguro de eliminar la categoría {{categoriaSelect.nombre}} ?
+          <div class="modal-footer mt-3">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Eliminar</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

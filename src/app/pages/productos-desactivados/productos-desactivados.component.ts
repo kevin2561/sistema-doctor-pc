@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductosService } from '../../services/productos.service';
 import { Producto } from '../../entites/producto';
 import { MensajesService } from '../../services/mensajes.service';
+import { Categoria } from '../../entites/categoria';
 
 @Component({
   selector: 'app-productos-desactivados',
@@ -15,6 +16,19 @@ export class ProductosDesactivadosComponent implements OnInit {
   esExito: boolean = false;
   cargando: boolean = false;
   e500: boolean = false;
+  productoSelect: Producto = {
+    idProducto: 1,
+    nombre: "",
+    precio: 0,
+    stock: 0,
+    estado: true,
+    imagen: "",
+    marca: "",
+    modelo: "",
+    condicion: "",
+    categoria: { idCategoria: 0, nombre: "", estado: true } as Categoria // Inicializa con un objeto vacío
+  }
+  categoriaSelect: Categoria[] = []
 
   constructor(public productoService: ProductosService, private mensajeService: MensajesService) {
 
@@ -25,13 +39,16 @@ export class ProductosDesactivadosComponent implements OnInit {
     this.mostrarProductos();
   }
 
+  productoSeleccionado(producto: Producto) {
+    this.productoSelect = { ...producto }
+  }
 
   mostrarProductos() {
     this.cargando = true
     this.e500 = false;
     this.productoService.getAllProductos().subscribe({
       next: (data) => {
-        this.productos = data.sort((a,b)=>a.nombre.localeCompare(b.nombre))
+        this.productos = data.sort((a, b) => a.nombre.localeCompare(b.nombre))
         setTimeout(() => {
           this.cargando = false
         }, 100)
@@ -67,20 +84,20 @@ export class ProductosDesactivadosComponent implements OnInit {
     })
   }
 
-  eliminarProductoDesactivado(id: number, nombre: string) {
-    if (window.confirm(`¿Esta seguro que quiere eliminar el Producto ${nombre}?`)) {
-      this.productoService.eliminarP(id).subscribe({
-        next: () => {
-          this.mensajeService.mostrarMensaje(`Producto ${nombre} eliminado correctamente`, true)
-          this.mostrarProductos();
-        },
-        error: () => {
-          this.mensajeService.mostrarMensaje(`Error al eliminar, intento más tarde`, false)
+  eliminarProductosDesactivados() {
+    const id = this.productoSelect.idProducto;
+    this.productoService.eliminarP(id).subscribe({
+      next: () => {
+        this.mensajeService.mostrarMensaje(`Producto ${this.productoSelect.nombre.toUpperCase()} eliminado correctamente`, true)
+        this.mostrarProductos();
+      },
+      error: () => {
+        this.mensajeService.mostrarMensaje(`Error al eliminar, intento más tarde`, false)
 
 
-        },
-      })
-    }
+      },
+    })
+
 
   }
 

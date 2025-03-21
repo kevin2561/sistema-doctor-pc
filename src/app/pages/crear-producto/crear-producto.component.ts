@@ -71,7 +71,10 @@ export class CrearProductoComponent implements OnInit {
             }
             this.mensajeService.mostrarMensaje(`Producto ${this.producto.nombre} creado exitosamente`, true)
             console.log(respuesta)
+            this.producto.categoria= null
             formularioProductoNuevo.resetForm();
+            this.producto.condicion= "";
+
 
           },
           error: (error) => {

@@ -9,28 +9,37 @@
     <!-- Filtros de Ventas -->
     <div id="contenedor-filtros-ventas" class="row mb-4">
 
-        <form (ngSubmit)="filtrarVentas(mes.value, anio.value)" class="row g-3 align-items-end">
+        <form #formularioFiltroMesAnio="ngForm" (ngSubmit)="filtrarVentas(mes.value, anio.value)"
+            class="row g-3 align-items-end">
             <!-- Filtro de Mes -->
             <div class="col-md-5">
                 <label class="form-label fw-bold">Seleccionar Mes</label>
-                <select #mes class="form-select" name="mes">
-                    <option selected disabled>Seleccione un mes</option>
+                <select #mes class="form-select" name="mes" [(ngModel)]="mesSeleccionado" #mesRef="ngModel" required>
+                    <option [ngValue]="null" selected disabled>Seleccione un mes</option>
                     <option *ngFor="let mes of meses" [value]="mes[1]"> {{ mes[0] }}</option>
+
                 </select>
+                <div *ngIf="mesRef.invalid && mesRef.touched" class="text-danger mt-1">
+                    Debe seleccionar un mes.
+                </div>
             </div>
 
             <!-- Filtro de Año -->
             <div class="col-md-5">
                 <label class="form-label fw-bold">Seleccionar Año</label>
-                <select #anio class="form-select" name="anio">
-                    <option selected disabled>Seleccione un año</option>
+                <select #anio class="form-select" name="anio" [(ngModel)]="anioSeleccionado" #anioRef="ngModel"
+                    required>
+                    <option [ngValue]="null" selected disabled>Seleccione un año</option>
                     <option *ngFor="let anio of anios" [value]="anio">{{ anio }}</option>
                 </select>
+                <div *ngIf="anioRef.invalid && anioRef.touched" class="text-danger mt-1">
+                    Debe seleccionar un Año.
+                </div>
             </div>
 
             <!-- Botón Filtrar -->
             <div class="col-md-2">
-                <button type="submit" class="btn btn-primary w-100">
+                <button type="submit" class="btn btn-primary w-100" [disabled]="formularioFiltroMesAnio.invalid">
                     <i class="bi bi-search"></i> Filtrar
                 </button>
             </div>
@@ -51,56 +60,81 @@
 
 
     </div>
-    <div *ngIf="!e500 && !cargando" class="tabla-contenedor scroll-tabla">
 
-        <table class="table table-bordered table-hover text-center">
-            <thead class="table-dark">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Código Venta</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Documento</th>
-                    <th scope="col">Descripción</th>
-                    <th scope="col">Metodo de Pago</th>
-                    <th scope="col">Fecha</th>
-                    <th scope="col">Monto</th>
-                    <th scope="col" colspan="2">Acciones</th>
-                </tr>
-            </thead>
-            <tbody id="t-body">
-                <tr *ngFor="let item of venta; let i= index;">
-                    <td>{{ i + 1 }}</td>
-                    <td>{{ item.idVenta }}</td>
-                    <td>{{item.nombre}}</td>
-                    <td>{{item.documento === "" ? "Dato omitido" : item.documento}}</td>
-                    <td class="descripcion-columna">{{item.descripcion}}</td>
-                    <td>{{item.metodoPago}}</td>
-                    <td>{{item.fecha | date: 'dd/MM/yy'}}</td>
-                    <td>S/ {{item.total | number:'1.2-2'}}</td>
-                    <td>
-                        <i class="bi bi-pencil-square text-primary accion-iconos" title="Editar" style="cursor:pointer;"
-                            (click)="seleccionarVenta(item)" data-bs-toggle="modal"
-                            data-bs-target="#modalActualizarVenta"></i>
-                    </td>
-                    <td>
-                        <i (click)="eliminarVenta(item.idVenta, i)" class="bi bi-trash text-danger accion-iconos"
-                            title="Eliminar"></i>
-                    </td>
-                </tr>
-            </tbody>
-            <!-- <tfoot>
-                <tr class="total-fila">
-                    <td colspan="5" class="fw-bold text-end">Total</td>
-                    <td class="fw-bold text-dark"> S/ {{ totalVentas | number:'1.2-2' }}</td>
-                    <td class="fw-bold text-dark" colspan="2">{{ venta.length === 0 ? '' : mesSeleccionado + ' del ' +
-                        anioSeleccionado }}</td>
-                </tr>
-            </tfoot> -->
-        </table>
-        <div *ngIf="ceroVentasFiltrados" class="alert alert-warning text-center mt-3">
-            No se encontraron ventas para dicha fecha. {{this.mesSeleccionado}} del {{this.anioSeleccionado}}.
+
+
+    <div *ngIf="!e500 && !cargando" class="tabla-contenedor">
+
+        <!-- BUSCADOR VENTAS -->
+        <div id="contenedor-filtros-ventas" class="row mb-4 mt-4 ml-3">
+            <form (ngSubmit)="buscarVenta()" class="row g-3 align-items-end">
+                <div class="col-12 text-left">
+                    <h5 class="text-dark mb-2">Buscar Venta</h5>
+                </div>
+                <!-- Filtro -->
+                <div class="col-md-10">
+                    <input type="text" name="filtroTemporal" [(ngModel)]="filtroTemporal"
+                        placeholder="Ingrese datos de búsqueda" class="form-control">
+
+                </div>
+                <!-- Botón Filtrar -->
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-search"></i> Buscar
+                    </button>
+                </div>
+            </form>
         </div>
 
+        <div class="scroll-tabla">
+            <table class="table table-bordered table-hover text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Código Venta</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Documento</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col">Metodo de Pago</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Monto</th>
+                        <th scope="col" colspan="2">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="t-body">
+                    <tr *ngFor="let item of ventasFiltradas; let i= index;">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ item.idVenta }}</td>
+                        <td>{{item.nombre}}</td>
+                        <td>{{item.documento === "" ? "Dato omitido" : item.documento}}</td>
+                        <td class="descripcion-columna">{{item.descripcion}}</td>
+                        <td>{{item.metodoPago}}</td>
+                        <td>{{item.fecha | date: 'dd/MM/yy'}}</td>
+                        <td>S/ {{item.total | number:'1.2-2'}}</td>
+                        <td>
+                            <i class="bi bi-pencil-square text-primary accion-iconos" title="Editar"
+                                style="cursor:pointer;" (click)="seleccionarVenta(item,i)" data-bs-toggle="modal"
+                                data-bs-target="#modalActualizarVenta"></i>
+                        </td>
+                        <td>
+                            <i (click)="seleccionarVenta(item,i)" class="bi bi-trash text-danger accion-iconos"
+                                data-bs-toggle="modal" data-bs-target="#eliminarVentaModal" title="Eliminar"></i>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+
+        <div *ngIf="ceroVentasFiltrados" class="alert alert-warning text-center mt-3">
+            No se encontraron ventas para dicha fecha.
+        </div>
+
+
+        <div *ngIf="ceroVentasEncontrados" class="alert alert-warning text-center mt-3">
+            No se encontraron Ventas con ese criterio de búsqueda. Inténtelo nuevamente.<br>
+            Para ver todas las Ventas, realice una búsqueda en blanco (sin escribir nada en el buscador).
+        </div>
     </div>
     <app-error-servidor *ngIf="e500"></app-error-servidor>
 
@@ -190,6 +224,29 @@
                             <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Actualizar</button>
                         </div>
 
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- -------------------------MODAL eliminar ------------ -->
+    <div class="modal fade" id="eliminarVentaModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar Cátegoria</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="" (ngSubmit)="eliminarVenta()">
+                        ¿Está seguro que desea eliminar la venta {{ventaSeleccionada.idVenta}} ?
+                        <div class="modal-footer mt-3">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Eliminar</button>
+                        </div>
                     </form>
                 </div>
             </div>

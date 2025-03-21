@@ -56,8 +56,9 @@
                                         (click)="activarProducto(producto.idProducto, producto.nombre)"></i>
                                 </td>
                                 <td>
-                                    <i (click)="eliminarProductoDesactivado(producto.idProducto, producto.nombre)"
-                                        class="bi bi-trash text-danger accion-iconos ms-5" title="Eliminar"></i>
+                                    <i (click)="productoSeleccionado(producto)"
+                                        class="bi bi-trash text-danger accion-iconos ms-5" data-bs-toggle="modal"
+                                        data-bs-target="#eliminarProductoDModal" title="Eliminar"></i>
                                 </td>
 
                             </tr>
@@ -78,20 +79,42 @@
     </ng-template>
 
 
-   <!-- -------------------------MODAL IMAGEN------------ -->
-<div class="modal fade" id="imagePreviewModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-fullscreen">
-        <div class="modal-content bg-transparent border-0">
-            <div class="modal-header border-0 mb-4">
-                <button type="button" class="btn-close cerrar-imagen-grande" data-bs-dismiss="modal"
-                    aria-label="Cerrar"></button>
-            </div>
-            <div class="contenedor-imagen-modal d-flex justify-content-center align-items-center mt-4">
-                <img [src]="productoService.imagenGrande" alt="Imagen Producto" class="imagen-modal-grande" />
+    <!-- -------------------------MODAL IMAGEN------------ -->
+    <div class="modal fade" id="imagePreviewModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content bg-transparent border-0">
+                <div class="modal-header border-0 mb-4">
+                    <button type="button" class="btn-close cerrar-imagen-grande" data-bs-dismiss="modal"
+                        aria-label="Cerrar"></button>
+                </div>
+                <div class="contenedor-imagen-modal d-flex justify-content-center align-items-center mt-4">
+                    <img [src]="productoService.imagenGrande" alt="Imagen Producto" class="imagen-modal-grande" />
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+    <!-- -------------------------MODAL ELIMINAR------------ -->
+    <div class="modal fade" id="eliminarProductoDModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar Producto</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="" (ngSubmit)="eliminarProductosDesactivados()">
+                        ¿Está seguro de eliminar el Producto {{productoSelect.nombre}} ?
+                        <div class="modal-footer mt-3">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Eliminar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 

@@ -21,6 +21,7 @@ export class CategoriasDesactivadasComponent implements OnInit {
   categoriasDesactivadasFiltradas: Categoria[] = []
   ceroCategoriasFiltradas: boolean = false
   controlar: boolean = false;
+  categoriaSelect: Categoria = { idCategoria: 0, nombre: "", estado: true }
 
 
 
@@ -63,6 +64,10 @@ export class CategoriasDesactivadasComponent implements OnInit {
       return this.categoriasDesactivadasFiltradas
     }
     return this.categorias?.filter(c => !c.estado)
+  }
+
+  categoriaSeleccionada(categoria: Categoria) {
+    return this.categoriaSelect = { ...categoria }
   }
 
   activarCategoria(id: number, nombre: string) {
@@ -116,6 +121,23 @@ export class CategoriasDesactivadasComponent implements OnInit {
     console.log("Filtro:", this.filtro);
     console.log("Categorías Filtradas:", this.categoriasDesactivadasFiltradas);
     console.log("Cero Categorías Filtradas:", this.ceroCategoriasFiltradas);
+  }
+
+  eliminarCategoriaDesactivada() {
+    const id = this.categoriaSelect.idCategoria;
+    this.categoriaService.eliminarC(id).subscribe({
+      next: (mensaje) => {
+        this.mensajeService.mostrarMensaje(`Se Eliminó la categoria ${this.categoriaSelect.nombre.toUpperCase()} correctamente`, true);
+        this.mostrarCategorias();
+      },
+      error: (err) => {
+        this.mensajeService.mostrarMensaje(
+          `No puedes eliminar esta categoría ya que está vinculada a un producto.<br> +
+          Elimina primero el(los) producto(s) vinculados a la categoría <strong>${this.categoriaSelect.nombre.toUpperCase()}</strong>`,
+          false
+        );
+      }
+    });
   }
 
 

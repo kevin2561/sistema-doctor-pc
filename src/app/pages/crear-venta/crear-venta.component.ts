@@ -29,7 +29,7 @@ export class CrearVentaComponent implements OnInit {
   constructor(private ventasService: VentasService, private mensajeService: MensajesService) {
     this.fechaFormateada = this.ventasService.formateoFechPE(this.fecha)
     this.ventas.fecha = this.fechaFormateada;
-    // console.log("Fecha FORMATEADA:", this.ventas.fecha);
+
     this.mensajeService.mensaje$.subscribe(mensaje => this.mensaje = mensaje);
     this.mensajeService.esExito$.subscribe(esExito => this.esExito = esExito);
   }
@@ -61,6 +61,9 @@ export class CrearVentaComponent implements OnInit {
       next: (data) => {
         this.mensajeService.mostrarMensaje(`Venta creada: Código N° ${data.idVenta}`, true);
         formularioNuevaVenta.reset()
+        const fechaActual = this.ventasService.formateoFechPE(new Date())
+        this.ventas.fecha = fechaActual;
+        this.ventas.metodoPago = "";
         console.log("Venta creada:", data);
       },
       error: (err) => {
