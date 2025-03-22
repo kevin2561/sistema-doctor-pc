@@ -116,12 +116,12 @@ export class CategoriasComponent implements OnInit {
     const id = this.categoriaSelect.idCategoria
     this.categoriaService.eliminarC(id).subscribe({
       next: (mensaje) => {
-        this.mensajeService.mostrarMensaje(`Se Eliminó la categoria ${this.categoriaSelect.nombre.toUpperCase()} correctamente`, true);
+        this.mensajeService.mostrarMensaje(`Se Eliminó la categoría ${this.categoriaSelect.nombre.toUpperCase()} correctamente`, true);
         this.mostrarCategorias();
       },
       error: (err) => {
         this.mensajeService.mostrarMensaje(
-          `No puedes eliminar esta categoría ya que está vinculada a un producto.<br> +
+          `No puedes eliminar esta categoría ya que está vinculada a un producto.<br>
         Elimina primero el(los) producto(s) vinculados a la categoría <strong>${this.categoriaSelect.nombre.toUpperCase()}</strong>`,
           false
         );

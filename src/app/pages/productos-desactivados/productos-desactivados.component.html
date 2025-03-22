@@ -10,7 +10,7 @@
     </ng-container>
 
     <ng-template #listaProductos>
-        <ng-container *ngIf="pDesactivados.length > 0; else sinProductos">
+        <ng-container *ngIf="hayProductosDesactivadosEnGeneral; else sinProductos">
 
             <section id="contenedor-productos-desactivados" class="container">
                 <div class="">
@@ -18,14 +18,12 @@
 
                     <div id="contenedor-filtros-ventas" class="row mb-4 mt-4">
                         <form (ngSubmit)="buscarProductosDesactivados()" class="row g-3 align-items-end">
-                            <div class="col-12 text-left">
-                                <h5 class="text-dark mb-2">Buscar producto por nombre, modelo, marca o categoría</h5>
-                            </div>
                             <!-- Filtro -->
                             <div class="col-md-10">
                                 <!-- <label class="form-label fw-bold">Seleccionar Mes</label> -->
                                 <input type="text" [(ngModel)]="filtroTemporal" name="filtroTemporal"
-                                    placeholder="Ingrese datos de búsqueda" class="form-control">
+                                    placeholder="Buscar productos por nombre, marca, modelo o categoría"
+                                    class="form-control border border-primary">
 
                             </div>
                             <!-- Botón Filtrar -->
@@ -39,50 +37,60 @@
 
                 </div>
                 <div class="tabla-contenedor scroll-tabla">
-                    <table class="table table-bordered table-hover text-center">
-                        <thead class="table-dark">
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Marca</th>
-                                <th scope="col">Modelo</th>
-                                <th scope="col">Modelo</th>
-                                <th scope="col">Categoria</th>
-                                <th scope="col">stock</th>
-                                <th scope="col">Precio</th>
-                                <th scope="col">Imagen</th>
-                                <th scope="col" colspan="2">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="t-body">
-                            <tr *ngFor="let producto of pDesactivados; let i= index">
-                                <td>{{i + 1}}</td>
-                                <td>{{producto.nombre}}</td>
-                                <td>{{producto.marca}}</td>
-                                <td style="text-transform: capitalize;">{{producto.condicion}}</td>
-                                <td>{{producto.modelo}}</td>
-                                <td>{{producto.categoria?.nombre}}</td>
-                                <td>{{producto.stock === 0 ? "Agotado" : producto.stock}}</td>
-                                <td>S/ {{producto.precio | number:'1.2-2'}}</td>
+                    <ng-container *ngIf="pDesactivados.length > 0; else sinResultadosBusqueda">
 
-                                <td><img (click)="productoService.verImagenGrande(producto.imagen)" class="img-table"
-                                        [src]="producto.imagen || 'assets/no-imagen.jpg'" style="cursor: zoom-in;"></td>
+                        <table class="table table-bordered table-hover text-center">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Marca</th>
+                                    <th scope="col">Modelo</th>
+                                    <th scope="col">Modelo</th>
+                                    <th scope="col">Categoria</th>
+                                    <th scope="col">stock</th>
+                                    <th scope="col">Precio</th>
+                                    <th scope="col">Imagen</th>
+                                    <th scope="col" colspan="2">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="t-body">
+                                <tr *ngFor="let producto of pDesactivados; let i= index">
+                                    <td>{{i + 1}}</td>
+                                    <td>{{producto.nombre}}</td>
+                                    <td>{{producto.marca}}</td>
+                                    <td style="text-transform: capitalize;">{{producto.condicion}}</td>
+                                    <td>{{producto.modelo}}</td>
+                                    <td>{{producto.categoria?.nombre}}</td>
+                                    <td>{{producto.stock === 0 ? "Agotado" : producto.stock}}</td>
+                                    <td>S/ {{producto.precio | number:'1.2-2'}}</td>
+
+                                    <td><img (click)="productoService.verImagenGrande(producto.imagen)"
+                                            class="img-table" [src]="producto.imagen || 'assets/no-imagen.jpg'"
+                                            style="cursor: zoom-in;"></td>
 
 
-                                <td>
-                                    <i class="bi bi-toggle-on accion-iconos text-success" title="Activar"
-                                        (click)="activarProducto(producto.idProducto, producto.nombre)"></i>
-                                </td>
-                                <td>
-                                    <i (click)="productoSeleccionado(producto)"
-                                        class="bi bi-trash text-danger accion-iconos ms-5" data-bs-toggle="modal"
-                                        data-bs-target="#eliminarProductoDModal" title="Eliminar"></i>
-                                </td>
+                                    <td>
+                                        <i class="bi bi-toggle-on accion-iconos text-success" title="Activar"
+                                            (click)="activarProducto(producto.idProducto, producto.nombre)"></i>
+                                    </td>
+                                    <td>
+                                        <i (click)="productoSeleccionado(producto)"
+                                            class="bi bi-trash text-danger accion-iconos ms-5" data-bs-toggle="modal"
+                                            data-bs-target="#eliminarProductoDModal" title="Eliminar"></i>
+                                    </td>
 
-                            </tr>
-                        </tbody>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </ng-container>
 
-                    </table>
+                    <!-- Alerta cuando la búsqueda no arroja resultados -->
+                    <ng-template #sinResultadosBusqueda>
+                        <div class="alert alert-warning text-center mt-3">
+                            Para ver todos los productos, deje el campo de<br> búsqueda en blanco y presione buscar.
+                        </div>
+                    </ng-template>
                 </div>
             </section>
         </ng-container>

@@ -48,7 +48,7 @@
                 </div>
             </div>
 
-            <!-- Stock y Conficion--> 
+            <!-- Stock y Conficion-->
             <div class="row mt-3">
                 <div class="col-md-6">
                     <label class="form-label fw-bold">Stock</label>
@@ -81,7 +81,10 @@
                     id="formFile" name="imagen"> -->
                 <input (change)="productoService.validarSizeImagen($event)" class="form-control"
                     accept=".jpg, .jpeg, .png" type="file" id="formFile" name="imagen">
-                <div *ngIf="errorImagen" class="text-danger mt-1">La imagen debe ser menor a 10MB.</div>
+                    
+                <div *ngIf="errorImagen" class="text-danger mt-1">
+                    La imagen debe ser menor a 10MB.
+                </div>
             </div>
 
             <!-- Categoría -->

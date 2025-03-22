@@ -88,6 +88,8 @@ export class VentasComponent implements OnInit {
           this.venta = [];
           this.totalVentas = 0;
           this.ceroVentasFiltrados = true
+          this.divMensajeVentas= false;
+          this.ventasFiltradas=[]
           return;
         }
         this.venta = data.sort((a, b) => b.idVenta - a.idVenta)

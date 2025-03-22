@@ -29,8 +29,10 @@ export class ProductosDesactivadosComponent implements OnInit {
     categoria: { idCategoria: 0, nombre: "", estado: true } as Categoria // Inicializa con un objeto vacío
   }
   categoriaSelect: Categoria[] = []
-  filtroTemporal: string= "";
-  filtro: string= "";
+  productosFiltradosDesactivados: Producto[] = []
+  ceroProductosFiltradosDesactivados: boolean = false
+  filtroTemporal: string = "";
+  filtro: string = "";
 
   constructor(public productoService: ProductosService, private mensajeService: MensajesService) {
 
@@ -67,8 +69,15 @@ export class ProductosDesactivadosComponent implements OnInit {
   }
 
   get pDesactivados(): Producto[] {
+    if (this.filtro.trim() != "") {
+      return this.productosFiltradosDesactivados
+    }
     return this.productos?.filter((p) => !p.estado)
   }
+  get hayProductosDesactivadosEnGeneral(): boolean {
+    return this.productos.some(p => !p.estado);
+  }
+
 
   activarProducto(id: number, nombre: string) {
     this.cargando = true;
@@ -103,7 +112,22 @@ export class ProductosDesactivadosComponent implements OnInit {
 
   }
 
-  buscarProductosDesactivados(){
+  buscarProductosDesactivados(): void {
+    this.filtro = this.filtroTemporal.trim();
+    if (this.filtro) {
+      this.productosFiltradosDesactivados = this.productos?.filter(p =>
+        !p.estado && p.nombre.toLowerCase().includes(this.filtro.toLowerCase())
+      );
+    } else {
+      this.productosFiltradosDesactivados = this.productos?.filter(p => !p.estado)
+    }
+
+    this.ceroProductosFiltradosDesactivados = this.productosFiltradosDesactivados.length === 0;
+
+    console.log("filtro " + this.filtro)
+    console.log(this.productosFiltradosDesactivados)
+    console.log("bool " + this.ceroProductosFiltradosDesactivados)
+
 
   }
 }

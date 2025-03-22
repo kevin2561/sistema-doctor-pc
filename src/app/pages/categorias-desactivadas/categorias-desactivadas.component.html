@@ -18,13 +18,10 @@
 
         <div class="row mb-4 mt-4">
           <form (ngSubmit)="buscarCategoriaDesactivadas()" class="row g-3 align-items-end">
-            <div class="col-12 text-left">
-              <h5 class="text-dark mb-2">Buscar categoría</h5>
-            </div>
             <!-- Filtro -->
             <div class="col-md-10">
-              <input type="text" [(ngModel)]="filtroTemporal" name="filtroTemporal"
-                placeholder="Ingrese datos de búsqueda" class="form-control">
+              <input type="text" [(ngModel)]="filtroTemporal" name="filtroTemporal" placeholder="Buscar categoría"
+                class="form-control border border-primary">
             </div>
             <!-- Botón Filtrar -->
             <div class="col-md-2">

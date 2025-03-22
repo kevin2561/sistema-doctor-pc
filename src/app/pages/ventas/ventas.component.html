@@ -68,13 +68,11 @@
         <!-- BUSCADOR VENTAS -->
         <div id="contenedor-filtros-ventas" class="row mb-4 mt-4 ml-3">
             <form (ngSubmit)="buscarVenta()" class="row g-3 align-items-end">
-                <div class="col-12 text-left">
-                    <h5 class="text-dark mb-2">Buscar Venta</h5>
-                </div>
                 <!-- Filtro -->
                 <div class="col-md-10">
                     <input type="text" name="filtroTemporal" [(ngModel)]="filtroTemporal"
-                        placeholder="Ingrese datos de búsqueda" class="form-control">
+                        placeholder="Buscar productos por nombre, documento, metodo de pago o fecha"
+                        class="form-control border border-primary">
 
                 </div>
                 <!-- Botón Filtrar -->
@@ -86,6 +84,7 @@
             </form>
         </div>
 
+        <!-- TABLA VENTAS -->
         <div class="scroll-tabla">
             <table class="table table-bordered table-hover text-center">
                 <thead class="table-dark">
@@ -126,11 +125,12 @@
             </table>
         </div>
 
+        <!-- FILTRAR POR FECHA -->
         <div *ngIf="ceroVentasFiltrados" class="alert alert-warning text-center mt-3">
             No se encontraron ventas para dicha fecha.
         </div>
 
-
+        <!-- FILTRAR POR BUSCADOR -->
         <div *ngIf="ceroVentasEncontrados" class="alert alert-warning text-center mt-3">
             No se encontraron Ventas con ese criterio de búsqueda. Inténtelo nuevamente.<br>
             Para ver todas las Ventas, realice una búsqueda en blanco (sin escribir nada en el buscador).
