@@ -50,10 +50,11 @@ app.on('window-all-closed', () => {
   }
 });
 
+
 // 🔥 Configuración de electron-updater
 function setupUpdater() {
-  autoUpdater.autoDownload = true; // Se descarga automáticamente
-  autoUpdater.autoInstallOnAppQuit = true; // Se instala al cerrar la app
+  autoUpdater.autoDownload = true; // Descarga automáticamente la actualización
+  autoUpdater.autoInstallOnAppQuit = true; // Instala automáticamente al cerrar la app
 
   autoUpdater.on('checking-for-update', () => {
     console.log('Buscando actualizaciones...');
@@ -64,7 +65,7 @@ function setupUpdater() {
     dialog.showMessageBox({
       type: 'info',
       title: 'Actualización disponible',
-      message: `Nueva versión disponible: ${info.version}. Se descargará automáticamente.`,
+      message: `Se ha encontrado una nueva versión (${info.version}). La aplicación se actualizará automáticamente.`,
       buttons: ['OK']
     });
   });
@@ -81,12 +82,10 @@ function setupUpdater() {
     dialog.showMessageBox({
       type: 'info',
       title: 'Actualización lista',
-      message: 'La actualización se descargó. Se instalará al reiniciar la aplicación.',
-      buttons: ['Reiniciar ahora', 'Después']
-    }).then((result) => {
-      if (result.response === 0) {
-        autoUpdater.quitAndInstall();
-      }
+      message: 'La actualización se ha descargado. La aplicación se reiniciará para instalar la actualización.',
+      buttons: ['Reiniciar ahora']
+    }).then(() => {
+      autoUpdater.quitAndInstall(); // Reinicia e instala la actualización
     });
   });
 
