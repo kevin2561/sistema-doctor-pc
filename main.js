@@ -51,48 +51,79 @@ app.on('window-all-closed', () => {
 });
 
 
-// 🔥 Configuración de electron-updater
+// Configuración del autoUpdater
 function setupUpdater() {
-  autoUpdater.autoDownload = true; // Descarga automáticamente la actualización
-  autoUpdater.autoInstallOnAppQuit = true; // Instala automáticamente al cerrar la app
+  autoUpdater.autoDownload = true; // Descargar automáticamente la actualización
+  autoUpdater.autoInstallOnAppQuit = true; // Instalar automáticamente al cerrar la app
 
+  // Evento: Buscando actualizaciones
   autoUpdater.on('checking-for-update', () => {
     console.log('Buscando actualizaciones...');
   });
 
+  // Evento: Actualización disponible
   autoUpdater.on('update-available', (info) => {
     console.log(`Nueva versión disponible: ${info.version}`);
     dialog.showMessageBox({
       type: 'info',
       title: 'Actualización disponible',
       message: `Se ha encontrado una nueva versión (${info.version}). La aplicación se actualizará automáticamente.`,
-      buttons: ['OK']
+      buttons: ['OK'],
     });
   });
 
+  // Evento: No hay actualizaciones disponibles
   autoUpdater.on('update-not-available', () => {
     console.log('No hay actualizaciones disponibles.');
   });
 
+  // Evento: Progreso de la descarga
   autoUpdater.on('download-progress', (progress) => {
     console.log(`Progreso de descarga: ${progress.percent.toFixed(2)}%`);
   });
 
+  // Evento: Actualización descargada
   autoUpdater.on('update-downloaded', () => {
+    console.log('Actualización descargada. Reiniciando...');
     dialog.showMessageBox({
       type: 'info',
       title: 'Actualización lista',
       message: 'La actualización se ha descargado. La aplicación se reiniciará para instalar la actualización.',
-      buttons: ['Reiniciar ahora']
+      buttons: ['Reiniciar ahora'],
     }).then(() => {
-      autoUpdater.quitAndInstall(); // Reinicia e instala la actualización
+      autoUpdater.quitAndInstall(); // Reiniciar e instalar la actualización
     });
   });
 
+  // Evento: Error en la actualización
   autoUpdater.on('error', (err) => {
     console.error('Error en la actualización:', err);
+    dialog.showMessageBox({
+      type: 'error',
+      title: 'Error en la actualización',
+      message: `Ocurrió un error durante la actualización: ${err.message}`,
+      buttons: ['OK'],
+    });
   });
 
-  // 🔥 Buscar actualizaciones al iniciar
+  // Buscar actualizaciones al iniciar
   autoUpdater.checkForUpdatesAndNotify();
 }
+
+// Iniciar la aplicación
+app.whenReady().then(() => {
+  createWindow();
+
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) {
+      createWindow();
+    }
+  });
+});
+
+// Cerrar la aplicación
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
+});
