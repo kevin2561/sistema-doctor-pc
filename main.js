@@ -51,8 +51,14 @@ app.on('window-all-closed', () => {
 });
 
 
-// Configuración del autoUpdater
 function setupUpdater() {
+  // Configura el proveedor de actualizaciones (GitHub)
+  autoUpdater.setFeedURL({
+    provider: 'github',
+    owner: 'kevin2561', // Tu nombre de usuario de GitHub
+    repo: 'sistema-doctor-pc', // El nombre del repositorio
+  });
+
   autoUpdater.autoDownload = true; // Descargar automáticamente la actualización
   autoUpdater.autoInstallOnAppQuit = true; // Instalar automáticamente al cerrar la app
 
@@ -109,21 +115,3 @@ function setupUpdater() {
   // Buscar actualizaciones al iniciar
   autoUpdater.checkForUpdatesAndNotify();
 }
-
-// Iniciar la aplicación
-app.whenReady().then(() => {
-  createWindow();
-
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow();
-    }
-  });
-});
-
-// Cerrar la aplicación
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
-});
