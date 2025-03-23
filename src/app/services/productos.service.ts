@@ -95,12 +95,16 @@ export class ProductosService {
       if (!extensionesPermitidas.includes(extension)) {
         alert("Solo se permiten imágenes JPG, JPEG y PNG.");
         event.target.value = ""; // Limpia el input
+        setTimeout(() => event.target.focus(), 0); // Restaura el foco
+
         return;
       }
 
       // Verificar el tamaño
       if (file.size > maxSize) {
         alert("El archivo debe ser menor a 10MB.");
+        setTimeout(() => event.target.focus(), 0); // Restaura el foco
+
         event.target.value = ""; // Limpia el input
         return;
       }
