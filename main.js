@@ -24,7 +24,7 @@ app.whenReady().then(() => {
   });
 
   // mainWindow.setMenu(null);
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 
   globalShortcut.register('Ctrl+Shift+I', () => {
     mainWindow.webContents.openDevTools();
