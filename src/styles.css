@@ -53,7 +53,8 @@
 
 .scroll-tabla {
   
-    max-height: 600px;
+    max-height: 700px
+    ;
     overflow-y: auto;
     scroll-behavior: smooth;
     position: relative;
@@ -175,8 +176,8 @@
 
 /* TABLE IMG */
 .img-table {
-    width: 100px;
-    height: 100px;
+    width: 75px;
+    height: 75px;
     object-fit: cover;
     border: 1px solid #ccc; /* 🔹 Agrega un borde ligero */
 }

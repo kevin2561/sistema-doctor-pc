@@ -20,8 +20,8 @@ export class CrearProductoComponent implements OnInit {
   producto: Producto = {
     idProducto: 0,
     nombre: '',
-    precio: 0,
-    stock: 0,
+    precio: null,
+    stock: null,
     estado: true,
     imagen: '',
     marca: '',
@@ -64,7 +64,6 @@ export class CrearProductoComponent implements OnInit {
         .subscribe({
           next: (respuesta) => {
             if (respuesta === 0) {
-              // alert("Este producto ya exitse")
               this.mensajeService.mostrarMensaje(`Este Producto ya existe ${this.producto.nombre}`, false)
               console.log(respuesta)
               return;

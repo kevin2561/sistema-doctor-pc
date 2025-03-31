@@ -22,7 +22,7 @@ export class CrearVentaComponent implements OnInit {
     descripcion: "",
     fecha: "",
     metodoPago: "",
-    total: 0
+    total: null
   } as Ventas
   metodoPagos = ["Efectivo", "Plin", "Tarjeta", "Yape"]
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { VentasService } from '../../services/ventas.service';
 import { Ventas } from '../../entites/ventas';
 import { MensajesService } from '../../services/mensajes.service';
+import { Console } from 'node:console';
 
 @Component({
   selector: 'app-ventas',
@@ -88,8 +89,8 @@ export class VentasComponent implements OnInit {
           this.venta = [];
           this.totalVentas = 0;
           this.ceroVentasFiltrados = true
-          this.divMensajeVentas= false;
-          this.ventasFiltradas=[]
+          this.divMensajeVentas = false;
+          this.ventasFiltradas = []
           return;
         }
         this.venta = data.sort((a, b) => b.idVenta - a.idVenta)
@@ -130,14 +131,13 @@ export class VentasComponent implements OnInit {
       )
     }
     this.ceroVentasEncontrados = this.ventasFiltradas.length === 0;
-    this.ceroVentasFiltrados= false;
+    this.ceroVentasFiltrados = false;
 
   }
 
   seleccionarVenta(venta: Ventas, i?: number) {
     this.ventaSeleccionada = { ...venta }
-    this.ventaSeleccionada.total = parseFloat(venta.total.toFixed(2));
-    console.log(this.ventaSeleccionada.total);
+    // console.log(this.ventaSeleccionada.total)
     if (i !== undefined) {
       this.indiceSeleccionado = i;
     }
@@ -164,11 +164,12 @@ export class VentasComponent implements OnInit {
 
   actualizarVenta() {
     const id = this.ventaSeleccionada.idVenta
-    if (isNaN(this.ventaSeleccionada.total)) {
+    if (this.ventaSeleccionada.total === null || isNaN(this.ventaSeleccionada.total)) {
       this.mensajeService.mostrarMensaje(`La venta ${id} el total debe ser un número válido.`, false);
       return;
 
     }
+    this.ventaSeleccionada.total = Number(this.ventaSeleccionada.total)
     this.ventasService.actualizarV(id, this.ventaSeleccionada).subscribe({
       next: (data) => {
         const index = this.ventasFiltradas.findIndex(v => v.idVenta === this.ventaSeleccionada.idVenta);
@@ -176,7 +177,7 @@ export class VentasComponent implements OnInit {
           this.ventasFiltradas[index] = { ...this.ventaSeleccionada }; // Actualiza el objeto en el array
         }
 
-
+        console.log(data)
         this.mensajeService.mostrarMensaje(`Venta ${id} actualizada correctamente.`, true)
         this.calcularVentas();
 
@@ -190,7 +191,7 @@ export class VentasComponent implements OnInit {
   }
 
   calcularVentas() {
-    this.totalVentas = this.venta.reduce((sum, v) => sum + v.total, 0)
+    this.totalVentas = this.ventasFiltradas.reduce((sum, v) => sum + (v.total ?? 0), 0)
   }
 
 }

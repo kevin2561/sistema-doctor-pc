@@ -71,7 +71,7 @@
                 <!-- Filtro -->
                 <div class="col-md-10">
                     <input type="text" name="filtroTemporal" [(ngModel)]="filtroTemporal"
-                        placeholder="Buscar productos por nombre, documento, metodo de pago o fecha"
+                        placeholder="Buscar ventas por nombre, documento, metodo de pago o fecha"
                         class="form-control border border-primary">
 
                 </div>
@@ -109,7 +109,7 @@
                         <td class="descripcion-columna">{{item.descripcion}}</td>
                         <td>{{item.metodoPago}}</td>
                         <td>{{item.fecha | date: 'dd/MM/yy'}}</td>
-                        <td>S/ {{item.total | number:'1.2-2'}}</td>
+                        <td>S/ {{(item.total === null || item.total === 0) ? "0" :item.total | number:'1.2-2'}}</td>
                         <td>
                             <i class="bi bi-pencil-square text-primary accion-iconos" title="Editar"
                                 style="cursor:pointer;" (click)="seleccionarVenta(item,i)" data-bs-toggle="modal"
@@ -200,8 +200,7 @@
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Total</label>
                                 <input type="text" name="total" [(ngModel)]="ventaSeleccionada.total"
-                                    class="form-control" placeholder="Ej: 150.00" #total="ngModel" required
-                                    pattern="^[0-9]+(\.[0-9]{1,2})?$">
+                                    class="form-control" placeholder="Ej: 150.00" #total="ngModel" required>
 
                                 <!-- Mensaje de error cuando el campo está vacío o no es un número -->
                                 <div *ngIf="total.invalid && total.touched" class="text-danger mt-1">

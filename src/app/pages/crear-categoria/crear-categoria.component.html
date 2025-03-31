@@ -14,7 +14,7 @@
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-tag"></i></span>
                     <input type="text" [(ngModel)]="categoria.nombre" name="nombre" class="form-control"
-                        placeholder="Ej: Electrónica" required #nombreRef="ngModel">
+                        placeholder="Ej: Placas" required #nombreRef="ngModel">
                 </div>
                 <div *ngIf="nombreRef.invalid && nombreRef.touched" class="text-danger mt-1">
                     El nombre es obligatorio.

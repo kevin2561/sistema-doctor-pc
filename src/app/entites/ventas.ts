@@ -5,6 +5,6 @@ export interface Ventas {
     descripcion: string,
     fecha: string,
     metodoPago: String ,
-    total: number
+    total: number | null
 
 }

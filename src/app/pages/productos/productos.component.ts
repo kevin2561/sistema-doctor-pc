@@ -15,7 +15,6 @@ import { CategoriasService } from '../../services/categorias.service';
   styleUrls: ['./productos.component.css']
 })
 export class ProductosComponent implements OnInit {
-  // https://chatgpt.com/share/67cf740d-07ec-8003-a576-86ffb0cbff84
   errorImagen: boolean = false;
   productos: Producto[] = [];
   cargando: boolean = false;
@@ -26,6 +25,17 @@ export class ProductosComponent implements OnInit {
   filtroTemporal: string = "";
   productosActivadosFiltrados: Producto[] = [];
   ceroProductosFiltrados: boolean = false;
+
+  arrayFModelos: string[] = [];
+  arrayFMarcas: string[] = [];
+  arrayFCategorias: string[] = [];
+  arrayFCondicion: string[] = [];
+  filtroProductos = {
+    "marca": null,
+    "modelo": null,
+    "categoria": null,
+    "condicion": null
+  }
 
   esExito: boolean = false;
   mensaje: string = "";
@@ -43,6 +53,10 @@ export class ProductosComponent implements OnInit {
     categoria: { idCategoria: 0, nombre: "", estado: true } as Categoria // Inicializa con un objeto vacío
   }
   categoriaSelect: Categoria[] = []
+  productosBusquedaFiltrados: Producto[] = [];
+  productosMultiFiltrados: Producto[] = [];
+
+
   constructor(public productosService: ProductosService, private mensajeSerive: MensajesService, private categoriaService: CategoriasService) { }
 
 
@@ -52,18 +66,39 @@ export class ProductosComponent implements OnInit {
     this.mostrarProductos();
     this.cargarCategorias();
   }
-  buscador(): void {
-    this.filtro = this.filtroTemporal.trim(); // Se actualiza solo al hacer submit
-    this.productosActivadosFiltrados = this.productos?.filter(producto =>
-      producto.estado && (
-        producto.nombre.toLowerCase().includes(this.filtro.toLowerCase()) ||
-        producto.marca.toLowerCase().includes(this.filtro.toLowerCase()) ||
-        producto.modelo.toLowerCase().includes(this.filtro.toLowerCase()) ||
-        producto.categoria?.nombre.toLowerCase().includes(this.filtro.toLowerCase())
-      )
-    );
-    this.ceroProductosFiltrados = this.productosActivadosFiltrados.length === 0;
+
+  mostrarProductosIniciados(data: Producto[]) {
+    // console.log(arrayCopiadoProductos)
+    this.arrayFMarcas = Array.from(new Set(data.map(p => p.marca.trim()).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))))
+    this.arrayFModelos = Array.from(new Set(data.map(p => p.modelo.trim()).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))))
+    this.arrayFCondicion = Array.from(new Set(data.map(p => p.condicion.trim()).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))))
+    this.arrayFCategorias = Array.from(new Set(data
+      .filter(p => p.categoria && p.categoria.estado)
+      .map(p => p.categoria!.nombre.trim())
+      .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
+    ))
+
+    console.log(this.arrayFMarcas)
+    console.log(this.arrayFModelos)
+    console.log(this.arrayFCondicion)
+    console.log(this.arrayFCategorias)
+
   }
+  buscador(): void {
+    const busqueda = this.filtroTemporal.trim().toLowerCase();
+    if (busqueda === "") {
+      this.productosBusquedaFiltrados = [];
+      this.ceroProductosFiltrados = false;
+
+      return;
+    }
+    this.productosBusquedaFiltrados = this.productos.filter(producto => producto.estado &&
+      producto.nombre.toLowerCase().includes(busqueda)
+    );
+    this.ceroProductosFiltrados = this.productosBusquedaFiltrados.length === 0;
+
+  }
+
 
 
   mostrarProductos(): void {
@@ -73,8 +108,12 @@ export class ProductosComponent implements OnInit {
 
     this.productosService.getAllProductos().subscribe({
       next: (data) => {
+        console.log(data)
         this.cargando = false
-        this.productos = data.sort((a, b) => a.nombre.localeCompare(b.nombre));
+        this.mostrarProductosIniciados(data)
+        this.productos = data.sort((a, b) => b.idProducto - a.idProducto);
+
+
         // console.log(this.productos)
       },
       error: () => {
@@ -86,10 +125,14 @@ export class ProductosComponent implements OnInit {
   }
 
   get productosActivados(): Producto[] {
-    if (this.filtro.trim() !== "") { // Si hay búsqueda activa
-      return this.productosActivadosFiltrados; // Devuelve el filtro (puede estar vacío)
+    if (this.filtroTemporal.trim() !== "") { // Si hay búsqueda activa
+      return this.productosBusquedaFiltrados; // Devuelve el filtro (puede estar vacío)
+    }
+    if (this.filtroProductos.marca || this.filtroProductos.modelo || this.filtroProductos.condicion || this.filtroProductos.categoria) {
+      return this.productosMultiFiltrados;
     }
     return this.productos?.filter(p => p.estado); // Si no hay filtro, devuelve todos los activados
+
   }
 
 
@@ -131,7 +174,9 @@ export class ProductosComponent implements OnInit {
           return;
         }
         this.mensajeSerive.mostrarMensaje(`Producto ${this.productoActualizado.nombre} actualizado`, true);
-        this.mostrarProductos(); // Recargar productos
+        // this.mostrarProductos(); // Recargar productos
+        this.mostrarProductosConFiltro();
+
       },
       error: (err) => {
         console.error("Error al actualizar:", err);
@@ -142,8 +187,10 @@ export class ProductosComponent implements OnInit {
   desactivarProducto(id: number, nombre: string): void {
     this.productosService.desactivarP(id).subscribe({
       next: () => {
-        this.mostrarProductos();
+        // this.mostrarProductos();
         this.mensajeSerive.mostrarMensaje(`El producto ${nombre.toUpperCase()} fue Desactivado Correctamente`, true);
+        this.mostrarProductosConFiltro();
+
       },
       error: (err) => {
         this.mensajeSerive.mostrarMensaje(`Error, No se pudo Desactivar el Producto  ${nombre.toUpperCase()}`, false);
@@ -155,17 +202,19 @@ export class ProductosComponent implements OnInit {
   }
 
   eliminarProducto() {
-   const id = this.productoActualizado.idProducto;
-      this.productosService.eliminarP(id).subscribe({
-        next: () => {
-          this.mensajeSerive.mostrarMensaje(`Producto ${this.productoActualizado.nombre.toUpperCase()} eliminado correctamente`, true)
-          this.mostrarProductos();
-        },
-        error: () => {
-          this.mensajeSerive.mostrarMensaje(`Error al eliminar, intento más tarde`, false)
-        },
-      })
-    
+    const id = this.productoActualizado.idProducto;
+    this.productosService.eliminarP(id).subscribe({
+      next: () => {
+        this.mensajeSerive.mostrarMensaje(`Producto ${this.productoActualizado.nombre.toUpperCase()} eliminado correctamente`, true)
+        // this.mostrarProductos();
+        this.mostrarProductosConFiltro();
+
+      },
+      error: () => {
+        this.mensajeSerive.mostrarMensaje(`Error al eliminar, intento más tarde`, false)
+      },
+    })
+
   }
 
   ponerStockCero(id: number, nombreP: string, event: Event) {
@@ -176,10 +225,11 @@ export class ProductosComponent implements OnInit {
         // console.log("Respuesta: ", respuesta)
         if (respuesta == 0) {
           this.mensajeSerive.mostrarMensaje(`El producto ${nombreP} ya está agotado.`, false);
+
         } else {
           this.mensajeSerive.mostrarMensaje(`El stock del producto ${nombreP} se ha actualizado a 0.`, true);
         }
-        this.mostrarProductos();
+        this.mostrarProductosConFiltro();
       },
       error: (err) => {
         this.mensajeSerive.mostrarMensaje(`Error, Intentenlo más tarde`, false)
@@ -188,11 +238,78 @@ export class ProductosComponent implements OnInit {
   }
 
 
+  filtrosProductos(): void {
+    const f = this.filtroProductos;
 
+    // Si no se selecciona nada, vaciamos el array (o podrías asignar todos)
+    if (!f.marca && !f.modelo && !f.condicion && !f.categoria) {
+      this.productosMultiFiltrados = [];
+      this.ceroProductosFiltrados = false;
 
+      return;
+    }
 
+    this.productosMultiFiltrados = this.productos.filter(producto => {
+      let coincide = true;
 
+      if (!producto.estado) {
+        return false;
+      }
+      if (f.marca) {
+        coincide = coincide && (producto.marca.trim() === f.marca);
+      }
+      if (f.modelo) {
+        coincide = coincide && (producto.modelo.trim() === f.modelo);
+      }
+      if (f.condicion) {
+        coincide = coincide && (producto.condicion.trim().toLowerCase() === f.condicion);
+      }
+      if (f.categoria) {
+        coincide = coincide && (producto.categoria ? producto.categoria.nombre.trim() === f.categoria : false);
+      }
+      return coincide;
+    });
+    this.ceroProductosFiltrados = this.productosMultiFiltrados.length === 0;
 
+  }
+
+  mostrarTodosProductos(): void {
+    // Reiniciar filtros
+    this.filtroTemporal = "";
+    this.filtroProductos = { marca: null, modelo: null, condicion: null, categoria: null };
+    // Vaciar arrays filtrados
+    this.productosBusquedaFiltrados = [];
+    this.productosMultiFiltrados = [];
+    // Ocultar mensaje de error
+    this.ceroProductosFiltrados = false;
+    // Recargar la lista completa (opcional, si la data puede cambiar)
+    this.mostrarProductos();
+  }
+
+  reaplicarFiltro(): void {
+    if (this.filtroTemporal.trim() !== "") {
+      this.buscador();
+    } else if (this.filtroProductos.marca || this.filtroProductos.modelo || this.filtroProductos.condicion || this.filtroProductos.categoria) {
+      this.filtrosProductos();
+    }
+  }
+
+  mostrarProductosConFiltro(): void {
+    this.productosService.getAllProductos().subscribe({
+      next: (data) => {
+        this.cargando = false;
+        this.mostrarProductosIniciados(data);
+        // Ordena o asigna la data según tu criterio (por ejemplo, por id descendente)
+        this.productos = data.sort((a, b) => b.idProducto - a.idProducto);
+        // Reaplicar el filtro activo, si hay alguno
+        this.reaplicarFiltro();
+      },
+      error: () => {
+        this.e500 = true;
+        this.cargando = false;
+      }
+    });
+  }
 
 
 

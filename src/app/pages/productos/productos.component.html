@@ -9,15 +9,12 @@
 
             <div id="contenedor-filtros-ventas" class="row mb-4 mt-4">
                 <form (ngSubmit)="buscador()" class="row g-3 align-items-end">
-                    <div class="col-12 text-left">
-                        <h5 class="text-dark mb-2"></h5>
-                    </div>
                     <!-- Filtro -->
                     <div class="col-md-10">
                         <!-- <label class="form-label fw-bold">Seleccionar Mes</label> -->
                         <input type="text" [(ngModel)]="filtroTemporal" name="filtroTemporal"
                             placeholder="Buscar productos por nombre, marca, modelo o categoría"
-                            class="form-control border border-primary">
+                            class="form-control border border-primary" [ngModelOptions]="{ updateOn: 'submit' }">
 
                     </div>
                     <!-- Botón Filtrar -->
@@ -25,6 +22,61 @@
                         <button type="submit" class="btn btn-primary w-100">
                             <i class="bi bi-search"></i> Buscar
                         </button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="contenedor-filtros-multiples" class="mt-5 mb-3">
+                <h2 class="h2 my-3">Filtros</h2>
+                <form (ngSubmit)="filtrosProductos()">
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="" class="form-label fw-bold">Marca</label>
+                            <select id="marca" class="form-select" [(ngModel)]="filtroProductos.marca" name="marcaF"
+                                [ngModelOptions]="{ updateOn: 'submit' }" #marcaF="ngModel" required>
+                                <option [ngValue]="null" disabled>Seleccione una marca</option>
+                                <option *ngFor="let marca of arrayFMarcas" [ngValue]="marca">{{ marca }}</option>
+                            </select>
+
+
+                        </div>
+                        <div class="col-md-3">
+                            <label for="" class="form-label fw-bold">Modelo</label>
+                            <select id="modelo" class="form-select" [(ngModel)]="filtroProductos.modelo" name="modeloF"
+                                [ngModelOptions]="{ updateOn: 'submit' }">
+                                <option [ngValue]="null" disabled>Seleccione un modelo</option>
+                                <option *ngFor="let modelo of arrayFModelos" [ngValue]="modelo">{{ modelo }}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="" class="form-label fw-bold">Codicion</label>
+                            <select id="condicion" name="condicionF" [(ngModel)]="filtroProductos.condicion"
+                                class="form-select" [ngModelOptions]="{ updateOn: 'submit' }">
+                                <option [ngValue]="null" disabled>Eliga la condicion</option>
+                                <option [ngValue]="item.toLowerCase()" *ngFor="let item of condicionSelect">{{ item }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label fw-bold">Categoría (Solo Activadas)</label>
+                            <select id="categoria" [(ngModel)]="filtroProductos.categoria" name="categoriaF"
+                                class="form-select" [ngModelOptions]="{ updateOn: 'submit' }">
+                                <option [ngValue]="null" disabled>Seleccione una categoría</option>
+                                <option *ngFor="let item of arrayFCategorias">
+                                    {{ item}}</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-12 my-5">
+                            <button type="submit" class="btn btn-primary mx-1">Filtrar</button>
+                            <button type="button" class="btn btn-outline-dark mx-1"
+                                (click)="mostrarTodosProductos()">Restablecer filtros</button>
+                        </div>
+
+
+
+
                     </div>
                 </form>
             </div>
@@ -83,12 +135,15 @@
 
                 </table>
                 <div *ngIf="ceroProductosFiltrados" class="alert alert-warning text-center mt-3">
-                    No se encontraron productos con ese criterio de búsqueda.
+                    No se encontraron productos con ese criterio de búsqueda.<br>
+                    Para ver todos los productos, de click a "Restablecer filtros"
+
                 </div>
 
             </div>
         </ng-container>
     </section>
+
 
     <!-- -------------------------MODAL IMAGEN------------ -->
     <div class="modal fade" id="imagePreviewModal" tabindex="-1" aria-hidden="true">
@@ -178,7 +233,7 @@
                             </div>
                         </div>
 
-                        <!-- Conficion-->
+                        <!-- Condicion-->
                         <div class="mt-3"> <label for="condicion" class="form-label fw-bold">Condición</label>
                             <select id="condicion" name="condicion" [(ngModel)]="productoActualizado.condicion"
                                 class="form-select" required>
