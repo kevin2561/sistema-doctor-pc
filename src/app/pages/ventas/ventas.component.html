@@ -97,7 +97,7 @@
                         <th scope="col">Metodo de Pago</th>
                         <th scope="col">Fecha</th>
                         <th scope="col">Monto</th>
-                        <th scope="col" colspan="2">Acciones</th>
+                        <th scope="col" colspan="3">Acciones</th>
                     </tr>
                 </thead>
                 <tbody id="t-body">
@@ -118,6 +118,10 @@
                         <td>
                             <i (click)="seleccionarVenta(item,i)" class="bi bi-trash text-danger accion-iconos"
                                 data-bs-toggle="modal" data-bs-target="#eliminarVentaModal" title="Eliminar"></i>
+                        </td>
+                        <td>
+                            <i (click)="comprobanteVenta(item)" class="bi bi-printer text-dark accion-iconos"
+                                title="Imprimir"></i>
                         </td>
                     </tr>
                 </tbody>

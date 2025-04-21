@@ -22,6 +22,8 @@ import { ProductosService } from './services/productos.service';
 import { MesajeValidacionComponent } from './mensaje/mesaje-validacion/mesaje-validacion.component';
 import { LoadingComponent } from './componentes/loading/loading.component';
 import { ErrorServidorComponent } from './mensaje/error-servidor/error-servidor.component';
+import { Page404Component } from './estados/page-404/page-404.component';
+import { ComprobanteVentaComponent } from './pages/comprobante-venta/comprobante-venta.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +42,8 @@ import { ErrorServidorComponent } from './mensaje/error-servidor/error-servidor.
     MesajeValidacionComponent,
     LoadingComponent,
     ErrorServidorComponent,
+    Page404Component,
+    ComprobanteVentaComponent,
     
   ],
   imports: [

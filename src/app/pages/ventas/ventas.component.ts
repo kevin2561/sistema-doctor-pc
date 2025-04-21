@@ -3,6 +3,7 @@ import { VentasService } from '../../services/ventas.service';
 import { Ventas } from '../../entites/ventas';
 import { MensajesService } from '../../services/mensajes.service';
 import { Console } from 'node:console';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ventas',
@@ -11,7 +12,7 @@ import { Console } from 'node:console';
   styleUrl: './ventas.component.css'
 })
 export class VentasComponent implements OnInit {
-  constructor(private ventasService: VentasService, private mensajeService: MensajesService) { }
+  constructor(private ventasService: VentasService, private mensajeService: MensajesService, private router: Router) { }
 
   ngOnInit(): void {
     this.mensajeService.mensaje$.subscribe(mensaje => this.mensaje = mensaje);
@@ -141,6 +142,10 @@ export class VentasComponent implements OnInit {
     if (i !== undefined) {
       this.indiceSeleccionado = i;
     }
+
+  }
+  comprobanteVenta(venta: Ventas) {
+    this.router.navigate(['/comprobante-venta'], { state: { venta } })
 
   }
   eliminarVenta() {

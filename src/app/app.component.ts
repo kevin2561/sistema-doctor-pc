@@ -13,9 +13,9 @@ export class AppComponent implements OnInit {
 
 
   ngOnInit() {
-    if (this.router.url === '/') {
-      this.router.navigate(['/login']); // Redirigir a Login
-    }
+    // if (this.router.url === '/') {
+    //   this.router.navigate(['/login']); // Redirigir a Login
+    // }
   }
 mostrarHeaderYFooter() {
     return this.router.url !== '/login';

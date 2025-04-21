@@ -10,8 +10,11 @@ import { CrearCategoriaComponent } from './pages/crear-categoria/crear-categoria
 import { CategoriasDesactivadasComponent } from './pages/categorias-desactivadas/categorias-desactivadas.component';
 import { VentasComponent } from './pages/ventas/ventas.component';
 import { CrearVentaComponent } from './pages/crear-venta/crear-venta.component';
+import { Page404Component } from './estados/page-404/page-404.component';
+import { ComprobanteVentaComponent } from './pages/comprobante-venta/comprobante-venta.component';
 
 const routes: Routes = [
+  { path: "", redirectTo: "login", pathMatch: 'full' },
   { path: "inicio", component: InicioComponent },
   { path: "login", component: LoginComponent },
   { path: "productos", component: ProductosComponent },
@@ -22,7 +25,9 @@ const routes: Routes = [
   { path: "crear-categoria", component: CrearCategoriaComponent },
   { path: "ventas", component: VentasComponent },
   { path: "crear-venta", component: CrearVentaComponent },
-  { path: "", redirectTo: "login", pathMatch: 'full' }
+  { path: "comprobante-venta", component: ComprobanteVentaComponent },
+
+  { path: "**", component: Page404Component } // Esta siempre debe ir al final
 ];
 
 @NgModule({

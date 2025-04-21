@@ -1,0 +1,32 @@
+.error-container {
+    text-align: center;
+    padding: 30px;
+    background-image: url('https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-color:  transparent !important;
+    border:  0px !important;
+
+}
+
+.error-code {
+    font-size: 120px;
+    font-weight: 700;
+    color: #333;
+}
+
+.error-image {
+    width: 100%;
+    max-width: 400px;
+    height: 300px;
+    margin: 20px auto;
+    /* background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain; */
+}
+
+.error-message h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+    color: #333;
+}
