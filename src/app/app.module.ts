@@ -44,15 +44,17 @@ import { ComprobanteVentaComponent } from './pages/comprobante-venta/comprobante
     ErrorServidorComponent,
     Page404Component,
     ComprobanteVentaComponent,
-    
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
     
+  
+
 
 
   ],

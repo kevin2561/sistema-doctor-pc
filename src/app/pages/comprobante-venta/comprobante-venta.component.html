@@ -1,1 +1,113 @@
-<h1 class="h1">HOLA A TODOS</h1>
+<div id="contenedor-impresion">
+    <button (click)="visualizarPDF()"
+        styleSheetFile="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+        class="btn btn-primary"><i class="bi bi-printer"></i>
+        Imprimir</button>
+
+</div>
+<section id="contenedor-comprobante" class="container">
+    <div class="invoice">
+        <div class="row">
+            <div class="col-7">
+                <img src="../assets/logo.jpg" class="logo">
+                <div>
+                    <span class="">RUC: 2011887741</span>
+                </div>
+            </div>
+
+            <div class="col-5 text-center">
+                <h1 class="document-type display-4">{{ventaX?.documento!.length > 9 ? "FACTURA" : "BOLETA"}}</h1>
+                <p><strong>N° 000000000000{{ventaX?.idVenta}}</strong></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-7">
+                <p>
+                    <strong>DOCTOR PC - ISA</strong><br>
+                    Av. Los fresnos<br>
+                    990-999-888
+                </p>
+            </div>
+            <div class="col-5">
+                <br><br><br>
+                <div class="d-flex flex-column gap-2">
+                    <span><strong>Nombre: </strong> {{ventaX?.nombre}}</span>
+                    <span><strong>{{ ventaX?.documento?.length! > 9 ? "RUC" : "DNI" }}:</strong> {{ventaX?.documento ||
+                        ""}}</span>
+
+                    <span><strong>Metodo de pago: </strong> {{ventaX?.metodoPago}}</span>
+                    <span><strong>Emision: </strong> {{ventaX?.fecha | date: "dd/MM/yyyy"}}</span>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">N° Venta</th>
+                    <th scope="col">Descripción</th>
+                <tr>
+            </thead>
+            <tr>
+                <td>{{ventaX?.idVenta}}</td>
+                <td>{{ventaX?.descripcion}}</td>
+            </tr>
+
+
+        </table>
+        <div class="row">
+            <div class="col-7">
+            </div>
+            <div class="col-5">
+                <table id="table-total" class="table table-sm">
+                    <tr>
+                        <td><strong class="text-left">Valor de la venta:</strong></td>
+                        <td class="text-right border border-secondary-subtle px-3 py-1">S/ {{ ((ventaX?.total || 0) /
+                            1.18 ) | number:'1.2-2' }}</td>
+                    </tr>
+                    <tr>
+                        <td> <strong class="text-left">IGV (18%):</strong></td>
+                        <td class="text-right border border-secondary-subtle px-3 py-1">S/ {{ ((ventaX?.total || 0) -
+                            ((ventaX?.total || 0)/ 1.18)) |
+                            number:'1.2-2' }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong class="text-left">Importe Total:</strong></td>
+                        <td class="text-right border border-secondary-subtle px-3 py-1">S/ {{ ventaX?.total |
+                            number:'1.2-2' }}</td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+
+        <p class="conditions">
+            En votre aimable règlement
+            <br>
+            Et avec nos remerciements.
+            <br><br>
+            Conditions de paiement : paiement à réception de facture, à 15 jours.
+            <br>
+            Aucun escompte consenti pour règlement anticipé.
+            <br>
+            Règlement par virement bancaire.
+            <br><br>
+            En cas de retard de paiement, indemnité forfaitaire pour frais de recouvrement : 40 euros (art. L.4413 et
+            L.4416 code du commerce).
+        </p>
+
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <p class="bottom-page text-right">
+            90TECH SAS - N° SIRET 80897753200015 RCS METZ<br>
+            6B, Rue aux Saussaies des Dames - 57950 MONTIGNY-LES-METZ 03 55 80 42 62 - www.90tech.fr<br>
+            Code APE 6201Z - N° TVA Intracom. FR 77 808977532<br>
+            IBAN FR76 1470 7034 0031 4211 7882 825 - SWIFT CCBPFRPPMTZ
+        </p>
+    </div>
+</section>
