@@ -1,44 +1,46 @@
 
-   #contenedor-comprobante{
-    border: 1px solid black;
-   }
-  .container {
-    width: 210mm;
-    min-height: 297mm;
-      margin: auto;
-  }
-  
-  .invoice {
-    background: #fff;
-    width: 100%;
-    padding: 50px;
-  }
-  
-  .logo {
-    width: 5cm;
-  }
-  
-  .document-type {
-    color: #444;
-    font-weight: 600;
-  }
-  
-  .conditions {
-    font-size: 0.7em;
-    color: #666;
-  }
-  
-  .bottom-page {
-    font-size: 0.7em;
-  }
+#contenedor-comprobante {
+  border: 1px solid black;
+}
 
-  /* #table-total td{
+.container {
+  width: 210mm;
+  min-height: 297mm;
+  margin: auto;
+}
+
+.invoice {
+  background: #fff;
+  width: 100%;
+  padding: 50px;
+}
+
+.logo {
+  width: 5cm;
+}
+
+.document-type {
+  color: #444;
+  font-weight: 600;
+}
+
+.conditions {
+  font-size: 0.7em;
+  color: #666;
+}
+
+.bottom-page {
+  font-size: 0.7em;
+}
+
+/* #table-total td{
     border: 1px solid black;
 
   } */
-  
-  @media print {
-    @page {
-      margin: 0; /* Elimina los márgenes predeterminados */
-    }
-  }  
+
+@media print {
+  @page {
+    margin: 0;
+    /* Elimina los márgenes predeterminados */
+  }
+}

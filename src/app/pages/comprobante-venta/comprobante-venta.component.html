@@ -1,4 +1,4 @@
-<div id="contenedor-impresion">
+<div id="contenedor-impresion" class="d-flex justify-content-center my-3">
     <button (click)="visualizarPDF()"
         styleSheetFile="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
         class="btn btn-primary"><i class="bi bi-printer"></i>
@@ -10,22 +10,21 @@
         <div class="row">
             <div class="col-7">
                 <img src="../assets/logo.jpg" class="logo">
-                <div>
-                    <span class="">RUC: 2011887741</span>
-                </div>
+            
             </div>
 
             <div class="col-5 text-center">
                 <h1 class="document-type display-4">{{ventaX?.documento!.length > 9 ? "FACTURA" : "BOLETA"}}</h1>
-                <p><strong>N° 000000000000{{ventaX?.idVenta}}</strong></p>
+                <p><strong>Código: {{codigoComprobante}}</strong></p>
             </div>
         </div>
-        <div class="row">
+        <div class="row ">
             <div class="col-7">
-                <p>
-                    <strong>DOCTOR PC - ISA</strong><br>
-                    Av. Los fresnos<br>
-                    990-999-888
+                <p class="text-left">
+                    <strong>RUC: 20112345678</strong><br>
+                    <strong>Doctor Pc-I S.A</strong><br>
+                    <br>
+
                 </p>
             </div>
             <div class="col-5">
@@ -103,11 +102,10 @@
         <br>
         <br>
 
-        <p class="bottom-page text-right">
-            90TECH SAS - N° SIRET 80897753200015 RCS METZ<br>
-            6B, Rue aux Saussaies des Dames - 57950 MONTIGNY-LES-METZ 03 55 80 42 62 - www.90tech.fr<br>
-            Code APE 6201Z - N° TVA Intracom. FR 77 808977532<br>
-            IBAN FR76 1470 7034 0031 4211 7882 825 - SWIFT CCBPFRPPMTZ
+        <p class="bottom-page fs-6 text-right">
+            Avenida alameda del corregidor 1928 - La Molina<br>
+            Referencia: Frente a la Universidad San Martin de Porres Facultad de Derecho<br>
+            <i class="bi bi-whatsapp text-success"></i> 990 999 888<br>
         </p>
     </div>
 </section>

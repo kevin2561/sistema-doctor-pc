@@ -11,10 +11,12 @@ import html2canvas from 'html2canvas';
 })
 export class ComprobanteVentaComponent implements OnInit {
   ventaX?: Ventas;
+  codigoComprobante: number = 0
+
 
   ngOnInit(): void {
 
-
+    this.generarComprobante()
   }
 
 
@@ -37,6 +39,15 @@ export class ComprobanteVentaComponent implements OnInit {
       // o descarga directo:
       // pdf.save('factura.pdf');
     });
+  }
+
+  generarComprobante(): number {
+    const min = 1000000000;
+    const max = 9999999999;
+    this.codigoComprobante = Math.floor(Math.random() * (max - min + 1)) + min;
+    return this.codigoComprobante
+
+
   }
 }
 
