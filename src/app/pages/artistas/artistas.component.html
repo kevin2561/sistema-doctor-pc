@@ -1,0 +1,52 @@
+<section class="container">
+    <div class="d-flex flex-column w-25">
+        <label for="Seleccione">Mostrar cantidad de datos</label>
+        <select name="" id="" class="form-select" (change)="mostrarCantidadDatos($event)">
+            <option value="" disabled>Seleccione una opcion</option>
+            <option value="10" selected>10</option>
+            <option value="30">30</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+        </select>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>idCantante</th>
+                <th>nombreReal</th>
+                <th>nombreArtistico</th>
+                <th>fechaNacimiento</th>
+                <th>paisOrigen</th>
+                <th>generoMusical</th>
+                <th>edad</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let artista of arrayArtistas!">
+                <td>{{artista.idCantante}}</td>
+                <td>{{artista.nombreReal}}</td>
+                <td>{{artista.nombreArtistico}}</td>
+                <td>{{artista.fechaNacimiento}}</td>
+                <td>{{artista.paisOrigen}}</td>
+                <td>{{artista.generoMusical}}</td>
+                <td>{{artista.edad}}</td>
+
+            </tr>
+
+
+        </tbody>
+    </table>
+    <div class="d-flex justify-content-center my-5">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" (click)="atras()">Previous</a></li>
+                <li id="enlaces-page" class="page-item {{paginaActual == i ? 'active' : ''}}"
+                    *ngFor="let page of getPaginas(); let i= index">
+                    <a (click)="irPagina(i)" class="page-link">{{i + 1}}</a>
+                </li>
+                <li class="page-item"><a class="page-link" (click)="siguiente()">Next</a></li>
+            </ul>
+        </nav>
+    </div>
+</section>

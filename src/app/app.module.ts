@@ -24,6 +24,7 @@ import { LoadingComponent } from './componentes/loading/loading.component';
 import { ErrorServidorComponent } from './mensaje/error-servidor/error-servidor.component';
 import { Page404Component } from './estados/page-404/page-404.component';
 import { ComprobanteVentaComponent } from './pages/comprobante-venta/comprobante-venta.component';
+import { ArtistasComponent } from './pages/artistas/artistas.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,6 +45,7 @@ import { ComprobanteVentaComponent } from './pages/comprobante-venta/comprobante
     ErrorServidorComponent,
     Page404Component,
     ComprobanteVentaComponent,
+    ArtistasComponent,
 
   ],
   imports: [

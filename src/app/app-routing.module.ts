@@ -12,6 +12,7 @@ import { VentasComponent } from './pages/ventas/ventas.component';
 import { CrearVentaComponent } from './pages/crear-venta/crear-venta.component';
 import { Page404Component } from './estados/page-404/page-404.component';
 import { ComprobanteVentaComponent } from './pages/comprobante-venta/comprobante-venta.component';
+import { ArtistasComponent } from './pages/artistas/artistas.component';
 
 const routes: Routes = [
   { path: "", redirectTo: "login", pathMatch: 'full' },
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: "ventas", component: VentasComponent },
   { path: "crear-venta", component: CrearVentaComponent },
   { path: "comprobante-venta", component: ComprobanteVentaComponent },
+  { path: "paginacion", component:ArtistasComponent  },
 
   { path: "**", component: Page404Component } // Esta siempre debe ir al final
 ];
